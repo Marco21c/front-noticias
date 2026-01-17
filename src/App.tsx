@@ -7,11 +7,13 @@ export const router = createBrowserRouter(
 [
   { path: "/",
     element: <DefaultLayout/> ,
-    errorElement: <NotFound/> ,
     children: [
       { index: true,
         element: <Home/>
        },
+       { path: "*",
+         element: <NotFound/>
+       }
     ]
    }
 ]
