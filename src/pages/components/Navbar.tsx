@@ -1,5 +1,5 @@
 import NavItem from "../../components/ui/NavItem";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Menu, Bell, User } from "lucide-react";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
