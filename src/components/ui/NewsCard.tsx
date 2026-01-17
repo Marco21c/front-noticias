@@ -4,29 +4,40 @@ type NewsCardProps = {
     section: string;
     imageUrl?: string;
     publishedAt?: string;
+    author?: string;
     variant?: "default" | "featured";
 }
 
-export default function NewsCard({ title, excerpt, section, imageUrl, publishedAt, variant }: NewsCardProps) {
+export default function NewsCard({ title, excerpt, section, imageUrl, publishedAt, author, variant }: NewsCardProps) {
     return (
-        <article className={`bg-white rounded-md shadow-sm border overflow-hidden ${variant === "featured" ? "md:col-span-2 " : ""}`}>
+        <article className={`bg-white rounded-md shadow-sm border overflow-hidden transition hover:shadow-md hover:-translate-y-0.5`}>
 
             <img
-                src={imageUrl || `https://via.placeholder.com/400x200?text=${encodeURIComponent(title)}`}
+                src={imageUrl || `https://picsum.photos/400/200?random=${encodeURIComponent(title)}`}
                 alt={title}
-                className={`w-full object-cover ${variant === 'featured' ? 'h-72' : 'h-48'}`}
+                className={`w-full object-cover ${variant === 'featured' ? 'h-72' : 'h-44'}`}
             />
+
+            {author && (<div className="px-4 py-2 text-xs text-gray-500">
+                Por {author}
+                </div>)}
 
             <div className="p-4">
                 <span className="text-xs uppercase text-blue-600 font-semibold">
                     {section}
                 </span>
 
-                <h2 className="text-lg font-bold mt-2">
+                <h2 className={`mt-2 font-bold ${variant === 'featured' 
+                    ? 'text-2xl leading-tight' 
+                    : 'text-base'
+                    }`}>
                     {title}
                 </h2>
 
-                <p className="text-gray-600 text-sm mt-2">
+                <p className={ `mt-2 ${variant === 'featured'
+                    ? "text-gray-700"
+                    : "text-gray-600 text-sm"
+                }`}>
                     {excerpt}
                 </p>
 
