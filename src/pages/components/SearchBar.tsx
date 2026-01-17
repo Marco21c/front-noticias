@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Search} from "lucide-react";
 
@@ -26,3 +27,4 @@ export default function SearchBar({onSearch}:Props) {
           </form>
   )
 }
+

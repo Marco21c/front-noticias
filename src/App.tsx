@@ -1,3 +1,4 @@
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./pages/components/DefaultLayout";
 import NotFound from "./pages/NotFound";

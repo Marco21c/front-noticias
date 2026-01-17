@@ -33,6 +33,7 @@ export default function Navbar() {
    }
 
   return (
+
     <>
       <header className="sticky top-0 z-50 w-full border-b border-gray-300 bg-white">
       
@@ -62,4 +63,5 @@ export default function Navbar() {
       <OffCanvasMenu open={open} onClose={() => setOpen(false)} />
     </>
   )
+
 }
