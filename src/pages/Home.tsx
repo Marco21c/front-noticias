@@ -6,6 +6,7 @@ import { SeparatorHorizontal, SeparatorHorizontalIcon } from "lucide-react";
 
 export default function Home() {
   return (
+
     <>
       <HeaderTop />
 
@@ -34,3 +35,4 @@ export default function Home() {
     </>
   );
 }
+
