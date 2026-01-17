@@ -4,9 +4,6 @@ export default function Home() {
   return (
 
     <>
-      <div className="min-h-screen bg-gray-100">
-
-
         <main className="max-w-5xl mx-auto px-4">
 
           <h1 className="text-3xl font-serif font-bold mt-8 mb-6">
@@ -21,8 +18,6 @@ export default function Home() {
           </p>
 
         </main>
-
-      </div>
     </>
   );
 }
