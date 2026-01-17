@@ -4,7 +4,7 @@ import { Menu, Bell, User } from "lucide-react";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import OffCanvasMenu from "./OffCanvasMenu";
+import OffCanvasMenu from "../../components/ui/OffCanvasMenu";
 type Category = {
   name: string,
   to: string
