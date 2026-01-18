@@ -1,18 +1,18 @@
 import axios from 'axios';
-import { URL_BACKEND } from '../lib/axios';
+import { apiClient } from '../lib/axios';
 
 export const getCategories = async () => {
-    const { data } = await axios.get(`${URL_BACKEND}/categories`);
+    const { data } = await axios.get(`${apiClient}/categories`);
     return data;
 };
 
 export const getCategoryById = async (id: string) => {
-    const { data } = await axios.get(`${URL_BACKEND}/categories/${id}`);
+    const { data } = await axios.get(`${apiClient}/categories/${id}`);
     return data;
 }
 
 export const getCategoryByName = async (name: string) => {
-    const { data } = await axios.get(`${URL_BACKEND}/categories/${name}`);
+    const { data } = await axios.get(`${apiClient}/categories/${name}`);
     return data;
 }
 // TODO: Add more category-related services as needed.

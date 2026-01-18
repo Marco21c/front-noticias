@@ -1,19 +1,22 @@
-import { apiClient } from '../lib/axios';
-import { mapNewsArray } from '../services/mappers/news.mapper.ts';
-import type { News } from '@/types/news.ts';
+import type { News } from '@/types/News.type';
+//import { apiClient } from '../lib/axios';
+import { newsMock } from '../mocks/newsMocks';
 
 export const getNews = async (): Promise<News[]> => {
     try {
-        const { data } = await apiClient.get('/news');
-        console.log('Noticias recibidas:', data);
-        return mapNewsArray(data.data || data);
+        // const { data } = await apiClient.get('/news');
+        const data = newsMock;
+        console.log('News:', data);
+        return data;
+      //el mappeo no lo use 
     } catch (error) {
         console.error('Error fetching news:', error);
         throw error;
     }
 };
+// Hacer lo mismo que el getNews 👆 para todas las funciones de abajo
 
-export const getNewsByCategory = async (category: string): Promise<News[]> => {
+/* export const getNewsByCategory = async (category: string): Promise<News[]> => {
     try {
         const { data } = await apiClient.get(`/news?category=${category}`);
         return mapNewsArray(data.data || data);
@@ -44,6 +47,6 @@ export const searchNews = async (query: string): Promise<News[]> => {
         console.error('Error searching news:', error);
         throw error;
     }
-};
+}; */
 
 // TODO: Add more services as needed.
