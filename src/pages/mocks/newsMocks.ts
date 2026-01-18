@@ -58,7 +58,7 @@ export const newsMock = [
   {
     id: 7,
     title: "Cine: Estreno de la película más esperada del año",
-    excerpt: "El filme rompe records de taquilla en su primer fin de semana.",
+    excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
     section: "Entretenimiento",
     author: "Laura Rodríguez",
     imageUrl: "https://picsum.photos/800/400?random=7",
@@ -72,7 +72,6 @@ export const newsMock = [
     author: "Andrés Gómez",
     imageUrl: "https://picsum.photos/800/400?random=8",
     publishedAt: "hace 2 horas",
-    variant: "featured" as const,
   },
   {
     id: 9,
@@ -81,7 +80,8 @@ export const newsMock = [
     section: "Deportes",
     author: "Javier Ortiz",
     imageUrl: "https://picsum.photos/800/400?random=9",
-    publishedAt: "hace 45 minutos"
+    publishedAt: "hace 45 minutos",
+    variant: "featured" as const,
   },
   {
     id: 10,
@@ -91,7 +91,6 @@ export const newsMock = [
     author: "Gabriela Pérez",
     imageUrl: "https://picsum.photos/800/400?random=10",
     publishedAt: "hace 3 horas",
-    variant: "featured" as const,
   },
   {
     id: 11,
@@ -109,6 +108,17 @@ export const newsMock = [
     section: "Tránsito",
     author: "Marcos Díaz",
     imageUrl: "https://picsum.photos/800/400?random=12",
-    publishedAt: "hace 1 hora"
+    publishedAt: "hace 1 hora",
   },
+
+  {
+    id: 13,
+    title: "Educación: Nuevo plan de becas para estudiantes",
+    excerpt: "El gobierno anunció inversión histórica en educación superior.",
+    section: "Educación",
+    author: "Gabriela Pérez",
+    imageUrl: "https://picsum.photos/800/400?random=10",
+    publishedAt: "hace 3 horas",
+  },
+
 ];
