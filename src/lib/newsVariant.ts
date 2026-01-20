@@ -1,4 +1,4 @@
-import type { News } from '../types/news';
+import type { News } from '../interfaces/news';
 
 export type NewsVariant = 'highlighted' | 'featured' | 'default';
 

@@ -1,4 +1,4 @@
-import type { News, NewsApi } from '../types/News.type';
+import type { News, NewsApi } from '../interfaces/News.type';
 
 export const mapNewsFromBackend = (item: NewsApi): News => {
     return {

@@ -1,11 +1,11 @@
-import type { News } from '@/types/News.type';
-//import { apiClient } from '../lib/axios';
-import { newsMock } from '../mocks/newsMocks';
+import type { INews } from '@/interfaces/News.type';
+import { apiClient } from '../lib/axios';
+//import { newsMock } from '../mocks/newsMocks';
 
-export const getNews = async (): Promise<News[]> => {
+export const getNews = async (): Promise<INews[]> => {
     try {
-        // const { data } = await apiClient.get('/news');
-        const data = newsMock;
+        const { data } = await apiClient.get('/news');
+        
         console.log('News:', data);
         return data;
       //el mappeo no lo use 

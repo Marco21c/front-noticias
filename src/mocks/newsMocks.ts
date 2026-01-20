@@ -7,13 +7,14 @@ export const newsMock = [
       "El Gobierno anunció nuevas medidas para profundizar la digitalización de trámites públicos.",
     content:
       "El plan incluye la eliminación de formularios físicos, interoperabilidad entre organismos y mayor uso de identidad digital. Se espera reducir costos y tiempos para ciudadanos y empresas.",
-    highlights: true, // Luego cambiar 
+    highlights: ["plan"],
     author: "Redacción Política",
     category: "politica",
     mainImage:
       "https://images.unsplash.com/photo-1556742031-c6961e8560b0",
     status: "published",
     publicationDate: new Date("2026-01-10"),
+    variant:"highli",
     source: ""
   },
   {
@@ -24,14 +25,15 @@ export const newsMock = [
       "Las acciones de MELI alcanzaron un nuevo máximo impulsadas por buenos resultados trimestrales.",
     content:
       "El crecimiento del e-commerce y de Mercado Pago fue clave para superar las expectativas del mercado. Analistas ven un escenario alcista a mediano plazo.",
-    highlights: true,
+    highlights: ["crecimiento"],
     author: "Marcos Condori",
     category: "economia",
     mainImage:
       "https://images.unsplash.com/photo-1556742031-c6961e8560b0",
     status: "published",
     publicationDate: new Date("2026-01-12"),
-    source: ""
+    source: "",
+    
   },
   {
     _id: "3",
@@ -41,7 +43,7 @@ export const newsMock = [
       "Una nueva herramienta promete mejorar el rendimiento y la experiencia de desarrollo.",
     content:
       "El framework combina renderizado híbrido, tipado estricto y una API simple. Aún se encuentra en fase experimental, pero genera gran expectativa.",
-    highlights: false,
+    highlights: [],
     author: "Equipo Tech",
     category: "tecnologia",
     mainImage:
@@ -58,7 +60,7 @@ export const newsMock = [
       "El mercado de autos usados crece ante la falta de unidades 0km.",
     content:
       "La llegada de nuevos barcos con vehículos importados podría estabilizar los precios en los próximos meses, aunque la demanda sigue firme.",
-    highlights: false,
+    highlights: [],
     author: "Redacción Economía",
     category: "autos",
     mainImage:
