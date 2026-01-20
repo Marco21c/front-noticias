@@ -12,9 +12,11 @@ Actualmente el proyecto cuenta con:
 
 - Creación del proyecto base
 - Estructura inicial de carpetas
-- Implementación del Navbar *
-- Implementación de Home * 
+- Implementación del Navbar 
+- Implementación de Home 
 - Configuración inicial del entorno de desarrollo
+- Configuración de variables de entorno y axios
+- Cración e implementación del servicio get News.
 
 ---
 
@@ -23,14 +25,14 @@ Actualmente el proyecto cuenta con:
 - **React**
 - **Vite**
 - **JavaScript**
-- **CSS / Tailwind CSS** 
-- **React Router** (pendiente)
-- 
-
+- **CSS / Tailwind CSS V.3** 
+- **Axios**
+- **React-Query**
+- **React-Router**
+- **dayjs**
 ---
 
-## Estructura de carpetas
 
-Estructura inicial del proyecto:
+
 
 
