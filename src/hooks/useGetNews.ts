@@ -2,12 +2,12 @@ import { useQuery} from "@tanstack/react-query";
 import { getNews } from "@/services/news.services";
 import type { INews } from "../interfaces/News.type";
 
-export const useGetNews = () =>
-  useQuery<INews[]>({
-    queryKey: ["news"],
-    //podriamos ordenar las noticias antes de mandarlas a las vistas
+export const useGetNews = () => {
+  return useQuery<INews[]>({
+    queryKey: ['news'],
     queryFn: getNews,
   })
+}
 
  // Los otros tipos de get 
 export const useGetNewsxId = () => {}

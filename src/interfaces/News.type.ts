@@ -11,7 +11,7 @@ export interface INews {
   source?: string;
   variant: string;
   status: string;
-  publicationDate: Date;
+  publicationDate: string;
 }
 
 /* export type StatusNews = 'draft' | 'published' | 'archived' ;

@@ -4,7 +4,7 @@ type NewsCardsProps = {
   author: string
   category: string
   mainImage?: string
-  publicationDate: Date
+  publicationDate: string
   variant: string
 }
 
@@ -79,7 +79,7 @@ export default function NewsCard({ title, summary, author, category, mainImage, 
         <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
           <span>{author}</span>
           <time>
-            {publicationDate.toLocaleDateString("es-AR")}
+            {new Date(publicationDate).toLocaleDateString('es-AR')}
           </time>
         </div>
       </div>
