@@ -1,52 +1,88 @@
-type NewsCardProps = {
-    title: string;
-    excerpt: string;
-    section: string;
-    imageUrl?: string;
-    publishedAt?: string;
-    author?: string;
-    variant?: "default" | "featured";
+type NewsCardsProps = {
+  title: string
+  summary: string
+  author: string
+  category: string
+  mainImage?: string
+  publicationDate: string
+  variant: string
 }
 
-export default function NewsCard({ title, excerpt, section, imageUrl, publishedAt, author, variant }: NewsCardProps) {
-    return (
-        <article className={`bg-white rounded-md shadow-sm border overflow-hidden transition hover:shadow-md hover:-translate-y-0.5`}>
+export default function NewsCard({ title, summary, author, category, mainImage, publicationDate, variant}: NewsCardsProps) {
+  
+  return (
+    <article
+      className={`
+        overflow-hidden rounded-xl bg-white shadow-md transition
+        ${variant === "highlighted" ? "col-span-full" : ""}
+      `}
+    >
+      {/* Imagen */}
+      {mainImage && (
+        <div
+          className={
+            variant === "highlighted"
+              ? "h-96"
+              : variant === "featured"
+              ? "h-64"
+              : "h-48"
+          }
+        >
+          <img
+            src={mainImage}
+            alt={title}
+            className="h-full w-full object-cover"
+          />
+        </div>
+      )}
 
-            <img
-                src={imageUrl || `https://picsum.photos/400/200?random=${encodeURIComponent(title)}`}
-                alt={title}
-                className={`w-full object-cover ${variant === 'featured' ? 'h-72' : 'h-44'}`}
-            />
+      {/* Contenido */}
+      <div className={variant === "highlighted" ? "p-6" : "p-4"}>
+        {/* Categoría */}
+        <span className="mb-2 inline-block rounded bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-700">
+          {category}
+        </span>
 
-            {author && (<div className="px-4 py-2 text-xs text-gray-500">
-                Por {author}
-                </div>)}
+        {/* Título */}
+        <h2
+          className={`
+            font-bold leading-tight
+            ${
+              variant === "highlighted"
+                ? "text-3xl md:text-4xl"
+                : variant === "featured"
+                ? "text-xl"
+                : "text-base"
+            }
+          `}
+        >
+          {title}
+        </h2>
 
-            <div className="p-4">
-                <span className="text-xs uppercase text-blue-600 font-semibold">
-                    {section}
-                </span>
+        {/* Resumen */}
+        <p
+          className={`
+            mt-2 text-gray-600
+            ${
+              variant === "highlighted"
+                ? "text-lg"
+                : variant === "featured"
+                ? "text-sm"
+                : "text-xs line-clamp-3"
+            }
+          `}
+        >
+          {summary}
+        </p>
 
-                <h2 className={`mt-2 font-bold ${variant === 'featured' 
-                    ? 'text-2xl leading-tight' 
-                    : 'text-base'
-                    }`}>
-                    {title}
-                </h2>
-
-                <p className={ `mt-2 ${variant === 'featured'
-                    ? "text-gray-700"
-                    : "text-gray-600 text-sm"
-                }`}>
-                    {excerpt}
-                </p>
-
-                <p className="text-xs text-gray-500 mt-3">
-                    Publicado {publishedAt || 'hace unos minutos'}
-                </p>
-
-            </div>
-
-        </article>
-    );
+        {/* Footer */}
+        <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+          <span>{author}</span>
+          <time>
+            {new Date(publicationDate).toLocaleDateString('es-AR')}
+          </time>
+        </div>
+      </div>
+    </article>
+  )
 }

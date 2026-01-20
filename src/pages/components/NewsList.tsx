@@ -1,39 +1,33 @@
-
+import { useGetNews } from "@/hooks/useGetNews";
 import NewsCard from "../../components/ui/NewsCard"
-import { newsMock } from "../mocks/newsMocks"
-
-
 export default function NewsList() {
-    const featuredNews = newsMock.filter(news => news.variant === 'featured');
-    const regularNews = newsMock.filter(news => news.variant !== 'featured');
+  const { data, isLoading, isError } = useGetNews();
+  if (isLoading) return <p>Cargando...</p>
+  if (isError) return <p>Ocurrió un error</p>
+  if (!data || data.length === 0) return <p>No hay noticias</p>
 
-    const mainFeatured = featuredNews[0];
-    const secondaryFeatured = featuredNews.slice(1);
+  //const principalNews = data[data.length - 1]
+  //const restNews = data.slice(0, -1)
 
-    return (
-        <section className="mt-8 space-y-10">
-            {/* Main Featured News */}
-            {mainFeatured && (
-                <div>
-                    <NewsCard {...mainFeatured} variant="featured" />
-                </div>
-            )}
-
-            {/* Secondary Featured News */}
-            {secondaryFeatured.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {secondaryFeatured.map(news => (
-                        <NewsCard key={news.id} {...news} variant="featured" />
-                    ))}
-                </div>
-            )}
-
-            {/* Regular News */} 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6"> 
-                {regularNews.map((news) => (
-                    <NewsCard key={news.id} {...news} />
-                ))}
-            </div>
-        </section>
-    )
+  return (
+    <section className="mt-8 space-y-8">
+      {/* Noticia principal */}
+      
+      {/* Grid de noticias secundarias */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {data.map(item => (
+          <NewsCard
+            key={item.title}
+            title={item.title}
+            summary={item.summary}
+            author={item.author}
+            category={item.category}
+            mainImage={item.mainImage}
+            publicationDate={item.publicationDate}
+            variant={item.variant}
+          />
+        ))}
+      </div>
+    </section>
+  )
 }
