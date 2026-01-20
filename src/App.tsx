@@ -1,11 +1,29 @@
-import { Button } from "@/components/ui/button"
+
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import DefaultLayout from "./pages/components/DefaultLayout";
+import NotFound from "./pages/NotFound";
+import Home from "./pages/Home";
+
+export const router = createBrowserRouter(
+[
+  { path: "/",
+    element: <DefaultLayout/> ,
+    children: [
+      { index: true,
+        element: <Home/>
+       },
+       { path: "*",
+         element: <NotFound/>
+       }
+    ]
+   }
+]
+);
  
 function App() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Listo crack</Button>
-    </div>
-  )
-}
+    <RouterProvider router={router}/>
+  );
+};
  
-export default App
+export default App;
