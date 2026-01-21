@@ -80,6 +80,14 @@ La aplicación estará disponible en `http://localhost:5173` (o el puerto que Vi
 - **`npm run preview`**: Previsualiza la build de producción localmente
 - **`npm run lint`**: Ejecuta el linter para verificar el código
 
+### Desarrollo local
+
+Una vez instaladas las dependencias y configuradas las variables de entorno:
+
+1. Ejecuta `npm run dev` para iniciar el servidor de desarrollo
+2. Abre tu navegador en la URL que Vite indique (generalmente `http://localhost:5173`)
+3. Los cambios se reflejarán automáticamente gracias al hot-reload
+
 ### Estructura del proyecto
 
 ```
@@ -155,11 +163,86 @@ Actualmente el proyecto cuenta con:
 - ✅ Creación e implementación del servicio get News
 - ✅ Sistema de routing básico
 - ✅ Componentes UI reutilizables
+- ✅ Configuración de deploy en Vercel
 
+## 🚢 Deploy
+
+### Deploy en Vercel
+
+Este proyecto está configurado para desplegarse fácilmente en Vercel.
+
+#### Opción 1: Deploy mediante CLI de Vercel
+
+1. **Instala Vercel CLI** (si no lo tienes instalado):
+
+```bash
+npm i -g vercel
+```
+
+2. **Inicia sesión en Vercel**:
+
+```bash
+vercel login
+```
+
+3. **Despliega el proyecto**:
+
+```bash
+vercel
+```
+
+4. **Para producción**:
+
+```bash
+vercel --prod
+```
+
+#### Opción 2: Deploy mediante GitHub
+
+1. Conecta tu repositorio de GitHub con Vercel
+2. Vercel detectará automáticamente que es un proyecto Vite
+3. Configura las variables de entorno en el dashboard de Vercel:
+   - `VITE_DEV` = `false` (para producción)
+   - `VITE_BACKEND_URL` = URL de tu backend de desarrollo (opcional)
+   - `VITE_URL_HOST` = URL de tu backend de producción
+
+#### Configuración de variables de entorno en Vercel
+
+1. Ve a tu proyecto en el dashboard de Vercel
+2. Navega a **Settings** → **Environment Variables**
+3. Agrega las siguientes variables:
+   - `VITE_DEV`: `false` (para producción)
+   - `VITE_URL_HOST`: URL de tu API de producción
+   - `VITE_BACKEND_URL`: URL de tu API de desarrollo (opcional)
+
+**Nota:** El archivo `vercel.json` ya está configurado para manejar las rutas de React Router correctamente.
+
+## 🤝 Contribución
+
+Este proyecto está en desarrollo activo. Si deseas contribuir:
+
+1. Haz un fork del repositorio
+2. Crea una rama desde `main` para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Realiza tus cambios
+4. Asegúrate de que el código pase el linter (`npm run lint`)
+5. Commit tus cambios (`git commit -m 'Agrega nueva funcionalidad'`)
+6. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+7. Abre un Pull Request con una descripción clara de los cambios
+
+### Guías de contribución
+
+- Sigue las convenciones de código existentes
+- Asegúrate de que tu código esté tipado correctamente con TypeScript
+- Escribe código limpio y legible
+- Agrega comentarios cuando sea necesario
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+Este proyecto está bajo la Licencia MIT.
+
+La Licencia MIT es una licencia de software libre permisiva que permite el uso, copia, modificación, fusión, publicación, distribución, sublicencia y/o venta de copias del software, siempre y cuando se incluya el aviso de copyright y la notificación de permiso en todas las copias o partes sustanciales del software.
+
+Ver el archivo `LICENSE` en la raíz del proyecto para más detalles.
 
 ## 👥 Autores
 
