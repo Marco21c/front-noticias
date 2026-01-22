@@ -1,5 +1,5 @@
 import NavItem from "../../components/ui/NavItem";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Menu, Bell, User } from "lucide-react";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
@@ -32,6 +32,10 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const handleSearch = (query: string) => {
+   const [open, setOpen] = useState(false);
+   const navigate = useNavigate();
+   const handleSearch = () => {
+    //parametro => query: string
     //aqui va a ir la consulta para mostrar la noticia o por palabra 😎😛
     console.log("Si funciona.")
   }
