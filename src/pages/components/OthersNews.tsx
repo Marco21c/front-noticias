@@ -6,9 +6,10 @@ export default function NewsList() {
     if (isError) return <p>Ocurrió un error</p>
     if (!data || data.length === 0) return <p>No hay noticias</p>
 
-    const featuredNews = data[0]
-    const defaultNews = data.slice(1, 3);
-    const othersNews = data.slice(4, 8);
+
+    const featuredNews = data[10]
+    const defaultNews = data.slice(11, 13);
+    const othersNews = data.slice(14, 18);
 
     return (
         <>
