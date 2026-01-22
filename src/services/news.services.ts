@@ -1,13 +1,12 @@
 import type { INews } from '@/interfaces/News.type';
 import { apiClient } from '../lib/axios';
-//import { newsMock } from '../mocks/newsMocks';
 
 export const getNews = async (): Promise<INews[]> => {
     try {
-        const { data } = await apiClient.get('/news');
+        const { data } = await apiClient.get('/api/news');
         console.log('News:', data);
         return data;
-      //el mappeo no lo use 
+        //el mappeo no lo use 
     } catch (error) {
         console.error('Error fetching news:', error);
         throw error;
