@@ -1,5 +1,6 @@
 import { useGetNews } from "@/hooks/useGetNews";
-import NewsCard from "../../components/ui/NewsCard"
+import NewsCard from "../../components/ui/NewsCard";
+
 export default function NewsList() {
   const { data, isLoading, isError } = useGetNews();
   if (isLoading) return <p>Cargando...</p>

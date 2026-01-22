@@ -39,7 +39,7 @@ export default function Navbar() {
     //aqui va a ir la consulta para mostrar la noticia o por palabra 😎😛
     console.log("Si funciona.")
   }
-
+  }
   return (
 
     <>
