@@ -2,44 +2,21 @@ import NavItem from "../../components/ui/NavItem";
 import { Button } from "@/components/ui/button";
 import { Menu, Bell, User } from "lucide-react";
 import SearchBar from "./SearchBar";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import OffCanvasMenu from "../../components/ui/OffCanvasMenu";
-type Category = {
-  name: string,
-  to: string
-};
-
-const categories: Category[] = [
-  {
-    name: "Ultimas noticias",
-    to: "/"
-  },
-  {
-    name: "Economia",
-    to: "/economia"
-  },
-  {
-    name: "Internacional",
-    to: "/internacional"
-  },
-  {
-    name: "Cultura",
-    to: "/cultura"
-  }
-]
+import { categories } from "@/mocks/categoriesMocks";
+import { baseStyles } from "@/styles/styleLinkNav";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const handleSearch = (query: string) => {
-   const [open, setOpen] = useState(false);
-   const navigate = useNavigate();
+  
    const handleSearch = () => {
     //parametro => query: string
     //aqui va a ir la consulta para mostrar la noticia o por palabra 😎😛
     console.log("Si funciona.")
   }
-  }
+ 
   return (
 
     <>
@@ -60,15 +37,15 @@ export default function Navbar() {
 
         <nav className="hidden md:block border-t border-gray-100">
           <ul className="mx-auto flex max-w-7xl gap-6 px-4 py-2">
+            <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
             {categories.map((category) => (
-              <NavItem key={category.to} to={category.to}>
-                {category.name}
-              </NavItem>
+              <NavItem key={category._id} name={category.name} _id={category._id} />
+                
             ))}
           </ul>
         </nav>
       </header>
-      <OffCanvasMenu open={open} onClose={() => setOpen(false)} />
+      <OffCanvasMenu open={open} onClose={() => setOpen(false)} categories={categories} />
     </>
   )
 

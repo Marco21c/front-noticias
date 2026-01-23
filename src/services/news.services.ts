@@ -14,16 +14,18 @@ export const getNews = async (): Promise<INews[]> => {
 };
 // Hacer lo mismo que el getNews 👆 para todas las funciones de abajo
 
-/* export const getNewsByCategory = async (category: string): Promise<News[]> => {
+ export const getNewsByCategory = async (category: string): Promise<INews[]> => {
     try {
-        const { data } = await apiClient.get(`/news?category=${category}`);
-        return mapNewsArray(data.data || data);
+        const { data } = await apiClient.get('/news/category', {
+             params: { category }
+         });
+        return data;
     } catch (error) {
         console.error('Error fetching news by category:', error);
         throw error;
     }
 };
-
+/*
 export const getNewsById = async (id: string): Promise<News> => {
     try {
         const { data } = await apiClient.get(`/news/${id}`);

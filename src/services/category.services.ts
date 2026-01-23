@@ -2,8 +2,13 @@ import axios from 'axios';
 import { apiClient } from '../lib/axios';
 
 export const getCategories = async () => {
+    try{
     const { data } = await axios.get(`${apiClient}/categories`);
     return data;
+    } catch(error){
+        console.error("Error get news: ", Error);
+        throw error;
+    }
 };
 
 export const getCategoryById = async (id: string) => {

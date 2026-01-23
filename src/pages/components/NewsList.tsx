@@ -1,11 +1,12 @@
-import { useGetNews } from "@/hooks/useGetNews";
+import type { INews } from "@/interfaces/News.type";
 import NewsCard from "../../components/ui/NewsCard";
 
-export default function NewsList() {
-  const { data, isLoading, isError } = useGetNews();
-  if (isLoading) return <p>Cargando...</p>
-  if (isError) return <p>Ocurrió un error</p>
-  if (!data || data.length === 0) return <p>No hay noticias</p>
+type Props = {
+  data: INews[];
+};
+
+export default function NewsList({data}:Props) {
+  
 
   const highlightedNews = data[0];
   const featuredNews = data[1];
