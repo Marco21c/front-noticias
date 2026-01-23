@@ -8,10 +8,10 @@ type Props = {
 
 export default function NewsList({data}:Props) {
    
-
+    
     const featuredNews = data[0]
     const defaultNews = data.slice(1, 3);
-    const othersNews = data.slice(4, 8);
+    const othersNews = data.slice(3, 8);
 
     return (
         <>
