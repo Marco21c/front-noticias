@@ -7,6 +7,12 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const NewsCategory = lazy(() => import("./pages/NewsCategory"));
+const PanelUser = lazy(() => import("./pages/Panel/PanelUser"));
+const DashboardPanel = lazy(() => import("./pages/Panel/DashboardPanel"));
+const UpdateNew = lazy(() => import("./pages/Panel/UpdateNew"));
+const AddNew = lazy(() => import("./pages/Panel/AddNew"));
+const UpdateCategory = lazy(() => import("./pages/Panel/UpdateCategory"));
+
 export const router = createBrowserRouter(
   [
     {
@@ -30,7 +36,34 @@ export const router = createBrowserRouter(
           element: <NotFound />
         }
       ]
-    }
+    },
+    {
+      path: "panel/",
+      element: <PanelUser/>,
+      children:[
+           {
+          index: true,
+          element: <DashboardPanel />
+        },
+        {
+          path: "news",
+          element: <UpdateNew />
+        },
+        {
+          path: "new",
+          element: <AddNew/>
+        },
+        {
+          path: "categories",
+          element: <UpdateCategory/>
+        },
+        {
+          path: "*",
+          element: <NotFound />
+        }
+      ]
+    },
+     
   ]
 );
 
