@@ -1,12 +1,15 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./pages/components/DefaultLayout";
-import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+
+import { Skeleton } from "./components/ui/skeleton";
 
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
+const NewsCategory = lazy(() => import("./pages/NewsCategory"));
 
 export const router = createBrowserRouter(
   [
@@ -23,6 +26,14 @@ export const router = createBrowserRouter(
           element: <Login />
         },
         {
+          path: "register",
+          element: <Register />
+        }.
+        {
+          path: "category/:id",
+          element: <NewsCategory/>
+        },
+        {
           path: "*",
           element: <NotFound />
         }
@@ -34,8 +45,12 @@ export const router = createBrowserRouter(
 function App() {
 
   return (
-    <RouterProvider router={router} />
-    <Suspense fallback={<div>Cargando...</div>}>
+
+    <Suspense fallback={<div className="space-y-3 mt-10">
+      <Skeleton className="h-40 w-full rounded-xl" />
+      <Skeleton className="h-4 w-3/4" />
+      <Skeleton className="h-4 w-1/2" />
+    </div>}>
     <RouterProvider router={router}/>
     </Suspense>
   );

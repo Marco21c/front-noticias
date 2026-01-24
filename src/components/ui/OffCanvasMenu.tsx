@@ -1,23 +1,15 @@
 import { X } from "lucide-react";
+import type { ICategory } from "@/interfaces/Category.type";
+import NavItem from "./NavItem";
 import { NavLink } from "react-router-dom";
-
-type Category = {
-  name: string;
-  to: string;
-};
-
-const categories: Category[] = [
-  { name: "Últimas noticias", to: "/" },
-  { name: "Economía", to: "/economia" },
-  { name: "Internacional", to: "/internacional" },
-];
-
+import { baseStyles } from "@/styles/styleLinkNav";
 type Props = {
   open: boolean;
   onClose: () => void;
+  categories: ICategory[];
 };
 
-export default function OffCanvasMenu({ open, onClose }:Props) {
+export default function OffCanvasMenu({ open, onClose, categories }:Props) {
  
     return (
     <>
@@ -40,15 +32,9 @@ export default function OffCanvasMenu({ open, onClose }:Props) {
         </div>
 
         <nav className="flex flex-col gap-2 p-4">
-          {categories.map((cat) => (
-            <NavLink
-              key={cat.to}
-              to={cat.to}
-              onClick={onClose}
-              className="px-3 py-2 rounded hover:bg-gray-100"
-            >
-              {cat.name}
-            </NavLink>
+            <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
+          {categories.map((category) => (
+                <NavItem key={category._id} name={category.name} _id={category._id} />
           ))}
         </nav>
       </aside>
