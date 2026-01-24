@@ -12,6 +12,7 @@ const DashboardPanel = lazy(() => import("./pages/Panel/DashboardPanel"));
 const UpdateNew = lazy(() => import("./pages/Panel/UpdateNew"));
 const AddNew = lazy(() => import("./pages/Panel/AddNew"));
 const UpdateCategory = lazy(() => import("./pages/Panel/UpdateCategory"));
+const Register = lazy(() => import("./pages/Register"));
 
 export const router = createBrowserRouter(
   [
@@ -26,6 +27,10 @@ export const router = createBrowserRouter(
         {
           path: "login",
           element: <Login />
+        },
+        {
+          path: "register",
+          element: <Register />
         },
         {
           path: "category/:id",
@@ -70,7 +75,7 @@ export const router = createBrowserRouter(
 function App() {
 
   return (
-    
+
     <Suspense fallback={<div className="space-y-3 mt-10">
       <Skeleton className="h-40 w-full rounded-xl" />
       <Skeleton className="h-4 w-3/4" />

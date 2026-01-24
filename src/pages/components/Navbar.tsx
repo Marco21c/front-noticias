@@ -10,28 +10,27 @@ import { baseStyles } from "@/styles/styleLinkNav";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  
+
    const handleSearch = () => {
     //parametro => query: string
     //aqui va a ir la consulta para mostrar la noticia o por palabra 😎😛
-    console.log("Si funciona.")
+    console.log("Búsqueda");
   }
  
   return (
-
     <>
       <header className="sticky top-0 z-50 w-full border-b border-gray-300 bg-white">
 
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
             <Menu className="md:h-6 md:w-6 h-5 w-5 cursor-pointer md:mr-2 text-gray-600 hover:text-black" onClick={() => setOpen(true)} />
-            <span className="md:text-2xl xs:text-xl font-serif font-bold tracking-tight"> WebNoticias </span>
+            <span className="md:text-2xl xs:text-xl font-serif font-bold tracking-tight">WebNoticias </span>
           </div>
           <div className="flex items-center gap-3">
             <SearchBar onSearch={handleSearch} />
 
             <Button variant={"warning"} size={"sm"} onClick={() => navigate("/login")}> <User className="hidden sm:block" /> Ingresar </Button>
-            <Button variant={"outline"} size={"sm"}> <Bell className="hidden sm:block" onClick={() => navigate("/")} /> Suscribirse </Button>
+            <Button variant={"outline"} size={"sm"}> <Bell className="hidden sm:block" /> Suscribirse </Button>
           </div>
         </div>
 
@@ -48,5 +47,4 @@ export default function Navbar() {
       <OffCanvasMenu open={open} onClose={() => setOpen(false)} categories={categories} />
     </>
   )
-
 }

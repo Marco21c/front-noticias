@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Button } from '@/components/ui/button';
 
 /* VALIDATION SCHEMA */
 const loginSchema = z.object({
@@ -99,13 +100,15 @@ const LoginForm = () => {
                 </div>
 
                 {/* SUBMIT BUTTON */}
-                <button
+                <Button
                     type='submit'
+                    variant='warning'
+                    size='lg'
+                    className='w-full'
                     disabled={isLoading}
-                    className='w-full bg-amber-300 text-black py-2 px-4 rounded-md hover:bg-amber-400 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors'
                 >
                     {isLoading ? 'Iniciando Sesión...' : 'Iniciar Sesión'}
-                </button>
+                </Button>
 
                 {/* ERROR DEL SERVIDOR */}
                 {serverError && (
