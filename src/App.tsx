@@ -1,16 +1,13 @@
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./pages/components/DefaultLayout";
-import Register from "./pages/Register";
-
-
 import { Skeleton } from "./components/ui/skeleton";
 
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const NewsCategory = lazy(() => import("./pages/NewsCategory"));
-
+const Register = lazy(() => import("./pages/Register"));
 export const router = createBrowserRouter(
   [
     {
@@ -28,7 +25,7 @@ export const router = createBrowserRouter(
         {
           path: "register",
           element: <Register />
-        }.
+        },
         {
           path: "category/:id",
           element: <NewsCategory/>

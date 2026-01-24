@@ -14,7 +14,7 @@ export default function Navbar() {
    const handleSearch = () => {
     //parametro => query: string
     //aqui va a ir la consulta para mostrar la noticia o por palabra 😎😛
-    console.log("Búsqueda:", query);
+    console.log("Búsqueda");
   }
  
   return (
