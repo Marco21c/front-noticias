@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { apiClient } from "@/lib/axios";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 
 
@@ -25,6 +26,8 @@ const RegisterForm = () => {
     /* Navigation Hooks */
     const navigate = useNavigate();
 
+    const { login } = useAuth();
+
     /* REACT HOOK FORM CONFIGURATION */
     const {
         register, handleSubmit, formState: { errors }, // validation client errors
@@ -39,10 +42,10 @@ const RegisterForm = () => {
             setServerError(null); // Clean logs errors
 
             /* API CALL */
-            const response = await axios.post('/register', data);
+            const response = await apiClient.post('/api/user', data);
 
             /* SAVE TOKEN */
-            localStorage.setItem('token', response.data.token);
+            login(response.data.token, response.data.user);
 
             /* REDIRECT */
             navigate('/');

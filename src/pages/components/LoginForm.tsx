@@ -3,8 +3,9 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { Button } from '@/components/ui/button';
+import { apiClient } from '@/lib/axios';
+import { useAuth } from '@/contexts/AuthContext';
 
 /* VALIDATION SCHEMA */
 const loginSchema = z.object({
@@ -22,6 +23,8 @@ const LoginForm = () => {
     /* Navigation Hooks */
     const navigate = useNavigate();
 
+    const { login } = useAuth();
+
     /* REACT HOOK FORM CONIGURATION */
     const {
         register, handleSubmit, formState: { errors }, // validation client errors
@@ -37,10 +40,10 @@ const LoginForm = () => {
             setServerError(null); // Clean logs errors
 
             /* API CALL */
-            const response = await axios.post('/login', data);
+            const response = await apiClient.post('/api/auth/login', data);
 
             /* SAVE TOKEN */
-            localStorage.setItem('token', response.data.token);
+            login(response.data.token, response.data.user);
 
             /* REDIRECT */
             navigate('/');
