@@ -24,7 +24,6 @@ console.log(invertedData);
   if (isError) return <p>Ocurrió un error</p>
   if (!data || data.length === 0) return <p>No hay noticias</p>
      
-  
   return (
       <>
                <main className="max-w-6xl mx-auto px-4">
@@ -45,8 +44,7 @@ console.log(invertedData);
                     <OthersNews data={invertedData.slice(9,17)} />
                   </>
                 )}
-     
-                
+           
                </main>
              </>
     

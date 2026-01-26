@@ -14,4 +14,20 @@ export interface INews {
   publicationDate: string;
 }
 
+export interface INewsCreate {
+  title: string; //
+  slug: string ; 
+  summary: string; //
+  content: string; //
+  highlights: string[];
+  author: string; //
+  category: string; // 
+  mainImage?: string; //
+  source?: string | null; //
+  variant: string; 
+  status: string; //
+}
+
+
+
     
