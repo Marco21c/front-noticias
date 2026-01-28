@@ -3,15 +3,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./pages/components/DefaultLayout";
 import { Skeleton } from "./components/ui/skeleton";
 
+const EditNew = lazy(() => import("./pages/panel/EditNew"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const NewsCategory = lazy(() => import("./pages/NewsCategory"));
-const PanelUser = lazy(() => import("./pages/Panel/PanelUser"));
-const DashboardPanel = lazy(() => import("./pages/Panel/DashboardPanel"));
-const UpdateNew = lazy(() => import("./pages/Panel/UpdateNew"));
-const AddNew = lazy(() => import("./pages/Panel/AddNew"));
-const UpdateCategory = lazy(() => import("./pages/Panel/UpdateCategory"));
+const PanelUser = lazy(() => import("./pages/panel/components/PanelUser"));
+const DashboardPanel = lazy(() => import("./pages/panel/DashboardPanel"));
+const UpdateNew = lazy(() => import("./pages/panel/UpdateNew"));
+const AddNew = lazy(() => import("./pages/panel/AddNew"));
+const UpdateCategory = lazy(() => import("./pages/panel/UpdateCategory"));
 const Register = lazy(() => import("./pages/Register"));
 
 export const router = createBrowserRouter(
@@ -52,7 +53,11 @@ export const router = createBrowserRouter(
         },
         {
           path: "news",
-          element: <UpdateNew />
+          element: <UpdateNew />,
+        }, 
+        {
+          path: "edit/:id",
+          element: <EditNew/>
         },
         {
           path: "new",
@@ -75,7 +80,7 @@ export const router = createBrowserRouter(
 function App() {
 
   return (
-
+    
     <Suspense fallback={<div className="space-y-3 mt-10">
       <Skeleton className="h-40 w-full rounded-xl" />
       <Skeleton className="h-4 w-3/4" />

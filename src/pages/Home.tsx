@@ -14,7 +14,7 @@ export default function Home() {
     () => (data ? [...data].reverse() : []),
     [data]
   );
-console.log(invertedData);
+
 
   if (isLoading) return <div className="space-y-3 mt-10">
       <Skeleton className="h-40 w-full rounded-xl" />
