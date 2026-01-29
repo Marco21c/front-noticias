@@ -1,4 +1,5 @@
-import { postNew } from "@/services/news.services";
+import type { INewsCreate } from "@/interfaces/News.type";
+import { deleteNew, postNew, updateNew } from "@/services/news.services";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 export const useCreateNew = () => {
@@ -10,3 +11,26 @@ export const useCreateNew = () => {
       } 
    });
 }
+
+export const useUpdateNew = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: INewsCreate }) =>
+      updateNew({ id, payload }),
+    onSuccess: (_, { id }) => {
+      qc.invalidateQueries({ queryKey: ["news"] });
+      qc.invalidateQueries({ queryKey: ["news", id] });
+    },
+  });
+};
+
+export const useDeleteNew = () => {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteNew,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["news"] });
+    },
+  });
+};
