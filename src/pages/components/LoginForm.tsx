@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { Button } from '@/components/ui/button';
+import { apiClient } from '@/lib/axios';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from "sonner";
 
 /* VALIDATION SCHEMA */
 const loginSchema = z.object({
@@ -22,6 +24,8 @@ const LoginForm = () => {
     /* Navigation Hooks */
     const navigate = useNavigate();
 
+    const { login } = useAuth();
+
     /* REACT HOOK FORM CONIGURATION */
     const {
         register, handleSubmit, formState: { errors }, // validation client errors
@@ -37,10 +41,16 @@ const LoginForm = () => {
             setServerError(null); // Clean logs errors
 
             /* API CALL */
-            const response = await axios.post('/login', data);
+            const response = await apiClient.post('/auth/login', data);
+
 
             /* SAVE TOKEN */
-            localStorage.setItem('token', response.data.token);
+            const { token, user } = response.data.data;
+            login(token, user);
+
+            toast.success("Sesion Iniciada!",
+                { description: `Bienvenido ${response.data.data.user.name}`
+            })
 
             /* REDIRECT */
             navigate('/');
@@ -49,8 +59,14 @@ const LoginForm = () => {
             /* Handle Server Errors */
             if (error.response?.data?.message) {
                 setServerError(error.response.data.message);
+                toast.error("Error en los datos!", {
+                    description: error.response.data.message,
+                });
             } else {
                 setServerError('Login error. Please try again!')
+                toast.error("Error en el inicio de sesión", {
+                    description: "Ocurrió un error inesperado. Por favor intenta nuevamente.",
+                });
             }
         } finally {
             setIsLoading(false);
@@ -60,8 +76,8 @@ const LoginForm = () => {
 
 
     return (
-        <div className="max w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-            <h2 className='text-2xl font-bol mb-6 text-center'> Login </h2>
+        <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+            <h2 className='text-2xl font-bold mb-6 text-center'> Login </h2>
             <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
                 { /* INPUT EMAIL */}
                 <div>

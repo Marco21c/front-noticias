@@ -5,8 +5,7 @@ type Props = {
   data: INews[];
 };
 
-export default function NewsList({data}:Props) {
-  
+export default function NewsList({ data }: Props) {
 
   const highlightedNews = data[0];
   const featuredNews = data[1];
