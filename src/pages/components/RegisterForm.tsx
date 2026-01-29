@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "@/lib/axios";
-import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 
@@ -26,8 +26,6 @@ const RegisterForm = () => {
     /* Navigation Hooks */
     const navigate = useNavigate();
 
-    const { login } = useAuth();
-
     /* REACT HOOK FORM CONFIGURATION */
     const {
         register, handleSubmit, formState: { errors }, // validation client errors
@@ -42,20 +40,35 @@ const RegisterForm = () => {
             setServerError(null); // Clean logs errors
 
             /* API CALL */
-            const response = await apiClient.post('/api/user', data);
+            const response = await apiClient.post('/user', data);
 
-            /* SAVE TOKEN */
-            login(response.data.token, response.data.user);
+            // Temporal: para verificar la estructura
+            console.log('Respuesta completa:', response);
+            console.log('response.data:', response.data);
+            console.log('response.data.message:', response.data.message);
+            console.log('response.data.data:', response.data.data);
+
+            toast.success("Registro exitoso!", {
+                description: "Tu cuenta ha sido creada correctamente.",
+            });
 
             /* REDIRECT */
-            navigate('/');
+            setTimeout(() => {
+                navigate('/auth/login');
+            }, 1500);
 
         } catch (error: any) {
             /* Handle Server Errors */
             if (error.response?.data?.message) {
                 setServerError(error.response.data.message);
+                toast.error("Error en el registro", {
+                    description: error.response.data.message,
+                });
             } else {
                 setServerError('Register error. Please try again!')
+                toast.error("Error en el registro", {
+                    description: "Ocurrió un error inesperado. Por favor intenta nuevamente.",
+                });
             }
         } finally {
             setIsLoading(false);

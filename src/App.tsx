@@ -89,6 +89,7 @@ function App() {
         <RouterProvider router={router} />
       </Suspense>
     </AuthProvider>
+
   );
 };
 
