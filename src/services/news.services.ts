@@ -54,15 +54,14 @@ export const getNewById = async (id: string): Promise<INews> => {
  }
 };
 
-export const updateNew = async ({ id, payload}: {id: string; payload: INewsCreate}): Promise<INews> => { 
- try{
-  const { data } = await apiClient.put(`/news/${id}`, payload);
+export const updateNew = async ({id, payload}: {
+  id: string;
+  payload: INewsCreate;
+}): Promise<INews> => {
+  const { data } = await apiClient.put(`/news?_id=${id}`, payload);
   return data;
-}catch(error){
-    console.error('Error update new:', error);
-        throw error;
- }
 };
+
 
 export const deleteNew = async (id: string): Promise<void> => {
   await apiClient.delete(`/news/${id}`);
