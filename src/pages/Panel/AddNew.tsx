@@ -1,38 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import type { INewsCreate } from "@/interfaces/News.type";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import { categories } from "@/mocks/categoriesMocks";
-import type { ICategory } from "@/interfaces/Category.type";
-import { useState } from "react";
+import { useCreateNew } from "@/hooks/useUpdateNew";
+import FormNew from "@/pages/Panel/components/FormNew";
 import { toast } from "sonner";
+import type { INewsCreate } from "@/interfaces/News.type";
 
 export default function AddNew() {
   const navigate = useNavigate();
-  const { mutate, isPending } = useCreateNew();
-  const [tags, setTags] = useState<string[]>([]);
-  const [input, setInput] = useState(""); 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<INewsCreate>();
+  const { mutate, isPending, error } = useCreateNew();
 
   const onSubmit = (data: INewsCreate) => {
     mutate(data, {
       onSuccess: () => {
-      toast.success("Noticia creada correctamente. ", {
-        description: "La noticia se guardó exitosamente"
-      });
-
-      setTimeout(() => navigate("/panel/news"), 700);
-    },
-    onError: () => {
-      toast.error("Error al crear la noticia.",{
-        description: "No se pudo crear la noticia"
-      });
-    },   });
+        toast.success("Noticia creada correctamente", {  });
+        navigate("/panel/news");
+      },
+    });
   };
 
   return (
@@ -49,7 +31,7 @@ export default function AddNew() {
                 <h1 className="text-center text-lg font-semibold"> Vista Previa </h1>
 
                 <div className="bg-red-300/90 h-80 w-80">
-                       
+
                 </div>
         </div>
     </div>
