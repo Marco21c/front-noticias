@@ -5,11 +5,12 @@ import { Skeleton } from "./components/ui/skeleton";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./pages/components/ProtectedRoute";
 
+const EditNew = lazy(() => import("./pages/Panel/EditNew"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const NewsCategory = lazy(() => import("./pages/NewsCategory"));
-const PanelUser = lazy(() => import("./pages/Panel/PanelUser"));
+const PanelUser = lazy(() => import("./pages/Panel/components/PanelUser"));
 const DashboardPanel = lazy(() => import("./pages/Panel/DashboardPanel"));
 const UpdateNew = lazy(() => import("./pages/Panel/UpdateNew"));
 const AddNew = lazy(() => import("./pages/Panel/AddNew"));
@@ -57,7 +58,11 @@ export const router = createBrowserRouter(
         },
         {
           path: "news",
-          element: <UpdateNew />
+          element: <UpdateNew />,
+        }, 
+        {
+          path: "edit/:id",
+          element: <EditNew/>
         },
         {
           path: "new",

@@ -43,4 +43,28 @@ import { apiClient } from '../lib/axios';
     }
 };
 
+export const getNewById = async (id: string): Promise<INews> => {
+ try{
+  const { data } = await apiClient.get(`/news/${id}`);
+  return data;
+ }
+ catch(error){
+    console.error('Error fetching new by id:', error);
+        throw error;
+ }
+};
+
+export const updateNew = async ({id, payload}: {
+  id: string;
+  payload: INewsCreate;
+}): Promise<INews> => {
+  const { data } = await apiClient.put(`/news?_id=${id}`, payload);
+  return data;
+};
+
+
+export const deleteNew = async (id: string): Promise<void> => {
+  await apiClient.delete(`/news/${id}`);
+};
+
    
