@@ -21,7 +21,6 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 const RegisterForm = () => {
     /* Local States */
     const [isLoading, setIsLoading] = useState(false);
-    const [serverError, setServerError] = useState<string | null>(null);
 
     /* Navigation Hooks */
     const navigate = useNavigate();
@@ -37,16 +36,9 @@ const RegisterForm = () => {
     const onSubmit = async (data: RegisterFormData) => {
         try {
             setIsLoading(true);
-            setServerError(null); // Clean logs errors
 
             /* API CALL */
             const response = await apiClient.post('/user', data);
-
-            // Temporal: para verificar la estructura
-            console.log('Respuesta completa:', response);
-            console.log('response.data:', response.data);
-            console.log('response.data.message:', response.data.message);
-            console.log('response.data.data:', response.data.data);
 
             toast.success("Registro exitoso!", {
                 description: "Tu cuenta ha sido creada correctamente.",
@@ -54,18 +46,16 @@ const RegisterForm = () => {
 
             /* REDIRECT */
             setTimeout(() => {
-                navigate('/auth/login');
-            }, 1500);
+                navigate('/login');
+            }, 2000);
 
         } catch (error: any) {
             /* Handle Server Errors */
             if (error.response?.data?.message) {
-                setServerError(error.response.data.message);
                 toast.error("Error en el registro", {
-                    description: error.response.data.message,
+                    description: error.response.data.message, 
                 });
             } else {
-                setServerError('Register error. Please try again!')
                 toast.error("Error en el registro", {
                     description: "Ocurrió un error inesperado. Por favor intenta nuevamente.",
                 });
@@ -162,13 +152,6 @@ const RegisterForm = () => {
                 >
                     {isLoading ? 'Registrando...' : 'Registrarse'}
                 </Button>
-
-                {/* ERROR DEL SERVIDOR */}
-                {serverError && (
-                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-                        {serverError}
-                    </div>
-                )}
             </form>
         </div>
     )

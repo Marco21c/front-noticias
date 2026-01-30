@@ -6,14 +6,13 @@ import { Button } from "@/components/ui/button";
 import { categories } from "@/mocks/categoriesMocks";
 import type { ICategory } from "@/interfaces/Category.type";
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 export default function AddNew() {
   const navigate = useNavigate();
   const { mutate, isPending } = useCreateNew();
   const [tags, setTags] = useState<string[]>([]);
   const [input, setInput] = useState(""); 
-  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -24,18 +23,15 @@ export default function AddNew() {
   const onSubmit = (dataN: INewsCreate) => {
     mutate(dataN, {
       onSuccess: () => {
-      toast({
-        title: "Noticia creada correctamente. ",
-        description: "La noticia se guardó exitosamente",
+      toast.success("Noticia creada correctamente. ", {
+        description: "La noticia se guardó exitosamente"
       });
 
       setTimeout(() => navigate("/panel/news"), 700);
     },
     onError: () => {
-      toast({
-        title: "Error.",
-        description: "No se pudo crear la noticia",
-        variant: "destructive",
+      toast.error("Error al crear la noticia.",{
+        description: "No se pudo crear la noticia"
       });
     },   });
   };
