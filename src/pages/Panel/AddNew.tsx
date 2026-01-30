@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useCreateNew } from "@/hooks/useUpdateNew";
-import FormNew from "@/pages/panel/components/FormNew";
+import FormNew from "@/pages/Panel/components/FormNew";
 import { useToast } from "@/hooks/use-toast";
 import type { INewsCreate } from "@/interfaces/News.type";
 

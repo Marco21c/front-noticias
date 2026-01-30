@@ -3,16 +3,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./pages/components/DefaultLayout";
 import { Skeleton } from "./components/ui/skeleton";
 
-const EditNew = lazy(() => import("./pages/panel/EditNew"));
+const EditNew = lazy(() => import("./pages/Panel/EditNew"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const NewsCategory = lazy(() => import("./pages/NewsCategory"));
-const PanelUser = lazy(() => import("./pages/panel/components/PanelUser"));
-const DashboardPanel = lazy(() => import("./pages/panel/DashboardPanel"));
-const UpdateNew = lazy(() => import("./pages/panel/UpdateNew"));
-const AddNew = lazy(() => import("./pages/panel/AddNew"));
-const UpdateCategory = lazy(() => import("./pages/panel/UpdateCategory"));
+const PanelUser = lazy(() => import("./pages/Panel/components/PanelUser"));
+const DashboardPanel = lazy(() => import("./pages/Panel/DashboardPanel"));
+const UpdateNew = lazy(() => import("./pages/Panel/UpdateNew"));
+const AddNew = lazy(() => import("./pages/Panel/AddNew"));
+const UpdateCategory = lazy(() => import("./pages/Panel/UpdateCategory"));
 const Register = lazy(() => import("./pages/Register"));
 
 export const router = createBrowserRouter(
