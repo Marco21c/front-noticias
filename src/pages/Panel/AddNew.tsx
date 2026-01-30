@@ -1,21 +1,38 @@
 import { useNavigate } from "react-router-dom";
-import { useCreateNew } from "@/hooks/useUpdateNew";
-import FormNew from "@/pages/Panel/components/FormNew";
-import { useToast } from "@/hooks/use-toast";
 import type { INewsCreate } from "@/interfaces/News.type";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { categories } from "@/mocks/categoriesMocks";
+import type { ICategory } from "@/interfaces/Category.type";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function AddNew() {
   const navigate = useNavigate();
-  const { mutate, isPending, error } = useCreateNew();
-  const { toast } = useToast();
+  const { mutate, isPending } = useCreateNew();
+  const [tags, setTags] = useState<string[]>([]);
+  const [input, setInput] = useState(""); 
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<INewsCreate>();
 
   const onSubmit = (data: INewsCreate) => {
     mutate(data, {
       onSuccess: () => {
-        toast({ title: "Noticia creada correctamente" });
-        navigate("/panel/news");
-      },
-    });
+      toast.success("Noticia creada correctamente. ", {
+        description: "La noticia se guardó exitosamente"
+      });
+
+      setTimeout(() => navigate("/panel/news"), 700);
+    },
+    onError: () => {
+      toast.error("Error al crear la noticia.",{
+        description: "No se pudo crear la noticia"
+      });
+    },   });
   };
 
   return (

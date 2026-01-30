@@ -30,6 +30,7 @@ export default function Navbar() {
             <SearchBar onSearch={handleSearch} />
 
             <Button variant={"warning"} size={"sm"} onClick={() => navigate("/login")}> <User className="hidden sm:block" /> Ingresar </Button>
+
             <Button variant={"outline"} size={"sm"}> <Bell className="hidden sm:block" /> Suscribirse </Button>
           </div>
         </div>

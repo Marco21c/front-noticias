@@ -2,6 +2,8 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./pages/components/DefaultLayout";
 import { Skeleton } from "./components/ui/skeleton";
+import { AuthProvider } from "./contexts/AuthContext";
+import { ProtectedRoute } from "./pages/components/ProtectedRoute";
 
 const EditNew = lazy(() => import("./pages/Panel/EditNew"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -35,7 +37,7 @@ export const router = createBrowserRouter(
         },
         {
           path: "category/:id",
-          element: <NewsCategory/>
+          element: <NewsCategory />
         },
         {
           path: "*",
@@ -45,9 +47,12 @@ export const router = createBrowserRouter(
     },
     {
       path: "panel/",
-      element: <PanelUser/>,
-      children:[
-           {
+      element:
+        <ProtectedRoute>
+          <PanelUser />
+        </ProtectedRoute>,
+      children: [
+        {
           index: true,
           element: <DashboardPanel />
         },
@@ -61,11 +66,11 @@ export const router = createBrowserRouter(
         },
         {
           path: "new",
-          element: <AddNew/>
+          element: <AddNew />
         },
         {
           path: "categories",
-          element: <UpdateCategory/>
+          element: <UpdateCategory />
         },
         {
           path: "*",
@@ -73,21 +78,23 @@ export const router = createBrowserRouter(
         }
       ]
     },
-     
+
   ]
 );
 
 function App() {
 
   return (
-    
-    <Suspense fallback={<div className="space-y-3 mt-10">
-      <Skeleton className="h-40 w-full rounded-xl" />
-      <Skeleton className="h-4 w-3/4" />
-      <Skeleton className="h-4 w-1/2" />
-    </div>}>
-    <RouterProvider router={router}/>
-    </Suspense>
+    <AuthProvider>
+      <Suspense fallback={<div className="space-y-3 mt-10">
+        <Skeleton className="h-40 w-full rounded-xl" />
+        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-4 w-1/2" />
+      </div>}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </AuthProvider>
+
   );
 };
 
