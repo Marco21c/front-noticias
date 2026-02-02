@@ -101,6 +101,7 @@ front-noticias/
 │   ├── mocks/            # Datos de prueba
 │   ├── pages/            # Páginas y componentes de página
 │   │   └── components/   # Componentes específicos de páginas
+|   |   └── panel/        # Componentes para CRUD de noticias y categorias  
 │   ├── services/         # Servicios de API
 │   ├── App.tsx           # Componente principal
 │   └── main.tsx          # Punto de entrada
@@ -124,6 +125,10 @@ front-noticias/
 - **NewsList**: Lista de noticias
 - **SearchBar**: Barra de búsqueda
 - **Footer**: Pie de página
+- **PanelUser**: Panel de control para crud de Noticias
+- **Register**: Registro de Usuarios
+- **Login**: Login de Usuarios
+- **NewsDetail**: Detalles de una noticia
 
 ## 🛠️ Tecnologías utilizadas
 
@@ -164,6 +169,14 @@ Actualmente el proyecto cuenta con:
 - ✅ Sistema de routing básico
 - ✅ Componentes UI reutilizables
 - ✅ Configuración de deploy en Vercel
+- ✅ Crud de noticias
+- ✅ Visualizacion de noticia.
+- ✅ Login de Usuarios.
+- ✅ Registro de Nuevo Usuario.
+- ✅ Uso de context para autenticaciones.
+
+
+
 
 ## 🚢 Deploy
 
