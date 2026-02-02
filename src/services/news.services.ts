@@ -1,51 +1,70 @@
-import type { INews } from '@/interfaces/News.type';
+import type { INews, INewsCreate } from '@/interfaces/News.type';
 import { apiClient } from '../lib/axios';
-//import { newsMock } from '../mocks/newsMocks';
 
-export const getNews = async (): Promise<INews[]> => {
-    try {
-        const { data } = await apiClient.get('/news');
-        console.log('News:', data);
+ export const getNews = async (): Promise<INews[]> => {
+     try {
+         const { data } = await apiClient.get('/news');
+         console.log('News:', data);
+         return data;
+         //el mappeo no lo use 
+     } catch (error) {
+         console.error('Error fetching news:', error);
+         throw error;
+     }
+ };
+
+ export const postNew = async (newData:INewsCreate) => {
+     try{
+        newData.slug = newData.title  .toLowerCase()
+          .normalize("NFD") 
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-z0-9 ]/g, "")
+          .trim()
+          .replace(/\s+/g, "-");
+        newData.variant = "highlighted";
+        const {data} = await apiClient.post("/news", newData);  
         return data;
-      //el mappeo no lo use 
-    } catch (error) {
-        console.error('Error fetching news:', error);
-        throw error;
-    }
-};
-// Hacer lo mismo que el getNews 👆 para todas las funciones de abajo
+     }
+     catch(error){
+          console.error("Error creating news:", error);
+          throw error;
+     }
+ }  
 
-/* export const getNewsByCategory = async (category: string): Promise<News[]> => {
+ export const getNewsByCategory = async (category: string): Promise<INews[]> => {
     try {
-        const { data } = await apiClient.get(`/news?category=${category}`);
-        return mapNewsArray(data.data || data);
+        const { data } = await apiClient.get('/news/category', {
+             params: { category }
+         });
+        return data;
     } catch (error) {
         console.error('Error fetching news by category:', error);
         throw error;
     }
 };
 
-export const getNewsById = async (id: string): Promise<News> => {
-    try {
-        const { data } = await apiClient.get(`/news/${id}`);
-        const mapped = mapNewsArray(Array.isArray(data) ? data : [data]);
-        return mapped[0];
-    } catch (error) {
-        console.error('Error fetching news by id:', error);
+export const getNewById = async (id: string): Promise<INews> => {
+ try{
+  const { data } = await apiClient.get(`/news/${id}`);
+  return data;
+ }
+ catch(error){
+    console.error('Error fetching new by id:', error);
         throw error;
-    }
+ }
 };
 
-export const searchNews = async (query: string): Promise<News[]> => {
-    try {
-        const { data } = await apiClient.get('/news/search', {
-            params: { q: query },
-        });
-        return mapNewsArray(data.data || data);
-    } catch (error) {
-        console.error('Error searching news:', error);
-        throw error;
-    }
-}; */
+export const updateNew = async ({id, payload}: {
+  id: string;
+  payload: INewsCreate;
+}): Promise<INews> => {
+  const { data } = await apiClient.put(`/news?_id=${id}`, payload);
+  return data;
+};
 
-// TODO: Add more services as needed.
+
+export const deleteNew = async (id: string): Promise<void> => {
+  await apiClient.delete(`/news/${id}`);
+};
+
+   

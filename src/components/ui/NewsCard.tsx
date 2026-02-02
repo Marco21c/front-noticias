@@ -1,19 +1,30 @@
-type NewsCardsProps = {
-  title: string
-  summary: string
-  author: string
-  category: string
-  mainImage?: string
-  publicationDate: string
-  variant: string
-}
+import { Link } from "react-router-dom";
 
-export default function NewsCard({ title, summary, author, category, mainImage, publicationDate, variant}: NewsCardsProps) {
-  
-  return (
+type NewsCardsProps = {
+  title: string;
+  slug?: string;
+  summary: string;
+  author: string;
+  category: string;
+  mainImage?: string;
+  publicationDate: string;
+  variant: string;
+};
+
+export default function NewsCard({
+  title,
+  slug,
+  summary,
+  author,
+  category,
+  mainImage,
+  publicationDate,
+  variant,
+}: NewsCardsProps) {
+  const cardContent = (
     <article
       className={`
-        overflow-hidden rounded-xl bg-white shadow-md transition
+        overflow-hidden bg-white transition
         ${variant === "highlighted" ? "col-span-full" : ""}
       `}
     >
@@ -79,10 +90,20 @@ export default function NewsCard({ title, summary, author, category, mainImage, 
         <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
           <span>{author}</span>
           <time>
-            {new Date(publicationDate).toLocaleDateString('es-AR')}
+            {new Date(publicationDate).toLocaleDateString("es-AR")}
           </time>
         </div>
       </div>
     </article>
-  )
+  );
+
+  if (slug) {
+    return (
+      <Link to={`/news/${slug}`} className="block">
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return cardContent;
 }

@@ -1,5 +1,5 @@
 import { useQuery} from "@tanstack/react-query";
-import { getNews } from "@/services/news.services";
+import { getNewsByCategory, getNews, getNewById } from "@/services/news.services";
 import type { INews } from "../interfaces/News.type";
 
 export const useGetNews = () => {
@@ -8,6 +8,19 @@ export const useGetNews = () => {
     queryFn: getNews,
   })
 }
+ 
+export const useGetNewsPorCategories = (category:string) => {
+      return useQuery<INews[]>({
+          queryKey: ['news', category],
+          queryFn: () => getNewsByCategory(category as string),
+          enabled: !!category 
+      })    
+}
 
- // Los otros tipos de get 
-export const useGetNewsxId = () => {}
+export const useGetNew = (id?: string) => {
+  return useQuery({
+    queryKey: ["news", id],
+    queryFn: () => getNewById(id!),
+    enabled: !!id,
+  });
+};
