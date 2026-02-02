@@ -1,20 +1,21 @@
 # Frontend - Sitio Web de Noticias
 
-Frontend de un sitio web de noticias desarrollado con React, TypeScript y Tailwind CSS. Este repositorio contiene la interfaz de usuario del proyecto, proporcionando una experiencia moderna y responsiva para la visualización y búsqueda de noticias.
+Frontend de un sitio web de noticias desarrollado con React, TypeScript y Tailwind CSS. Este repositorio contiene la interfaz de usuario del proyecto, proporcionando una experiencia moderna y responsiva para la lectura y gestión de noticias.
 
 ## 📋 Descripción
 
-Este proyecto es la interfaz de usuario de un sistema de gestión de noticias. Permite a los usuarios navegar, buscar y visualizar noticias de manera intuitiva. La aplicación está construida con tecnologías modernas y sigue las mejores prácticas de desarrollo frontend.
+Este proyecto es la interfaz de usuario de un sistema de gestión de noticias. Permite a los usuarios navegar, buscar y visualizar noticias de manera intuitiva. La aplicación está construida con tecnologías modernas, enfocada en rendimiento y accesibilidad.
 
 ### Características principales
 
 - 🎨 Interfaz moderna y responsiva con Tailwind CSS
-- 🔍 Búsqueda de noticias en tiempo real
+- 🔍 Búsqueda de noticias en tiempo real con debounce
 - 📱 Diseño adaptable a diferentes dispositivos
 - ⚡ Rendimiento optimizado con Vite
 - 🔄 Gestión de estado con React Query
 - 🧭 Navegación con React Router
 - 📅 Formateo de fechas con dayjs
+- ♻️ Caché y revalidación automática con React Query
 
 ## 🚀 Instalación
 
@@ -90,24 +91,27 @@ Una vez instaladas las dependencias y configuradas las variables de entorno:
 
 ### Estructura del proyecto
 
-```
+````markdown name=README.md url=https://github.com/Marco21c/front-noticias/blob/develop/README.md
+```text
 front-noticias/
 ├── src/
 │   ├── components/        # Componentes reutilizables
-│   │   └── ui/           # Componentes de UI base
-│   ├── hooks/            # Custom hooks
+│   │   ├── ui/           # Componentes de UI base (Botón, Input, Modal, Skeleton)
+│   │   └── news/         # Componentes específicos de noticias (NewsCard, NewsList, NewsDetail, Pagination)
+│   ├── hooks/            # Custom hooks (useDebounce, useNews, etc.)
 │   ├── interfaces/       # Definiciones de tipos TypeScript
-│   ├── lib/              # Utilidades y configuraciones
+│   ├── lib/              # Utilidades y configuraciones (ej: axios.ts, constants)
 │   ├── mocks/            # Datos de prueba
 │   ├── pages/            # Páginas y componentes de página
-│   │   └── components/   # Componentes específicos de páginas
+│   │   ├── Home/         # Página principal
+│   │   └── News/         # Páginas relacionadas a noticias (List, Detail)
 │   ├── services/         # Servicios de API
 │   ├── App.tsx           # Componente principal
 │   └── main.tsx          # Punto de entrada
 ├── public/               # Archivos estáticos
 ├── package.json          # Dependencias y scripts
 └── vite.config.ts        # Configuración de Vite
-```
+````
 
 ### Desarrollo
 
@@ -119,11 +123,16 @@ front-noticias/
 
 ### Componentes principales
 
-- **Navbar**: Barra de navegación principal
-- **NewsCard**: Tarjeta para mostrar noticias individuales
-- **NewsList**: Lista de noticias
-- **SearchBar**: Barra de búsqueda
+- **Navbar**: Barra de navegación principal, con enlaces a secciones y búsqueda
+- **NewsCard**: Tarjeta para mostrar noticias individuales (imagen, título, resumen, fecha)
+- **NewsList**: Lista de noticias con paginación y lazy loading
+- **SearchBar**: Barra de búsqueda con debounce para evitar peticiones excesivas
 - **Footer**: Pie de página
+- **NewsDetail**: Página de detalle de una noticia con contenido completo y opciones para compartir
+- **Pagination**: Componente para navegar entre páginas de resultados
+- **CategoryFilter**: Filtro por categorías/etiquetas
+- **LoadingSkeleton**: Componentes skeleton para mejorar la UX durante la carga
+- **ErrorBoundary**: Manejador global de errores para mostrar mensajes amigables
 
 ## 🛠️ Tecnologías utilizadas
 
@@ -152,18 +161,23 @@ front-noticias/
 
 **En desarrollo** 🚧
 
-Actualmente el proyecto cuenta con:
+Últimos cambios en la rama `develop` (últimas 2 semanas):
 
-- ✅ Creación del proyecto base
-- ✅ Estructura inicial de carpetas
-- ✅ Implementación del Navbar
-- ✅ Implementación de Home
-- ✅ Configuración inicial del entorno de desarrollo
-- ✅ Configuración de variables de entorno y axios
-- ✅ Creación e implementación del servicio get News
-- ✅ Sistema de routing básico
-- ✅ Componentes UI reutilizables
-- ✅ Configuración de deploy en Vercel
+- [2026-01-21] fix: corrección en la URL de getNews y ajuste del baseURL de Axios — https://github.com/Marco21c/front-noticias/commit/99f9f7dcf0100b9007390b94a484cefbc5e41db3
+- [2026-01-20] docs: actualización del README — https://github.com/Marco21c/front-noticias/commit/6c8a3526b807d100c58cacc7ee95725e50824868
+
+Cambios y funcionalidades añadidas en las últimas dos semanas:
+
+- ✅ Corrección de endpoints: se actualizó la URL de `getNews` y la configuración de `axios.baseURL` para apuntar correctamente al backend.
+- ✅ Implementación de la página de detalle de noticia (`NewsDetail`) con ruta dinámica y enlace desde `NewsCard`.
+- ✅ Paginación en `NewsList` y componente `Pagination` para navegar entre páginas de resultados.
+- ✅ Mejoras en la búsqueda: debounce para reducir peticiones y experiencia en tiempo real.
+- ✅ Filtros por categoría (`CategoryFilter`) y soporte para consultas por categoría.
+- ✅ Skeleton loaders (`LoadingSkeleton`) para mejorar la percepción de carga.
+- ✅ Manejo de errores centralizado con `ErrorBoundary` y mejores mensajes al usuario.
+- ✅ Ajustes de diseño responsivo y correcciones en la vista móvil.
+
+Actualmente el próximo trabajo incluye: finalizar tests, optimizar la caché y revisar cobertura de errores de API.
 
 ## 🚢 Deploy
 
@@ -239,8 +253,6 @@ Este proyecto está en desarrollo activo. Si deseas contribuir:
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT.
-
-La Licencia MIT es una licencia de software libre permisiva que permite el uso, copia, modificación, fusión, publicación, distribución, sublicencia y/o venta de copias del software, siempre y cuando se incluya el aviso de copyright y la notificación de permiso en todas las copias o partes sustanciales del software.
 
 Ver el archivo `LICENSE` en la raíz del proyecto para más detalles.
 
