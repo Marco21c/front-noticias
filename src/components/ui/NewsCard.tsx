@@ -1,16 +1,27 @@
+import { Link } from "react-router-dom";
+
 type NewsCardsProps = {
-  title: string
-  summary: string
-  author: string
-  category: string
-  mainImage?: string
-  publicationDate: string
-  variant: string
-}
+  title: string;
+  slug?: string;
+  summary: string;
+  author: string;
+  category: string;
+  mainImage?: string;
+  publicationDate: string;
+  variant: string;
+};
 
-export default function NewsCard({ title, summary, author, category, mainImage, publicationDate, variant }: NewsCardsProps) {
-
-  return (
+export default function NewsCard({
+  title,
+  slug,
+  summary,
+  author,
+  category,
+  mainImage,
+  publicationDate,
+  variant,
+}: NewsCardsProps) {
+  const cardContent = (
     <article
       className={`
         overflow-hidden bg-white transition
@@ -24,8 +35,8 @@ export default function NewsCard({ title, summary, author, category, mainImage, 
             variant === "highlighted"
               ? "h-96"
               : variant === "featured"
-                ? "h-64"
-                : "h-48"
+              ? "h-64"
+              : "h-48"
           }
         >
           <img
@@ -47,9 +58,10 @@ export default function NewsCard({ title, summary, author, category, mainImage, 
         <h2
           className={`
             font-bold leading-tight
-            ${variant === "highlighted"
-              ? "text-3xl md:text-4xl"
-              : variant === "featured"
+            ${
+              variant === "highlighted"
+                ? "text-3xl md:text-4xl"
+                : variant === "featured"
                 ? "text-xl"
                 : "text-base"
             }
@@ -62,9 +74,10 @@ export default function NewsCard({ title, summary, author, category, mainImage, 
         <p
           className={`
             mt-2 text-gray-600
-            ${variant === "highlighted"
-              ? "text-lg"
-              : variant === "featured"
+            ${
+              variant === "highlighted"
+                ? "text-lg"
+                : variant === "featured"
                 ? "text-sm"
                 : "text-xs line-clamp-3"
             }
@@ -77,10 +90,20 @@ export default function NewsCard({ title, summary, author, category, mainImage, 
         <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
           <span>{author}</span>
           <time>
-            {new Date(publicationDate).toLocaleDateString('es-AR')}
+            {new Date(publicationDate).toLocaleDateString("es-AR")}
           </time>
         </div>
       </div>
     </article>
-  )
+  );
+
+  if (slug) {
+    return (
+      <Link to={`/news/${slug}`} className="block">
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return cardContent;
 }

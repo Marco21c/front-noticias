@@ -15,6 +15,7 @@ export default function News() {
     return <p className="p-10 text-red-500">Ocurrió un error</p>;
   }
 
+
   const news = data.find(
     item => item.slug === slug
   );
