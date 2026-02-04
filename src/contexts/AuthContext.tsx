@@ -1,13 +1,13 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { UserRole } from "@/interfaces/User.roles"; // Importar el enum
 
 // Definicion de tipos
-
 interface User {
     id: string;
     name: string;
     lastName: string;
     email: string;
-    role: string;
+    role: UserRole; // Cambiar de string a UserRole
 }
 
 interface AuthContextType {
@@ -21,8 +21,8 @@ interface AuthContextType {
     login: (token: string, userData: User) => void;
     logout: () => void;
     checkAuth: () => void;
+    hasRole: (roles: UserRole[]) => boolean; // Nuevo método
 }
-
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -49,7 +49,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setIsAuthenticated(true);
     };
 
-    // Funcion para hacaer logout
+    // Funcion para hacer logout
     const logout = () => {
         // Limpiar localStorage
         localStorage.removeItem('token');
@@ -85,6 +85,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     };
 
+    // Nueva función para verificar roles
+    const hasRole = (roles: UserRole[]): boolean => {
+        return user ? roles.includes(user.role) : false;
+    };
+
     // Efecto para verificar autenticacion al montar la aplicacion
     useEffect(() => {
         checkAuth();
@@ -98,6 +103,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         login,
         logout,
         checkAuth,
+        hasRole, // Agregar nuevo método
     };
 
     return (

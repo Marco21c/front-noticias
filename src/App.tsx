@@ -3,7 +3,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./pages/components/DefaultLayout";
 import { Skeleton } from "./components/ui/skeleton";
 import { AuthProvider } from "./contexts/AuthContext";
-import { ProtectedRoute } from "./pages/components/ProtectedRoute";
+import { PanelProtectedRoute } from "./pages/components/PanelProtectedRoute";
+import LoginPanel from "./pages/Panel/LoginPanel";
+import { UserRole } from "./interfaces/User.roles";
+import ManageUsers from "./pages/Panel/ManageUsers";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -34,18 +37,74 @@ const router = createBrowserRouter([
   },
   {
     path: "panel",
-    element: (
-      <ProtectedRoute>
-        <PanelUser />
-      </ProtectedRoute>
-    ),
     children: [
-      { index: true, element: <DashboardPanel /> },
-      { path: "news", element: <UpdateNew /> },
-      { path: "edit/:id", element: <EditNew /> },
-      { path: "new", element: <AddNew /> },
-      { path: "categories", element: <UpdateCategory /> },
-      { path: "*", element: <NotFound /> }
+      // Login sin protección
+      { index: true, element: <LoginPanel /> },
+
+      // Rutas protegidas
+      {
+        path: "",
+        element: (
+          <PanelProtectedRoute>
+            <PanelUser />
+          </PanelProtectedRoute>
+        ),
+        children: [
+          // Dashboard accesible para todos los autenticados
+          {
+            path: "dashboard",
+            element: <DashboardPanel />
+          },
+
+          // Solo SUPERADMIN puede gestionar usuarios
+          {
+            path: "users",
+            element: (
+              <PanelProtectedRoute allowedRoles={[UserRole.SUPERADMIN]}>
+                <ManageUsers />
+              </PanelProtectedRoute>
+            )
+          },
+
+          // EDITOR, ADMIN y SUPERADMIN pueden gestionar noticias
+          {
+            path: "news",
+            element: (
+              <PanelProtectedRoute allowedRoles={[UserRole.EDITOR, UserRole.ADMIN, UserRole.SUPERADMIN]}>
+                <UpdateNew />
+              </PanelProtectedRoute>
+            )
+          },
+          {
+            path: "edit/:id",
+            element: (
+              <PanelProtectedRoute allowedRoles={[UserRole.EDITOR, UserRole.ADMIN, UserRole.SUPERADMIN]}>
+                <EditNew />
+              </PanelProtectedRoute>
+            )
+          },
+          {
+            path: "new",
+            element: (
+              <PanelProtectedRoute allowedRoles={[UserRole.EDITOR, UserRole.ADMIN, UserRole.SUPERADMIN]}>
+                <AddNew />
+              </PanelProtectedRoute>
+            )
+          },
+
+          // Categorías (ajusta los roles según necesites)
+          {
+            path: "categories",
+            element: (
+              <PanelProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.SUPERADMIN]}>
+                <UpdateCategory />
+              </PanelProtectedRoute>
+            )
+          },
+
+          { path: "*", element: <NotFound /> }
+        ]
+      }
     ]
   }
 ]);
