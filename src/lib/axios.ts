@@ -1,6 +1,6 @@
-import axios from "axios"
+import axios from "axios";
 
-const isDev = import.meta.env.MODE === "development";
+const isDev = import.meta.env.MODE === "production";
 
 const url = isDev 
 ? import.meta.env.VITE_BACKEND_URL 
