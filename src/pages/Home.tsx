@@ -23,9 +23,39 @@ export default function Home() {
       </div>
     );
 
-  if (isError) return <p className="text-center mt-10">Ocurrió un error</p>;
-  if (!data || data.length === 0)
-    return <p className="text-center mt-10">No hay noticias</p>;
+if (isError) {
+  return (
+    <div className="mt-20 flex flex-col items-center text-center">
+      <span className="mb-4 text-4xl">⚠️</span>
+
+      <h2 className="mb-2 font-serif text-2xl font-bold">
+        Ocurrió un error
+      </h2>
+
+      <p className="max-w-md text-gray-600">
+        No pudimos cargar las noticias en este momento.
+        Por favor, intentá nuevamente más tarde.
+      </p>
+    </div>
+  );
+}
+
+if (!data || data.length === 0) {
+  return (
+    <div className="mt-20 flex flex-col items-center text-center">
+      <span className="mb-4 text-4xl">📰</span>
+
+      <h2 className="mb-2 font-serif text-2xl font-bold">
+        No hay noticias disponibles
+      </h2>
+
+      <p className="max-w-md text-gray-600">
+        Todavía no se publicaron noticias.
+        Volvé más tarde para ver las novedades.
+      </p>
+    </div>
+  );
+}
 
   return (
     <main className="max-w-6xl mx-auto px-4 pb-16">
