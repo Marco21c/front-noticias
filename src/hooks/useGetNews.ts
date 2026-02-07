@@ -1,6 +1,6 @@
 import { useQuery} from "@tanstack/react-query";
 import { getNewsByCategory, getNews, getNewById } from "@/services/news.services";
-import type { INews } from "../interfaces/News.type";
+import type { INews } from "../types/News.type";
 
 export const useGetNews = () => {
   return useQuery<INews[]>({

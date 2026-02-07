@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import FormNew from "./components/FormNew";
-import type { INewsCreate } from "@/interfaces/News.type";
+import type { INewsCreate } from "@/types/News.type";
 import { useGetNew } from "@/hooks/useGetNews";
 import { useUpdateNew } from "@/hooks/useUpdateNew";
 

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import type { INews } from "../../interfaces/News.type";
+import type { INews } from "../../types/News.type";
 
 type Props = {
 news: INews;

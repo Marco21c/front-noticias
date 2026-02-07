@@ -5,15 +5,15 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
 const links = [
-    { name: "Dashboard", icon: LayoutDashboard, href: "/panel" },
-    { name: "Noticias", icon: Newspaper, href: "/panel/news" },
-    { name: "Crear", icon: PlusSquare, href: "/panel/new" },
-    { name: "Categorias", icon: Folder, href: "/panel/categories" }
-  ];
+  { name: "Dashboard", icon: LayoutDashboard, href: "/panel/dashboard" },
+  { name: "Noticias", icon: Newspaper, href: "/panel/news" },
+  { name: "Crear", icon: PlusSquare, href: "/panel/new" },
+  { name: "Categorias", icon: Folder, href: "/panel/categories" }
+];
 
 export default function AdminSidebar() {
   const [open, setOpen] = useState(true);
- const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <aside
       className={` fixed left-0 top-0 h-screen
@@ -22,7 +22,7 @@ export default function AdminSidebar() {
         transition-all duration-300
         ${open ? "w-64" : "w-16"}
         flex flex-col justify-between `}  >
-      
+
       <div>
         <div className="flex items-center justify-between p-4 border-b border-zinc-800">
           {open && <h1 className="font-bold"> Panel de Control</h1>}
@@ -35,7 +35,7 @@ export default function AdminSidebar() {
           {links.map(({ name, icon: Icon, href }) => (
             <NavLink
               key={name}
-              to = {href}
+              to={href}
               className=" flex items-center gap-3
                 p-3 rounded-xl
                 hover:bg-zinc-800
@@ -47,7 +47,7 @@ export default function AdminSidebar() {
           ))}
         </nav>
       </div>
-      
+
       <div className="p-3 border-t border-zinc-800">
         <Button variant="outline" className=" flex items-center gap-3
             w-full p-2 rounded-lg

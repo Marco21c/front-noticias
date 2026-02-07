@@ -2,8 +2,8 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/mocks/categoriesMocks";
-import type { ICategory } from "@/interfaces/Category.type";
-import type { INewsCreate } from "@/interfaces/News.type";
+import type { ICategory } from "@/types/Category.type";
+import type { INewsCreate } from "@/types/News.type";
 
 interface Props {
   defaultValues?: Partial<INewsCreate>;

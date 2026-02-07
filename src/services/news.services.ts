@@ -1,4 +1,4 @@
-import type { INews, INewsCreate } from '@/interfaces/News.type';
+import type { INews, INewsCreate } from '@/types/News.type';
 import { apiClient } from '../lib/axios';
 
  export const getNews = async (): Promise<INews[]> => {

@@ -3,7 +3,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./pages/components/DefaultLayout";
 import { Skeleton } from "./components/ui/skeleton";
 import { AuthProvider } from "./contexts/AuthContext";
-import { ProtectedRoute } from "./pages/components/ProtectedRoute";
+import { PanelProtectedRoute } from "./pages/components/PanelProtectedRoute";
+import LoginPanel from "./pages/Panel/LoginPanel";
+import  { USER_ROLES } from "./types/User.type";
+import ManageUsers from "./pages/Panel/ManageUsers";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -41,18 +44,74 @@ const router = createBrowserRouter([
   },
   {
     path: "panel",
-    element: (
-      <ProtectedRoute>
-        <PanelUser />
-      </ProtectedRoute>
-    ),
     children: [
-      { index: true, element: <DashboardPanel /> },
-      { path: "news", element: <UpdateNew /> },
-      { path: "edit/:id", element: <EditNew /> },
-      { path: "new", element: <AddNew /> },
-      { path: "categories", element: <UpdateCategory /> },
-      { path: "*", element: <NotFound /> }
+      // Login sin protección
+      { index: true, element: <LoginPanel /> },
+
+      // Rutas protegidas
+      {
+        path: "",
+        element: (
+          <PanelProtectedRoute>
+            <PanelUser />
+          </PanelProtectedRoute>
+        ),
+        children: [
+          // Dashboard accesible para todos los autenticados
+          {
+            path: "dashboard",
+            element: <DashboardPanel />
+          },
+
+          // Solo SUPERADMIN y el admin puede gestionar usuarios
+          {
+            path: "users",
+            element: (
+              <PanelProtectedRoute allowedRoles={[USER_ROLES.SUPERADMIN, USER_ROLES.ADMIN]}>
+                <ManageUsers />
+              </PanelProtectedRoute>
+            )
+          },
+
+          // EDITOR, ADMIN y SUPERADMIN pueden gestionar noticias
+          {
+            path: "news",
+            element: (
+              <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
+                <UpdateNew />
+              </PanelProtectedRoute>
+            )
+          },
+          {
+            path: "edit/:id",
+            element: (
+              <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
+                <EditNew />
+              </PanelProtectedRoute>
+            )
+          },
+          {
+            path: "new",
+            element: (
+              <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
+                <AddNew />
+              </PanelProtectedRoute>
+            )
+          },
+
+          // Categorías
+          {
+            path: "categories",
+            element: (
+              <PanelProtectedRoute allowedRoles={[USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
+                <UpdateCategory />
+              </PanelProtectedRoute>
+            )
+          },
+
+          { path: "*", element: <NotFound /> }
+        ]
+      }
     ]
   },
    
