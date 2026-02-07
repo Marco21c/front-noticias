@@ -5,14 +5,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { apiClient } from '@/lib/axios';
 import { toast } from "sonner";
 import { Button } from '@/components/ui/button';
-import { UserRole } from '@/interfaces/User.roles';
+import { USER_ROLES } from '@/types/User.type';
 
 /* VALIDATION SCHEMA */
 const manageUserSchema = z.object({
-    name: z.string().min(3, 'El nombre debe tener al menos 3 caracteres.'),
+    name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.'),
+    lastName: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.'),
     email: z.email('Email inválido.'),
     password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres.'),
-    role: z.enum([UserRole.ADMIN, UserRole.EDITOR, UserRole.USER], {
+    role: z.enum([USER_ROLES.ADMIN, USER_ROLES.EDITOR, USER_ROLES.USER] as const, {
         message: 'Debe seleccionar un rol válido.'
     })
 });
@@ -46,7 +47,7 @@ const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
             await apiClient.post('/user', data);
 
             toast.success("Usuario creado exitosamente!", {
-                description: `El usuario ${data.name} con rol ${data.role} ha sido creado.`,
+                description: `El usuario ${data.name} ${data.lastName} con rol ${data.role} ha sido creado.`,
             });
 
             /* Reset form after successful creation */
@@ -78,21 +79,41 @@ const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
             <h2 className='text-2xl font-bold mb-6 text-gray-800'>Crear Nuevo Usuario</h2>
             <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
                 {/* INPUT NAME */}
-                <div>
-                    <label htmlFor='name' className='block text-sm font-medium text-gray-700 mb-1'>
-                        Nombre Completo
-                    </label>
-                    <input
-                        id='name'
-                        type='text'
-                        {...register('name')}
-                        className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                        placeholder='Ingrese el nombre completo'
-                        disabled={isLoading}
-                    />
-                    {errors.name && (
-                        <p className='text-red-500 text-sm mt-1'>{errors.name.message}</p>
-                    )}
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div>
+                        <label htmlFor='name' className='block text-sm font-medium text-gray-700 mb-1'>
+                            Nombre
+                        </label>
+                        <input
+                            id='name'
+                            type='text'
+                            {...register('name')}
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                            placeholder='Nombre'
+                            disabled={isLoading}
+                        />
+                        {errors.name && (
+                            <p className='text-red-500 text-sm mt-1'>{errors.name.message}</p>
+                        )}
+                    </div>
+
+                    {/* INPUT LASTNAME */}
+                    <div>
+                        <label htmlFor='lastName' className='block text-sm font-medium text-gray-700 mb-1'>
+                            Apellido
+                        </label>
+                        <input
+                            id='lastName'
+                            type='text'
+                            {...register('lastName')}
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                            placeholder='Apellido'
+                            disabled={isLoading}
+                        />
+                        {errors.lastName && (
+                            <p className='text-red-500 text-sm mt-1'>{errors.lastName.message}</p>
+                        )}
+                    </div>
                 </div>
 
                 {/* INPUT EMAIL */}
@@ -105,7 +126,7 @@ const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
                         type='email'
                         {...register('email')}
                         className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                        placeholder='Ingrese el email'
+                        placeholder='correo@ejemplo.com'
                         disabled={isLoading}
                     />
                     {errors.email && (
@@ -123,7 +144,7 @@ const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
                         type='password'
                         {...register('password')}
                         className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                        placeholder='Ingrese la contraseña'
+                        placeholder='Mínimo 6 caracteres'
                         disabled={isLoading}
                     />
                     {errors.password && (
@@ -143,9 +164,9 @@ const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
                         disabled={isLoading}
                     >
                         <option value=''>Selecciona un rol</option>
-                        <option value={UserRole.ADMIN}>Administrador</option>
-                        <option value={UserRole.EDITOR}>Editor</option>
-                        <option value={UserRole.USER}>Usuario</option>
+                        <option value={USER_ROLES.ADMIN}>Administrador</option>
+                        <option value={USER_ROLES.EDITOR}>Editor</option>
+                        <option value={USER_ROLES.USER}>Usuario</option>
                     </select>
                     {errors.role && (
                         <p className='text-red-500 text-sm mt-1'>{errors.role.message}</p>

@@ -1,7 +1,7 @@
 // components/PanelProtectedRoute.tsx
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { UserRole } from '@/interfaces/User.roles';
+import type { UserRole } from '@/types/User.type';
 
 interface PanelProtectedRouteProps {
     children: React.ReactNode;
@@ -11,6 +11,7 @@ interface PanelProtectedRouteProps {
 export function PanelProtectedRoute({ children, allowedRoles }: PanelProtectedRouteProps) {
     const { isAuthenticated, isLoading, hasRole } = useAuth();
 
+    // Mostrar loading mientras verifica autenticación
     if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -19,10 +20,12 @@ export function PanelProtectedRoute({ children, allowedRoles }: PanelProtectedRo
         );
     }
 
+    // Si no está autenticado, redirigir al login del panel
     if (!isAuthenticated) {
         return <Navigate to="/panel" replace />;
     }
 
+    // Si se especificaron roles permitidos, verificar que el usuario tenga uno de ellos
     if (allowedRoles && !hasRole(allowedRoles)) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -44,5 +47,6 @@ export function PanelProtectedRoute({ children, allowedRoles }: PanelProtectedRo
         );
     }
 
+    // Si pasó todas las validaciones, renderizar el contenido
     return <>{children}</>;
 }

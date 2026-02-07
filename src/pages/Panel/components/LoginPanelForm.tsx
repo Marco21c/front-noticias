@@ -7,20 +7,33 @@ import { Button } from '@/components/ui/button';
 import { apiClient } from '@/lib/axios';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from "sonner";
+import type { UserRole } from '@/types/User.type';
 
 /* VALIDATION SCHEMA */
 const loginSchema = z.object({
     email: z.email('Invalid email.'),
     password: z.string().min(6, 'Password must be at least 6 characters long.'),
-    role: z.enum(['admin', 'editor'])
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
+interface LoginResponse {
+    data: {
+        token: string;
+        user: {
+            _id: string;
+            name: string;
+            lastName: string;
+            email: string;
+            role: UserRole;
+        };
+    };
+}
+
 const LoginForm = () => {
     /* Local States */
     const [isLoading, setIsLoading] = useState(false);
-    const [serverError, setServerError] = useState<string | null>(null);
+
 
     /* Navigation Hooks */
     const navigate = useNavigate();
@@ -39,33 +52,40 @@ const LoginForm = () => {
     const onSubmit = async (data: LoginFormData) => {
         try {
             setIsLoading(true);
-            setServerError(null); // Clean logs errors
 
             /* API CALL */
-            const response = await apiClient.post('/panel/dashboard', data);
+            const response = await apiClient.post<LoginResponse>('/auth/login', data);
 
 
-            /* SAVE TOKEN */
+            /* EXTRACT TOKEN AND USER */
             const { token, user } = response.data.data;
-            login(token, user);
+
+            const userData = {
+                id: user._id,
+                name: user.name,
+                lastName: user.lastName,
+                email: user.email,
+                role: user.role,
+            };
+
+            /* SAVE TOKEN AND USER */
+            login(token, userData);
 
             toast.success("Sesion Iniciada!",
                 {
-                    description: `Bienvenido ${response.data.data.user.name}`
+                    description: `Bienvenido ${user.name} ${user.lastName}`
                 })
 
             /* REDIRECT */
-            navigate('/');
+            navigate('/panel/dashboard');
 
         } catch (error: any) {
             /* Handle Server Errors */
             if (error.response?.data?.message) {
-                setServerError(error.response.data.message);
                 toast.error("Error en los datos!", {
                     description: error.response.data.message,
                 });
             } else {
-                setServerError('Login error. Please try again!')
                 toast.error("Error en el inicio de sesión", {
                     description: "Ocurrió un error inesperado. Por favor intenta nuevamente.",
                 });
@@ -79,7 +99,7 @@ const LoginForm = () => {
 
     return (
         <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-            <h2 className='text-2xl font-bold mb-6 text-center'> Login </h2>
+            <h2 className='text-2xl font-bold mb-6 text-center'> Iniciar Sesión </h2>
             <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
                 { /* INPUT EMAIL */}
                 <div>
@@ -117,26 +137,6 @@ const LoginForm = () => {
                     )}
                 </div>
 
-                {/* INPUT ROLE */}
-                <div>
-                    <label htmlFor='role' className='block text-sm font-medium text-gray-700 mb-1'>
-                        Rol
-                    </label>
-                    <select
-                        id='role'
-                        {...register('role')}
-                        className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                        disabled={isLoading}
-                    >
-                        <option value=''>Selecciona un rol</option>
-                        <option value='admin'>Administrador</option>
-                        <option value='editor'>Editor</option>
-                    </select>
-                    {errors.role && (
-                        <p className='text-red-500 text-sm mt-1'>{errors.role.message}</p>
-                    )}
-                </div>
-
                 {/* SUBMIT BUTTON */}
                 <Button
                     type='submit'
@@ -147,13 +147,6 @@ const LoginForm = () => {
                 >
                     {isLoading ? 'Iniciando Sesión...' : 'Iniciar Sesión'}
                 </Button>
-
-                {/* ERROR DEL SERVIDOR */}
-                {serverError && (
-                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-                        {serverError}
-                    </div>
-                )}
             </form>
         </div>
     )

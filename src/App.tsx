@@ -5,7 +5,7 @@ import { Skeleton } from "./components/ui/skeleton";
 import { AuthProvider } from "./contexts/AuthContext";
 import { PanelProtectedRoute } from "./pages/components/PanelProtectedRoute";
 import LoginPanel from "./pages/Panel/LoginPanel";
-import { UserRole } from "./interfaces/User.roles";
+import  { USER_ROLES } from "./types/User.type";
 import ManageUsers from "./pages/Panel/ManageUsers";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -56,11 +56,11 @@ const router = createBrowserRouter([
             element: <DashboardPanel />
           },
 
-          // Solo SUPERADMIN puede gestionar usuarios
+          // Solo SUPERADMIN y el admin puede gestionar usuarios
           {
             path: "users",
             element: (
-              <PanelProtectedRoute allowedRoles={[UserRole.SUPERADMIN]}>
+              <PanelProtectedRoute allowedRoles={[USER_ROLES.SUPERADMIN, USER_ROLES.ADMIN]}>
                 <ManageUsers />
               </PanelProtectedRoute>
             )
@@ -70,7 +70,7 @@ const router = createBrowserRouter([
           {
             path: "news",
             element: (
-              <PanelProtectedRoute allowedRoles={[UserRole.EDITOR, UserRole.ADMIN, UserRole.SUPERADMIN]}>
+              <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
                 <UpdateNew />
               </PanelProtectedRoute>
             )
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
           {
             path: "edit/:id",
             element: (
-              <PanelProtectedRoute allowedRoles={[UserRole.EDITOR, UserRole.ADMIN, UserRole.SUPERADMIN]}>
+              <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
                 <EditNew />
               </PanelProtectedRoute>
             )
@@ -86,17 +86,17 @@ const router = createBrowserRouter([
           {
             path: "new",
             element: (
-              <PanelProtectedRoute allowedRoles={[UserRole.EDITOR, UserRole.ADMIN, UserRole.SUPERADMIN]}>
+              <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
                 <AddNew />
               </PanelProtectedRoute>
             )
           },
 
-          // Categorías (ajusta los roles según necesites)
+          // Categorías
           {
             path: "categories",
             element: (
-              <PanelProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.SUPERADMIN]}>
+              <PanelProtectedRoute allowedRoles={[USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
                 <UpdateCategory />
               </PanelProtectedRoute>
             )

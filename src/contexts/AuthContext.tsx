@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import { UserRole } from "@/interfaces/User.roles"; // Importar el enum
+import { USER_ROLES, type UserRole, type IUser } from "@/types/User.type"; 
 
 // Definicion de tipos
 interface User {
@@ -7,21 +7,18 @@ interface User {
     name: string;
     lastName: string;
     email: string;
-    role: UserRole; // Cambiar de string a UserRole
+    role: UserRole;
 }
 
 interface AuthContextType {
-    // Estados
-    user: User | null;
+    user: IUser | null;  // 👈 Usa el tipo importado
     token: string | null;
     isAuthenticated: boolean;
     isLoading: boolean;
-
-    // Metodos
-    login: (token: string, userData: User) => void;
+    login: (token: string, userData: IUser) => void;
     logout: () => void;
     checkAuth: () => void;
-    hasRole: (roles: UserRole[]) => boolean; // Nuevo método
+    hasRole: (roles: UserRole[]) => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -70,22 +67,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
             const savedUser = localStorage.getItem('user');
 
             if (savedToken && savedUser) {
-                // Si hay datos guardados, restauramos la sesion
+                const parsedUser = JSON.parse(savedUser) as User;
+                
+                const validRoles = Object.values(USER_ROLES);
+                if (!validRoles.includes(parsedUser.role)) {
+                    console.warn('Rol inválido detectado en localStorage');
+                    logout();
+                    return;
+                }
+
+                // Si hay datos guardados y válidos, restauramos la sesión
                 setToken(savedToken);
-                setUser(JSON.parse(savedUser));
+                setUser(parsedUser);
                 setIsAuthenticated(true);
             } else {
                 setIsAuthenticated(false);
             }
         } catch (error) {
-            console.error('Error al verificar autenticacion:', error);
+            console.error('Error al verificar autenticación:', error);
+            // Si hay error parseando, limpiamos todo
+            logout();
             setIsAuthenticated(false);
         } finally {
             setIsLoading(false);
         }
     };
 
-    // Nueva función para verificar roles
+    // Función para verificar roles
     const hasRole = (roles: UserRole[]): boolean => {
         return user ? roles.includes(user.role) : false;
     };
@@ -103,7 +111,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         login,
         logout,
         checkAuth,
-        hasRole, // Agregar nuevo método
+        hasRole,
     };
 
     return (

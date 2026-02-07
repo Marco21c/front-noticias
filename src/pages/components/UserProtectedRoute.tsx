@@ -9,6 +9,7 @@ interface UserProtectedRouteProps {
 export function UserProtectedRoute({ children }: UserProtectedRouteProps) {
     const { isAuthenticated, isLoading } = useAuth();
 
+    // Mostrar loading mientras verifica autenticación
     if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
