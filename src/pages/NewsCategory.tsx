@@ -9,7 +9,7 @@ import OthersNews from "./components/OthersNews";
 
 export default function NewsCategory() {
     const { id } = useParams();
-     const { data, isLoading, isError }  = useGetNewsPorCategories (id!);
+    const { data, isLoading, isError }  = useGetNewsPorCategories (id!);
 
           
     const invertedData = useMemo(
