@@ -5,7 +5,7 @@ export default function LoginPage() {
     return (
         <>
             {/* Formulario */}
-            <div className="flex items-center justify-center h-full px-6 py-4 md:p-8 bg-gray-50">
+            <div className="flex flex-1 items-center justify-center bg-gray-50 px-4">
                 <div className="w-full max-w-md">
                     {/* Logo mobile (solo visible en pantallas chicas) */}
                     <div className="md:hidden text-center mb-8">
