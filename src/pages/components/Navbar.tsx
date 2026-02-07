@@ -7,9 +7,15 @@ import { useState } from "react";
 import OffCanvasMenu from "../../components/ui/OffCanvasMenu";
 import { categories } from "@/mocks/categoriesMocks";
 import { baseStyles } from "@/styles/styleLinkNav";
+import useHideOnScroll from "@/components/ui/useHideOnScroll";
+import { useAuth } from "@/contexts/AuthContext";
+import UserDropdown from "@/components/ui/UserDropdown";
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+   const hidden = useHideOnScroll();
   const navigate = useNavigate();
+  const { user, logout, isAuthenticated } = useAuth();
 
    const handleSearch = () => {
     //parametro => query: string
@@ -28,23 +34,30 @@ export default function Navbar() {
           </div>
           <div className="flex items-center gap-3">
             <SearchBar onSearch={handleSearch} />
-
-            <Button variant={"warning"} size={"sm"} onClick={() => navigate("/login")}> <User className="hidden sm:block" /> Ingresar </Button>
-
+             { isAuthenticated
+             ? (
+              <div className="flex">
+                <UserDropdown userName={user?.name || "Usuario"} onLogout={logout} role={user?.role || "Usuario"} />
+              </div>
+             )
+             : (<Button variant={"warning"} size={"sm"} onClick={() => navigate("/login")}> <User className="hidden sm:block" /> Ingresar </Button>)}
             <Button variant={"outline"} size={"sm"}> <Bell className="hidden sm:block" /> Suscribirse </Button>
           </div>
         </div>
+      </header>
+       <nav className={` hidden md:block
+            border-t border-gray-100
+            sticky top-[64px] z-40 bg-white
+            transition-transform duration-300
+            ${hidden ? "-translate-y-full" : "translate-y-0"}`} >
 
-        <nav className="hidden md:block border-t border-gray-100">
-          <ul className="mx-auto flex max-w-7xl gap-6 px-4 py-2">
+          <ul className="mx-auto flex max-w-7xl gap-6 px-4 py-2 border-b border-gray-300">
             <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
             {categories.map((category) => (
               <NavItem key={category._id} name={category.name} _id={category._id} />
-                
             ))}
           </ul>
         </nav>
-      </header>
       <OffCanvasMenu open={open} onClose={() => setOpen(false)} categories={categories} />
     </>
   )

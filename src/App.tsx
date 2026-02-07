@@ -11,7 +11,10 @@ const Register = lazy(() => import("./pages/Register"));
 const NewsCategory = lazy(() => import("./pages/NewsCategory"));
 const News = lazy(() => import("./pages/News"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-
+const AboutUs = lazy(() => import("./pages/footer/AboutUs"));
+const Policies = lazy(() => import("./pages/footer/Policies"));
+const TermsConditions = lazy(() => import("./pages/footer/Terms"));
+const Contact = lazy(() => import("./pages/footer/Contact"));
 const PanelUser = lazy(() => import("./pages/Panel/components/PanelUser"));
 const DashboardPanel = lazy(() => import("./pages/Panel/DashboardPanel"));
 const UpdateNew = lazy(() => import("./pages/Panel/UpdateNew"));
@@ -29,7 +32,11 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "category/:id", element: <NewsCategory /> },
       { path: "news/:slug", element: <News /> },
-      { path: "*", element: <NotFound /> }
+      { path: "*", element: <NotFound /> },
+      { path: "terms-and-conditions", element: <TermsConditions/> },
+      { path: "policies", element: <Policies/>},
+      { path: "about-us", element: <AboutUs/>},
+      { path: "contact", element: <Contact/>}
     ]
   },
   {
@@ -47,7 +54,8 @@ const router = createBrowserRouter([
       { path: "categories", element: <UpdateCategory /> },
       { path: "*", element: <NotFound /> }
     ]
-  }
+  },
+   
 ]);
 
 function App() {
