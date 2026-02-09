@@ -1,5 +1,5 @@
 
-import type { INews } from "@/interfaces/News.type";
+import type { INews } from "@/types/News.type";
 import NewsCard from "../../components/ui/NewsCard";
 
 type Props = {
