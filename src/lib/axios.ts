@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 const isDev = import.meta.env.MODE === "development";
 

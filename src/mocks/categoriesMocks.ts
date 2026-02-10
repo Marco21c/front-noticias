@@ -1,4 +1,4 @@
-import type { ICategory } from "@/interfaces/Category.type";
+import type { ICategory } from "@/types/Category.type";
 
 export const categories: ICategory[] = [
   {

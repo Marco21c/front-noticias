@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import type { ICategory } from "@/interfaces/Category.type";
+import type { ICategory } from "@/types/Category.type";
 import NavItem from "./NavItem";
 import { NavLink } from "react-router-dom";
 import { baseStyles } from "@/styles/styleLinkNav";

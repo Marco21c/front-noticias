@@ -27,30 +27,49 @@ export default function NewsCategory() {
   
 
   
-    return (
-        <>
-          <main className="max-w-6xl mx-auto px-4">
-    
-            <h1 className="text-2xl font-serif font-bold mt-10 mb-4 border-b-4 border-gray-600">{id}</h1>
-            <NewsList data={invertedData.slice(0,5)}/>
-     
-           {data.length >= 5 && (
-             <>
-                      <h2>Importantes</h2>
-                      <NewsFeatured data={invertedData.slice(5,9)} />
-             </>
-           )}
+return (
+  <main className="max-w-6xl mx-auto px-4 pb-20">
 
-           {data.length >= 10 && (
-             <>
-               <h2>Otras Noticias</h2>
-               <OthersNews data={invertedData.slice(9,17)} />
-             </>
-           )}
+    {/* TÍTULO DE CATEGORÍA */}
+    <header className="mt-12 mb-10">
+      <p className="uppercase tracking-widest text-sm text-yellow-600 font-semibold mb-2">
+        Categoría
+      </p>
 
-           
-          </main>
-        </>
-      );
-  
-}
+      <h1 className="text-4xl md:text-5xl font-serif font-bold capitalize">
+        {id}
+      </h1>
+
+      <div className="h-1 w-24 bg-yellow-500 mt-4" />
+    </header>
+
+    {/* NOTICIAS PRINCIPALES */}
+    <section className="mb-16">
+      <NewsList data={invertedData.slice(0, 5)} />
+    </section>
+
+    {/* IMPORTANTES */}
+    {data.length >= 5 && (
+      <section className="mb-16">
+        <h2 className="text-2xl font-bold mb-4">
+          Importantes
+        </h2>
+        <div className="h-px w-full bg-gray-300 mb-6" />
+
+        <NewsFeatured data={invertedData.slice(5, 9)} />
+      </section>
+    )}
+
+    {/* OTRAS */}
+    {data.length >= 10 && (
+      <section>
+        <h2 className="text-2xl font-bold mb-4">
+          Otras noticias
+        </h2>
+        <div className="h-px w-full bg-gray-300 mb-6" />
+
+        <OthersNews data={invertedData.slice(9, 17)} />
+      </section>
+    )}
+  </main>
+)}
