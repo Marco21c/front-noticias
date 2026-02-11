@@ -16,10 +16,10 @@ export default function AdminSidebar() {
   const navigate = useNavigate();
   return (
     <aside
-      className={` fixed left-0 top-0 h-screen
-        bg-zinc-900 text-white
-        border-r border-zinc-800
-        transition-all duration-300
+      className={`h-screen
+    bg-zinc-900 text-white
+    border-r border-zinc-800
+    transition-all duration-300
         ${open ? "w-64" : "w-16"}
         flex flex-col justify-between `}  >
 
