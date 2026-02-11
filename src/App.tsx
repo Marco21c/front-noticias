@@ -7,6 +7,7 @@ import { PanelProtectedRoute } from "./pages/components/PanelProtectedRoute";
 import LoginPanel from "./pages/Panel/LoginPanel";
 import  { USER_ROLES } from "./types/User.type";
 import ManageUsers from "./pages/Panel/ManageUsers";
+import Newsletter from "./pages/Newsletter/Newsletter";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -39,7 +40,8 @@ const router = createBrowserRouter([
       { path: "terms-and-conditions", element: <TermsConditions/> },
       { path: "policies", element: <Policies/>},
       { path: "about-us", element: <AboutUs/>},
-      { path: "contact", element: <Contact/>}
+      { path: "contact", element: <Contact/>},
+      {path: "newsletter", element: <Newsletter /> }
     ]
   },
   {
