@@ -1,155 +1,122 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { apiClient } from '@/lib/axios';
-import { useAuth } from '@/contexts/AuthContext';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { apiClient } from "@/lib/axios";
+import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import type { UserRole } from '@/types/User.type';
+import type { UserRole } from "@/types/User.type";
 
-/* VALIDATION SCHEMA */
+/* VALIDATION */
 const loginSchema = z.object({
-    email: z.email('Invalid email.'),
-    password: z.string().min(6, 'Password must be at least 6 characters long.'),
+  email: z.string().email("Email inválido."),
+  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres."),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
-interface LoginResponse {
-    data: {
-        token: string;
-        user: {
-            _id: string;
-            name: string;
-            lastName: string;
-            email: string;
-            role: UserRole;
-        };
-    };
-}
-
 const LoginForm = () => {
-    /* Local States */
-    const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
 
-    /* Navigation Hooks */
-    const navigate = useNavigate();
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      setIsLoading(true);
 
-    const { login } = useAuth();
+      const response = await apiClient.post("/auth/login", data);
+      const { token, user } = response.data;
 
-    /* REACT HOOK FORM CONIGURATION */
-    const {
-        register, handleSubmit, formState: { errors }, // validation client errors
+      login(token, {
+        id: user._id,
+        name: user.name,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role as UserRole,
+      });
 
-    } = useForm<LoginFormData>({
-        resolver: zodResolver(loginSchema), // Zod validations before submit
-    });
+      toast.success("Sesión iniciada!", {
+        description: `Bienvenido ${user.name} ${user.lastName}`,
+      });
 
-    /* SUBMIT FUNCTION */
-    const onSubmit = async (data: LoginFormData) => {
-        try {
-            setIsLoading(true);
-
-            /* API CALL */
-            const response = await apiClient.post<LoginResponse>('/auth/login', data);
-
-
-            /* EXTRACT TOKEN AND USER */
-            const { token, user } = response.data.data;
-
-            const userData = {
-                id: user._id,
-                name: user.name,
-                lastName: user.lastName,
-                email: user.email,
-                role: user.role,
-            };
-
-            /* SAVE TOKEN AND USER */
-            login(token, userData);
-
-            toast.success("Sesion Iniciada!",
-                {
-                    description: `Bienvenido ${user.name} ${user.lastName}`
-                })
-
-            /* REDIRECT */
-            navigate('/panel/dashboard');
-
-        } catch (error: any) {
-            /* Handle Server Errors */
-            if (error.response?.data?.message) {
-                toast.error("Error en los datos!", {
-                    description: error.response.data.message,
-                });
-            } else {
-                toast.error("Error en el inicio de sesión", {
-                    description: "Ocurrió un error inesperado. Por favor intenta nuevamente.",
-                });
-            }
-        } finally {
-            setIsLoading(false);
-        }
-
+      navigate("/panel/dashboard");
+    } catch (error: any) {
+      toast.error("Error en el inicio de sesión", {
+        description:
+          error.response?.data?.message ||
+          "Ocurrió un error inesperado. Intenta nuevamente.",
+      });
+    } finally {
+      setIsLoading(false);
     }
+  };
 
+  return (
+    <div className="flex justify-center mt-16 px-4">
+      <Card className="w-full max-w-md p-8 space-y-6">
+        <h2 className="text-2xl font-bold text-center">
+          Iniciar Sesión
+        </h2>
 
-    return (
-        <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-            <h2 className='text-2xl font-bold mb-6 text-center'> Iniciar Sesión </h2>
-            <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-                { /* INPUT EMAIL */}
-                <div>
-                    <label htmlFor='email' className='block text-sm font-medium text-gray-700 mb-1'>
-                        Email
-                    </label>
-                    <input
-                        id='email'
-                        type='email'
-                        {...register('email')}
-                        className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                        placeholder='Enter your email'
-                        disabled={isLoading}
-                    />
-                    {errors.email && (
-                        <p className='text-red-500 text-sm mt-1'> {errors.email.message} </p>
-                    )}
-                </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* EMAIL */}
+          <div className="space-y-1">
+            <label className="text-sm font-medium">Email</label>
+            <Input
+              type="email"
+              placeholder="Ingresa tu email"
+              disabled={isLoading}
+              {...register("email")}
+            />
+            {errors.email && (
+              <p className="text-sm text-red-500">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
 
-                {/* INPUT PASSWORD */}
-                <div>
-                    <label htmlFor='password' className='block text-sm font-medium text-gray-700 mb-1'>
-                        Contraseña
-                    </label>
-                    <input
-                        id='password'
-                        type='password'
-                        {...register('password')}
-                        className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                        placeholder='Enter your password'
-                        disabled={isLoading}
-                    />
-                    {errors.password && (
-                        <p className='text-red-500 text-sm mt-1'> {errors.password.message} </p>
-                    )}
-                </div>
+          {/* PASSWORD */}
+          <div className="space-y-1">
+            <label className="text-sm font-medium">Contraseña</label>
+            <Input
+              type="password"
+              placeholder="Ingresa tu contraseña"
+              disabled={isLoading}
+              {...register("password")}
+            />
+            {errors.password && (
+              <p className="text-sm text-red-500">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
 
-                {/* SUBMIT BUTTON */}
-                <Button
-                    type='submit'
-                    variant='warning'
-                    size='lg'
-                    className='w-full'
-                    disabled={isLoading}
-                >
-                    {isLoading ? 'Iniciando Sesión...' : 'Iniciar Sesión'}
-                </Button>
-            </form>
-        </div>
-    )
-}
+          <Button
+            type="submit"
+            variant="warning"
+            size="lg"
+            className="w-full"
+            disabled={isLoading}
+          >
+            {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
+          </Button>
+        </form>
+      </Card>
+    </div>
+  );
+};
 
 export default LoginForm;
+
