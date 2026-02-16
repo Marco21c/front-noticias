@@ -35,87 +35,81 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "category/:id", element: <NewsCategory /> },
       { path: "news/:slug", element: <News /> },
-      { path: "*", element: <NotFound /> },
-      { path: "terms-and-conditions", element: <TermsConditions/> },
-      { path: "policies", element: <Policies/>},
-      { path: "about-us", element: <AboutUs/>},
-      { path: "contact", element: <Contact/>}
+      { path: "terms-and-conditions", element: <TermsConditions /> },
+      { path: "policies", element: <Policies /> },
+      { path: "about-us", element: <AboutUs /> },
+      { path: "contact", element: <Contact /> },
+      { path: "*", element: <NotFound /> }
     ]
   },
+
+  // LOGIN PANEL AISLADO
   {
-    path: "panel",
-    children: [
-      // Login sin protección
-      { index: true, element: <LoginPanel /> },
-
-      // Rutas protegidas
-      {
-        path: "",
-        element: (
-          <PanelProtectedRoute>
-            <PanelUser />
-          </PanelProtectedRoute>
-        ),
-        children: [
-          // Dashboard accesible para todos los autenticados
-          {
-            path: "dashboard",
-            element: <DashboardPanel />
-          },
-
-          // Solo SUPERADMIN y el admin puede gestionar usuarios
-          {
-            path: "users",
-            element: (
-              <PanelProtectedRoute allowedRoles={[USER_ROLES.SUPERADMIN, USER_ROLES.ADMIN]}>
-                <ManageUsers />
-              </PanelProtectedRoute>
-            )
-          },
-
-          // EDITOR, ADMIN y SUPERADMIN pueden gestionar noticias
-          {
-            path: "news",
-            element: (
-              <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
-                <UpdateNew />
-              </PanelProtectedRoute>
-            )
-          },
-          {
-            path: "edit/:id",
-            element: (
-              <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
-                <EditNew />
-              </PanelProtectedRoute>
-            )
-          },
-          {
-            path: "new",
-            element: (
-              <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
-                <AddNew />
-              </PanelProtectedRoute>
-            )
-          },
-
-          // Categorías
-          {
-            path: "categories",
-            element: (
-              <PanelProtectedRoute allowedRoles={[USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
-                <UpdateCategory />
-              </PanelProtectedRoute>
-            )
-          },
-
-          { path: "*", element: <NotFound /> }
-        ]
-      }
-    ]
+    path: "/panel",
+    element: <LoginPanel />
   },
-   
+
+  // PANEL PROTEGIDO
+  {
+    path: "/panel",
+    element: (
+      <PanelProtectedRoute>
+        <PanelUser />
+      </PanelProtectedRoute>
+    ),
+    children: [
+      { path: "dashboard", element: <DashboardPanel /> },
+
+      {
+        path: "users",
+        element: (
+          <PanelProtectedRoute allowedRoles={[USER_ROLES.SUPERADMIN, USER_ROLES.ADMIN]}>
+            <ManageUsers />
+          </PanelProtectedRoute>
+        )
+      },
+
+      {
+        path: "news",
+        element: (
+          <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
+            <UpdateNew />
+          </PanelProtectedRoute>
+        )
+      },
+
+      {
+        path: "edit/:id",
+        element: (
+          <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
+            <EditNew />
+          </PanelProtectedRoute>
+        )
+      },
+
+      {
+        path: "new",
+        element: (
+          <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
+            <AddNew />
+          </PanelProtectedRoute>
+        )
+      },
+
+      {
+        path: "categories",
+        element: (
+          <PanelProtectedRoute allowedRoles={[USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
+            <UpdateCategory />
+          </PanelProtectedRoute>
+        )
+      },
+
+      { path: "*", element: <NotFound /> }
+    ]
+  }
 ]);
+
 
 function App() {
   return (

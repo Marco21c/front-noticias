@@ -7,12 +7,15 @@ import { Button } from '@/components/ui/button';
 import { apiClient } from '@/lib/axios';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from "sonner";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 /* VALIDATION SCHEMA */
 const loginSchema = z.object({
-    email: z.email('Invalid email.'),
+    email: z.string().email('Invalid email.'),
     password: z.string().min(6, 'Password must be at least 6 characters long.'),
 });
+
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
@@ -74,67 +77,78 @@ const LoginForm = () => {
 
     }
 
+return (
+    <Card className="w-full p-8 space-y-6 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+      
+      <div className="text-center space-y-2">
+        <h2 className="text-3xl font-bold text-zinc-800">
+          Panel Administrativo
+        </h2>
+        <p className="text-sm text-zinc-500">
+          Ingresá tus credenciales para continuar
+        </p>
+      </div>
 
-    return (
-        <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-            <h2 className='text-2xl font-bold mb-6 text-center'> Login </h2>
-            <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-                { /* INPUT EMAIL */}
-                <div>
-                    <label htmlFor='email' className='block text-sm font-medium text-gray-700 mb-1'>
-                        Email
-                    </label>
-                    <input
-                        id='email'
-                        type='email'
-                        {...register('email')}
-                        className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                        placeholder='Enter your email'
-                        disabled={isLoading}
-                    />
-                    {errors.email && (
-                        <p className='text-red-500 text-sm mt-1'> {errors.email.message} </p>
-                    )}
-                </div>
-
-                {/* INPUT PASSWORD */}
-                <div>
-                    <label htmlFor='password' className='block text-sm font-medium text-gray-700 mb-1'>
-                        Contraseña
-                    </label>
-                    <input
-                        id='password'
-                        type='password'
-                        {...register('password')}
-                        className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-                        placeholder='Enter your password'
-                        disabled={isLoading}
-                    />
-                    {errors.password && (
-                        <p className='text-red-500 text-sm mt-1'> {errors.password.message} </p>
-                    )}
-                </div>
-
-                {/* SUBMIT BUTTON */}
-                <Button
-                    type='submit'
-                    variant='warning'
-                    size='lg'
-                    className='w-full'
-                    disabled={isLoading}
-                >
-                    {isLoading ? 'Iniciando Sesión...' : 'Iniciar Sesión'}
-                </Button>
-
-                {/* ERROR DEL SERVIDOR */}
-                {serverError && (
-                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-                        {serverError}
-                    </div>
-                )}
-            </form>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        
+        {/* EMAIL */}
+        <div className="space-y-2">
+          <label htmlFor="email" className="text-sm font-medium">
+            Email
+          </label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+            disabled={isLoading}
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-sm text-red-500">
+              {errors.email.message}
+            </p>
+          )}
         </div>
-    )
+
+        {/* PASSWORD */}
+        <div className="space-y-2">
+          <label htmlFor="password" className="text-sm font-medium">
+            Contraseña
+          </label>
+          <Input
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            disabled={isLoading}
+            {...register("password")}
+          />
+          {errors.password && (
+            <p className="text-sm text-red-500">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
+
+        {/* BUTTON */}
+        <Button
+          type="submit"
+          variant="warning"
+          size="lg"
+          className="w-full"
+          disabled={isLoading}
+        >
+          {isLoading ? "Iniciando Sesión..." : "Iniciar Sesión"}
+        </Button>
+
+        {/* SERVER ERROR */}
+        {serverError && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+            {serverError}
+          </div>
+        )}
+      </form>
+    </Card>
+);
 }
 
 export default LoginForm;

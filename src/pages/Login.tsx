@@ -5,16 +5,16 @@ export default function LoginPage() {
     return (
         <>
             {/* Formulario */}
-            <div className="flex items-center justify-center min-h-screen p-8 bg-gray-50">
+            <div className="flex items-center justify-center py-16 px-4">
                 <div className="w-full max-w-md">
                     {/* Logo mobile (solo visible en pantallas chicas) */}
-                    <div className="md:hidden text-center mb-8">
+                    <div className="md:hidden text-center mb-6">
                         <h1 className="text-3xl font-bold text-gray-900">Tu Proyecto</h1>
                         <p className="text-gray-600 mt-2">Bienvenido de nuevo</p>
                     </div>
 
                     {/* Título de la sección */}
-                    <div className="mb-8">
+                    <div className="mb-6">
                         <h2 className="text-2xl font-bold text-gray-900">Iniciar Sesión</h2>
                         <p className="text-gray-600 mt-2">
                             Ingresá tus credenciales para acceder
