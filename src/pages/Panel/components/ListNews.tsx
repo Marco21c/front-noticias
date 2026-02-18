@@ -29,23 +29,42 @@ export default function ListNews({category}: Props) {
     if (isError) return <p>Ocurrió un error</p>
     if (!data || data.length === 0) return <p>No hay noticias</p> 
 
-  return (
-    <div className="flex p-6 mx-24 my-12">
-      <section className="mt-8 grid grid-cols-1 md:grid-cols-3 md:p-6 gap-4 border-x divide-x">
-                   {invertedData?.map((news) => (
-                     <div key={news._id}>
-                        <div className="flex p-2 justify-end gap-2 ">
-                        <Button onClick={() => navigate(`../edit/${news._id}`)}
-                         variant="default" > <Pencil size={24} color="white"/> </Button>
-                       <Button variant="destructive" onClick={() => {
-                              if (confirm("¿Eliminar noticia?")) {
-                                deleteNews(news._id); } }}>
-                        <Trash2 size={24} color="white"/> </Button> 
-                        </div>
-                       <NewsCard {...news} variant="featured" />
-                     </div>
-                   ))}
-      </section>
-   </div>
-  )
+return (
+  <div className="px-6 md:px-8 pb-12">
+    <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+      {invertedData?.map((news) => (
+        <div
+          key={news._id}
+          className="relative bg-white rounded-2xl shadow-sm border border-zinc-200 hover:shadow-md transition"
+        >
+          {/* Botones flotantes */}
+          <div className="absolute top-3 right-3 flex gap-2 z-10">
+            <Button
+              size="icon"
+              variant="secondary"
+              onClick={() => navigate(`../edit/${news._id}`)}
+            >
+              <Pencil size={16} />
+            </Button>
+
+            <Button
+              size="icon"
+              variant="destructive"
+              onClick={() => {
+                if (confirm("¿Eliminar noticia?")) {
+                  deleteNews(news._id);
+                }
+              }}
+            >
+              <Trash2 size={16} />
+            </Button>
+          </div>
+
+          {/* Card */}
+          <NewsCard {...news} variant="featured" />
+        </div>
+      ))}
+    </section>
+  </div>
+);
 }

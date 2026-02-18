@@ -36,12 +36,15 @@ export default function NewsCard({
   const cardContent = (
         <article
           className={`
-            overflow-hidden bg-white transition
-          border border-gray-200
-          hover:border-gray-300
+          group overflow-hidden bg-white rounded-xl
+          border border-zinc-200
+          shadow-sm
+          hover:shadow-md
+          transition-all duration-300
           ${variant === "highlighted" ? "col-span-full" : ""}
-  `} //Separaciones que se noten mas
+  `}
 >
+
 
       {/* Imagen */}
       {mainImage && (
@@ -65,8 +68,9 @@ export default function NewsCard({
           <img
             src={mainImage}
             alt={title}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
+
         </div>
       )}
 
@@ -74,12 +78,14 @@ export default function NewsCard({
       <div className={variant === "highlighted" ? "p-6" : "p-4"}>
         {/* Categoría */}
       <span
-        className={`mb-3 inline-block rounded px-2 py-1 text-xs font-bold uppercase tracking-widest border border-current/10
-
-        ${categoryColors[category] ?? "bg-gray-100 text-gray-700"}`}
+        className={`
+        mb-3 inline-flex items-center rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wide
+        ${categoryColors[category] ?? "bg-gray-100 text-gray-700"}
+`}
 >
-        {category}
-      </span>
+  {category}
+</span>
+
 
 
 
