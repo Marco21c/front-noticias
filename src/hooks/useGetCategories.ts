@@ -1,7 +1,16 @@
-import { useQuery } from "@tanstack/react-query"
-import { getNews } from "@/services/news.services"
+import { useQuery } from "@tanstack/react-query";
+import { getCategories } from "@/services/category.services";
 
-export const  useGetCategories = () => {
-    return (null);
- 
+export interface Category {
+  _id: string;
+  name: string;
 }
+
+export const useGetCategories = () => {
+  return useQuery<Category[]>({
+    queryKey: ["categories"],
+    queryFn: getCategories,
+  });
+};
+
+
