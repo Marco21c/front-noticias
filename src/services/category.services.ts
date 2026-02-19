@@ -1,23 +1,12 @@
-import axios from 'axios';
 import { apiClient } from '../lib/axios';
+import type { ICategory } from '@/types/Category.type';
 
-export const getCategories = async () => {
-    try{
-    const { data } = await axios.get(`${apiClient}/categories`);
-    return data;
-    } catch(error){
-        console.error("Error get news: ", Error);
-        throw error;
-    }
+export const getCategories = async (): Promise<ICategory[]> => {
+    const { data } = await apiClient.get('/categories');
+    return data.data;
 };
 
-export const getCategoryById = async (id: string) => {
-    const { data } = await axios.get(`${apiClient}/categories/${id}`);
-    return data;
-}
-
-export const getCategoryByName = async (name: string) => {
-    const { data } = await axios.get(`${apiClient}/categories/${name}`);
-    return data;
-}
-// TODO: Add more category-related services as needed.
+export const getCategoryById = async (id: string): Promise<ICategory> => {
+    const { data } = await apiClient.get(`/categories/${id}`);
+    return data.data;
+};

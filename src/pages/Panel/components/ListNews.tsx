@@ -34,7 +34,7 @@ return (
     <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
       {invertedData?.map((news) => (
         <div
-          key={news._id}
+          key={news.id}
           className="relative bg-white rounded-2xl shadow-sm border border-zinc-200 hover:shadow-md transition"
         >
           {/* Botones flotantes */}
@@ -42,7 +42,7 @@ return (
             <Button
               size="icon"
               variant="secondary"
-              onClick={() => navigate(`../edit/${news._id}`)}
+              onClick={() => navigate(`../edit/${news.id}`)}
             >
               <Pencil size={16} />
             </Button>
@@ -52,7 +52,7 @@ return (
               variant="destructive"
               onClick={() => {
                 if (confirm("¿Eliminar noticia?")) {
-                  deleteNews(news._id);
+                  deleteNews(news.id);
                 }
               }}
             >

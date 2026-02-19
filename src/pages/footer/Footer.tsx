@@ -1,7 +1,7 @@
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { categories } from "@/mocks/categoriesMocks";
+import { useGetCategories } from "@/hooks/useGetCategories";
 
 type FooterLink = {
   label: string;
@@ -16,6 +16,8 @@ const footerLinks: FooterLink[] = [
 ];
 
 export default function Footer() {
+  const { data: categories = [] } = useGetCategories();
+  
   return (
     <footer className="bg-secondary/40 border-top border-2 mt-12">
       <ScrollToTop />
@@ -35,7 +37,7 @@ export default function Footer() {
           <ul className="flex flex-col space-y-2 text-sm">
             {categories.slice(0,4).map(
               (category) => (
-                <NavLink key={category._id} to={`/category/${category.name}`} 
+                <NavLink key={category.id} to={`/category/${category.name}`} 
                 className={({ isActive }) =>
                   `transition hover:text-black/70 ${
                     isActive ? "font-semibold text-black" : "text-neutral-600"

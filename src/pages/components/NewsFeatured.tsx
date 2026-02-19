@@ -12,7 +12,7 @@ export default function NewsList({data}:Props) {
         <>
             <section className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-2 border-x divide-x">
              {data?.map((news) => (
-               <div key={news._id}>
+               <div key={news.id}>
                  <NewsCard {...news} variant="featured" />
                </div>
              ))}

@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import OffCanvasMenu from "../../components/ui/OffCanvasMenu";
-import { categories } from "@/mocks/categoriesMocks";
+import { useGetCategories } from "@/hooks/useGetCategories";
 import { baseStyles } from "@/styles/styleLinkNav";
 import useHideOnScroll from "@/components/ui/useHideOnScroll";
 import { useAuth } from "@/contexts/AuthContext";
@@ -16,6 +16,7 @@ export default function Navbar() {
    const hidden = useHideOnScroll();
   const navigate = useNavigate();
   const { user, logout, isAuthenticated } = useAuth();
+  const { data: categories = [] } = useGetCategories();
 
    const handleSearch = () => {
     //parametro => query: string
@@ -54,7 +55,7 @@ export default function Navbar() {
           <ul className="mx-auto flex max-w-7xl gap-6 px-4 py-2 border-b border-gray-300">
             <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
             {categories.map((category) => (
-              <NavItem key={category._id} name={category.name} _id={category._id} />
+              <NavItem key={category.id} name={category.name} id={category.id} />
             ))}
           </ul>
         </nav>
