@@ -24,7 +24,7 @@ const UpdateNew = lazy(() => import("./pages/Panel/UpdateNew"));
 const EditNew = lazy(() => import("./pages/Panel/EditNew"));
 const AddNew = lazy(() => import("./pages/Panel/AddNew"));
 const UpdateCategory = lazy(() => import("./pages/Panel/UpdateCategory"));
-
+const SearchResults = lazy(() => import("./pages/SearchResults"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,6 +33,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
+      { path: "search", element: <SearchResults /> },
       { path: "category/:id", element: <NewsCategory /> },
       { path: "news/:slug", element: <News /> },
       { path: "terms-and-conditions", element: <TermsConditions /> },

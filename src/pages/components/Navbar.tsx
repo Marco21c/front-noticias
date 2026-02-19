@@ -18,10 +18,8 @@ export default function Navbar() {
   const { user, logout, isAuthenticated } = useAuth();
   const { data: categories = [] } = useGetCategories();
 
-   const handleSearch = () => {
-    //parametro => query: string
-    //aqui va a ir la consulta para mostrar la noticia o por palabra 😎😛
-    console.log("Búsqueda:");
+   const handleSearch = (query: string) => {
+    navigate(`/search?q=${encodeURIComponent(query)}`);
   }
  
   return (

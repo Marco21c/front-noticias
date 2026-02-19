@@ -1,5 +1,5 @@
 import { useQuery} from "@tanstack/react-query";
-import { getNewsByCategory, getNews, getNewById } from "@/services/news.services";
+import { getNewsByCategory, getNews, getNewById, searchNews } from "@/services/news.services";
 import type { INews } from "../types/News.type";
 
 export const useGetNews = () => {
@@ -24,3 +24,11 @@ export const useGetNew = (id?: string) => {
     enabled: !!id,
   });
 };
+
+export const useSearchNews = (query: string) => {
+  return useQuery<INews[]>({
+    queryKey: ['searchNews', query],
+    queryFn: () => searchNews(query),
+    enabled: !!query,
+  });
+}

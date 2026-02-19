@@ -49,4 +49,10 @@ export const deleteNew = async (id: string): Promise<void> => {
     await apiClient.delete(`/news/${id}`);
 };
 
+export const searchNews = async (query: string): Promise<INews[]> => {
+    const { data } = await apiClient.get('/news/search', {
+        params: { query }
+    });
+    return data.data;
+}
 
