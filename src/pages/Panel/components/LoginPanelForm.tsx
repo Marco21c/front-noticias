@@ -37,10 +37,10 @@ const LoginForm = () => {
       setIsLoading(true);
 
       const response = await apiClient.post("/auth/login", data);
-      const { token, user } = response.data;
+      const { token, user } = response.data.data;
 
       login(token, {
-        id: user._id,
+        id: user.id,
         name: user.name,
         lastName: user.lastName,
         email: user.email,
