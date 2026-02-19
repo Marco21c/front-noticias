@@ -17,7 +17,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { user, logout, isAuthenticated } = useAuth();
   const { data: categories = [] } = useGetCategories();
-
+  console.log(categories);
    const handleSearch = (query: string) => {
     navigate(`/search?q=${encodeURIComponent(query)}`);
   }

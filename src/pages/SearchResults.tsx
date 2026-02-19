@@ -25,7 +25,14 @@ export default function SearchResults() {
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {news.map((item: any) => (
-          <NewsCard key={item.id} news={item} />
+         <NewsCard
+                                     title={item.title}
+                                     summary={item.summary}
+                                     author={item.author}
+                                     category={item.category}
+                                     publicationDate={item.publicationDate}
+                                     variant={'default'}
+                                 />
         ))}
       </section>
     </main>
