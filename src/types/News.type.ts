@@ -14,8 +14,8 @@ export interface INews {
   summary: string;
   content: string;
   highlights: string[];
-  author: string;
-  category: string;
+  author: { name?: string };
+  category: { id?: string; name?: string };
   mainImage?: string;
   source?: string;
   variant: string;
@@ -32,12 +32,10 @@ export interface INewsCreate {
   summary: string; //
   content: string; //
   highlights: string[];
-  author: string; //
   category: string; // 
   mainImage?: string; //
   source?: string | null; //
   variant: string;
-  status: NewsStatus; //
 }
 
 

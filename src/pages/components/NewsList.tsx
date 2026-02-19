@@ -1,4 +1,3 @@
-// NewsList.tsx
 import type { INews } from "@/types/News.type";
 import NewsCard from "../../components/ui/NewsCard";
 
