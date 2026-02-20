@@ -1,8 +1,86 @@
+import { Button } from "@/components/ui/button";
+import { Plus, Pencil, Trash2 } from "lucide-react";
+import { useGetCategories } from "@/hooks/useGetCategories";
+
 
 export default function UpdateCategory() {
+  const { data: categories = [], isLoading } = useGetCategories();
+
+  const hasCategories = categories.length > 0;
+
   return (
-    <div className="border border-secondary-300 justify-center rounded rounded-full p-12 mr-8 ml-20 my-12 rou">
-        <h1 className="text-center font-bold"> Categorias </h1>
+    <div className="px-6 md:px-12 py-10">
+      <div className="max-w-4xl mx-auto space-y-8">
+
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-semibold text-zinc-900">
+              Categorías
+            </h1>
+            <p className="text-sm text-zinc-500 mt-1">
+              Gestiona las categorías de las noticias ({categories.length})
+            </p>
+          </div>
+
+          <Button className="flex items-center gap-2">
+            <Plus size={16} />
+            Nueva categoría
+          </Button>
+        </div>
+
+        <div className="bg-white border border-zinc-200 rounded-2xl shadow-sm overflow-hidden">
+
+          {hasCategories ? (
+            <table className="w-full text-sm">
+              <thead className="bg-zinc-50 border-b border-zinc-200 text-zinc-600">
+                <tr>
+                  <th className="text-left px-6 py-3 font-medium">
+                    Nombre
+                  </th>
+                  <th className="text-right px-6 py-3 font-medium">
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {categories.map((category) => (
+                  <tr
+                    key={category._id}
+                    className="border-b border-zinc-100 last:border-0 hover:bg-zinc-50 transition"
+                  >
+                    <td className="px-6 py-4 font-medium text-zinc-800">
+                      {category.name}
+                    </td>
+
+                    <td className="px-6 py-4">
+                      <div className="flex justify-end gap-4">
+                        <button className="p-2 rounded-lg text-zinc-500 hover:bg-blue-50 hover:text-blue-600 transition">
+                          <Pencil size={16} />
+                        </button>
+
+                        <button className="p-2 rounded-lg text-zinc-500 hover:bg-red-50 hover:text-red-600 transition">
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="py-16 flex flex-col items-center justify-center text-center">
+              <p className="text-zinc-500 mb-4">
+                No hay categorías creadas
+              </p>
+              <Button className="flex items-center gap-2">
+                <Plus size={16} />
+                Crear primera categoría
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
-  )
+  );
 }

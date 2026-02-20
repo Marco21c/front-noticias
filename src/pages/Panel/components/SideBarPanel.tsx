@@ -76,9 +76,9 @@ export default function AdminSidebar() {
         <button
           onClick={() => navigate("/")}
           className="flex items-center gap-3 w-full px-3 py-2 rounded-xl
-                     text-sm font-medium text-zinc-400
-                     hover:bg-red-500/10 hover:text-red-400
-                     transition"
+                    text-sm font-medium text-zinc-400
+                    hover:bg-red-500/10 hover:text-red-400
+                    transition"
         >
           <LogOut size={18} />
           {open && <span>Salir</span>}
