@@ -14,6 +14,7 @@ const Register = lazy(() => import("./pages/Register"));
 const NewsCategory = lazy(() => import("./pages/NewsCategory"));
 const News = lazy(() => import("./pages/News"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Newsletter = lazy(() => import("./pages/Newsletter"));
 const AboutUs = lazy(() => import("./pages/footer/AboutUs"));
 const Policies = lazy(() => import("./pages/footer/Policies"));
 const TermsConditions = lazy(() => import("./pages/footer/Terms"));
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
       { path: "policies", element: <Policies /> },
       { path: "about-us", element: <AboutUs /> },
       { path: "contact", element: <Contact /> },
+      { path: "newsletter", element: <Newsletter /> },
       { path: "*", element: <NotFound /> }
     ]
   },

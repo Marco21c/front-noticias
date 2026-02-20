@@ -10,6 +10,7 @@ import { baseStyles } from "@/styles/styleLinkNav";
 import useHideOnScroll from "@/components/ui/useHideOnScroll";
 import { useAuth } from "@/contexts/AuthContext";
 import UserDropdown from "@/components/ui/UserDropdown";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -18,12 +19,21 @@ export default function Navbar() {
   const { user, logout, isAuthenticated } = useAuth();
   const { data: categories = [] } = useGetCategories();
 
-   const handleSearch = () => {
-    //parametro => query: string
-    //aqui va a ir la consulta para mostrar la noticia o por palabra 😎😛
-    console.log("Búsqueda:");
+const handleSearch = () => {
+    console.log("Busqueda:");
   }
- 
+
+  const handleNewsletterClick = () => {
+    if (!isAuthenticated) {
+      toast.warning("Inicia sesion para suscribirte", {
+        description: "Serás redirigido al login...",
+      });
+      setTimeout(() => navigate('/login'), 2000);
+    } else {
+      navigate('/newsletter');
+    }
+  };
+  
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b border-gray-300 bg-white">
@@ -42,7 +52,7 @@ export default function Navbar() {
               </div>
              )
              : (<Button variant={"warning"} size={"sm"} onClick={() => navigate("/login")}> <User className="hidden sm:block" /> Ingresar </Button>)}
-            <Button variant={"outline"} size={"sm"}> <Bell className="hidden sm:block" /> Suscribirse </Button>
+            <Button variant={"outline"} size={"sm"} onClick={handleNewsletterClick}> <Bell className="hidden sm:block" /> Newsletter </Button>
           </div>
         </div>
       </header>
