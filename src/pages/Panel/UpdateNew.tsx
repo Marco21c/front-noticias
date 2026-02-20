@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { categories } from "@/mocks/categoriesMocks";
+import { useGetCategories } from "@/hooks/useGetCategories";
 import { useState } from "react";
 import ListNews from "./components/ListNews";
 
 export default function UpdateNew() {
   const [category, setCategory] = useState("todas");
+  const { data: categories = [] } = useGetCategories();
 
   return (
     <div className="p-6 md:p-8">
@@ -22,7 +23,7 @@ export default function UpdateNew() {
           </li>
 
           {categories.map((cat) => (
-            <li key={cat._id}>
+            <li key={cat.id}>
               <Button
                 variant={category === cat.name ? "default" : "ghost"}
                 onClick={() => setCategory(cat.name)}

@@ -4,7 +4,7 @@ Frontend de un sistema de gestión de noticias desarrollado con React, TypeScrip
 
 ## Descripción
 
-Sistema de gestión de noticias con interfaz de usuario completa que incluye funcionalidades para usuarios finales y administradores. Implementa autenticación, autorización basada en roles y operaciones CRUD completas para noticias y usuarios.
+Sistema de gestión de noticias con interfaz de usuario completa que incluye funcionalidades para usuarios finales y administradores. Implementa autenticación, autorización basada en roles y operaciones CRUD completas para noticias, categorías y usuarios.
 
 ### Características principales
 
@@ -16,7 +16,7 @@ Sistema de gestión de noticias con interfaz de usuario completa que incluye fun
 - Búsqueda y filtrado de noticias
 - Visualización detallada de noticias
 - Notificaciones con Sonner
-- Validación de formularios con React Hook Form y Zod
+- Validación de formularios con React Hook Form
 - Gestión de estado del servidor con React Query
 - Rutas protegidas según roles de usuario
 
@@ -26,6 +26,7 @@ Sistema de gestión de noticias con interfaz de usuario completa que incluye fun
 
 - Node.js (versión 18 o superior)
 - npm, yarn o pnpm
+- Backend API corriendo (ver repositorio backend-noticias)
 
 ### Pasos de instalación
 
@@ -81,6 +82,7 @@ front-noticias/
 │   ├── lib/              # Configuraciones (axios, utils)
 │   ├── pages/            # Páginas principales
 │   │   ├── components/   # Componentes de páginas
+│   │   ├── footer/       # Componentes del footer
 │   │   └── Panel/        # Panel de administración
 │   ├── services/         # Servicios de API
 │   ├── styles/           # Estilos globales
@@ -112,7 +114,8 @@ El sistema implementa cuatro niveles de acceso:
 - DashboardPanel - Panel principal
 - AddNew - Creación de noticias
 - EditNew - Edición de noticias
-- UpdateNew - Actualización de noticias
+- UpdateNew - Listado y filtro de noticias
+- UpdateCategory - Gestión de categorías
 - ManageUsers - Gestión de usuarios (Superadmin)
 - LoginPanel - Acceso al panel
 
@@ -121,7 +124,61 @@ El sistema implementa cuatro niveles de acceso:
 - SearchBar - Búsqueda de noticias
 - NewsList - Lista de noticias
 - NewsDetail - Detalle de noticia
+- NewsCard - Tarjeta de noticia
 - Footer - Pie de página
+
+## API Integration
+
+### Servicios
+
+El frontend consume la API REST del backend a través de servicios organizados:
+
+**News Service (`src/services/news.services.ts`):**
+- `getNews()` - Obtiene todas las noticias
+- `getNewById(id)` - Obtiene una noticia por ID
+- `getNewsByCategory(category)` - Obtiene noticias por categoría
+- `postNew(data)` - Crea una nueva noticia
+- `updateNew({ id, payload })` - Actualiza una noticia
+- `deleteNew(id)` - Elimina una noticia
+
+**Category Service (`src/services/category.services.ts`):**
+- `getCategories()` - Obtiene todas las categorías
+- `getCategoryById(id)` - Obtiene una categoría por ID
+
+### Tipos principales
+
+**INews:**
+```typescript
+interface INews {
+  id: string;
+  title: string;
+  slug: string;
+  summary: string;
+  content: string;
+  highlights: string[];
+  author: { name?: string };
+  category: { id?: string; name?: string };
+  mainImage?: string;
+  source?: string;
+  variant: 'highlighted' | 'featured' | 'default';
+  status: 'draft' | 'in_review' | 'approved' | 'published' | 'rejected';
+  publicationDate?: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+```
+
+**ICategory:**
+```typescript
+interface ICategory {
+  id: string;
+  name: string;
+  description?: string;
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+```
 
 ## Tecnologías utilizadas
 
@@ -167,10 +224,16 @@ El sistema implementa cuatro niveles de acceso:
 - Búsqueda de noticias
 - Vista detallada de noticias
 - Formateo de fechas
+- Variantes de visualización (highlighted, featured, default)
+
+### Gestión de Categorías
+- Categorías dinámicas desde la API
+- Filtrado de noticias por categoría
+- Navegación por categorías
 
 ### Gestión de Usuarios
 - Creación de usuarios con roles específicos (Superadmin)
-- Validación de formularios con Zod
+- Validación de formularios
 - Interfaz de gestión de usuarios
 
 ### UI/UX
@@ -218,7 +281,7 @@ Este proyecto está bajo la Licencia MIT. Ver archivo `LICENSE` para más detall
 
 ## Integrantes
 
-- **Marcos Condori** - Fullstac Developer - [GitHub](https://github.com/Marco21c) | [LinkedIn](https://www.linkedin.com/in/marcos-condori-23c/)
+- **Marcos Condori** - Fullstack Developer - [GitHub](https://github.com/Marco21c) | [LinkedIn](https://www.linkedin.com/in/marcos-condori-23c/)
 - **Ezequiel Pacheco** - Scrum Master & Fullstack Developer - [GitHub](https://github.com/EzePacheco) | [LinkedIn](https://www.linkedin.com/in/ezepacheco-dev/)
 - **Andres Chaile** - Backend Developer - [GitHub](https://github.com/andres777c) | [LinkedIn](https://www.linkedin.com/in/andres-chaile-491a6127b/)
 - **Leonardo Alcedo** - Backend Developer - [GitHub](https://github.com/leo99902) | [LinkedIn](https://www.linkedin.com/in/leonardo-alcedo-45a83027b/)

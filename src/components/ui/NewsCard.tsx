@@ -4,8 +4,8 @@ type NewsCardsProps = {
   title: string;
   slug?: string;
   summary: string;
-  author: string;
-  category: string;
+  author: { name?: string };
+  category: { id?: string; name?: string };
   mainImage?: string;
   publicationDate: string;
   variant: string;
@@ -34,8 +34,8 @@ export default function NewsCard({
   variant,
 }: NewsCardsProps) {
   const cardContent = (
-        <article
-          className={`
+    <article
+      className={`
           group overflow-hidden bg-white rounded-xl
           border border-zinc-200
           shadow-sm
@@ -43,7 +43,7 @@ export default function NewsCard({
           transition-all duration-300
           ${variant === "highlighted" ? "col-span-full" : ""}
   `}
->
+    >
 
 
       {/* Imagen */}
@@ -54,16 +54,16 @@ export default function NewsCard({
             ${variant === "highlighted"
               ? "h-96"
               : variant === "featured"
-              ? "h-64"
-              : "h-48"}
+                ? "h-64"
+                : "h-48"}
     `}
-  >
+        >
 
-{variant === "highlighted" && (
-  <span className="absolute top-4 left-4 z-10 bg-yellow-400 text-black text-xs font-extrabold uppercase px-3 py-1 tracking-widest rounded-sm bg-yellow-500/90 backdrop-blur">
-    Exclusiva
-  </span>
-)} 
+          {variant === "highlighted" && (
+            <span className="absolute top-4 left-4 z-10 bg-yellow-400 text-black text-xs font-extrabold uppercase px-3 py-1 tracking-widest rounded-sm bg-yellow-500/90 backdrop-blur">
+              Exclusiva
+            </span>
+          )}
 
           <img
             src={mainImage}
@@ -77,14 +77,14 @@ export default function NewsCard({
       {/* Contenido */}
       <div className={variant === "highlighted" ? "p-6" : "p-4"}>
         {/* Categoría */}
-      <span
-        className={`
+        <span
+          className={`
         mb-3 inline-flex items-center rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wide
-        ${categoryColors[category] ?? "bg-gray-100 text-gray-700"}
+        ${categoryColors[category.name ?? "default"] ?? "bg-gray-100 text-gray-700"}
 `}
->
-  {category}
-</span>
+        >
+          {category.name}
+        </span>
 
 
 
@@ -93,10 +93,9 @@ export default function NewsCard({
         <h2
           className={`
             font-bold leading-tight tracking-tight font-serif
-            ${
-              variant === "highlighted"
-                ? "text-3xl md:text-4xl"
-                : variant === "featured"
+            ${variant === "highlighted"
+              ? "text-3xl md:text-4xl"
+              : variant === "featured"
                 ? "text-xl"
                 : "text-base"
             }
@@ -109,10 +108,9 @@ export default function NewsCard({
         <p
           className={`
             mt-2 text-gray-700 leading-relaxed
-            ${
-              variant === "highlighted"
-                ? "text-lg"
-                : variant === "featured"
+            ${variant === "highlighted"
+              ? "text-lg"
+              : variant === "featured"
                 ? "text-sm"
                 : "text-xs line-clamp-3"
             }
@@ -123,7 +121,7 @@ export default function NewsCard({
 
         {/* Footer */}
         <div className="mt-4 pt-3 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500">
-          <span>{author}</span>
+          <span>{author.name}</span>
           <time>
             {new Date(publicationDate).toLocaleDateString("es-AR")}
           </time>
