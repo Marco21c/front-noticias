@@ -26,24 +26,30 @@ const AddNew = lazy(() => import("./pages/Panel/AddNew"));
 const UpdateCategory = lazy(() => import("./pages/Panel/UpdateCategory"));
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <DefaultLayout />,
-    children: [
-      { index: true, element: <Home /> },
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
-      { path: "category/:id", element: <NewsCategory /> },
-      { path: "news/:slug", element: <News /> },
-      { path: "terms-and-conditions", element: <TermsConditions /> },
-      { path: "policies", element: <Policies /> },
-      { path: "about-us", element: <AboutUs /> },
-      { path: "contact", element: <Contact /> },
-      { path: "*", element: <NotFound /> }
-    ]
-  },
+// PUBLIC LAYOUT
+{
+  path: "/",
+  element: <DefaultLayout />,
+  children: [
+    { index: true, element: <Home /> },
+    { path: "register", element: <Register /> },
+    { path: "category/:id", element: <NewsCategory /> },
+    { path: "news/:slug", element: <News /> },
+    { path: "terms-and-conditions", element: <TermsConditions /> },
+    { path: "policies", element: <Policies /> },
+    { path: "about-us", element: <AboutUs /> },
+    { path: "contact", element: <Contact /> },
+    { path: "*", element: <NotFound /> }
+  ]
+},
 
-  // LOGIN PANEL AISLADO
+// LOGIN AISLADO (SIN LAYOUT)
+{
+  path: "/login",
+  element: <Login />
+},
+
+  // PANEL AISLADO
   {
     path: "/panel",
     element: <LoginPanel />
