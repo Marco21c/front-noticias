@@ -82,10 +82,10 @@ return (
       
       <div className="text-center space-y-2">
         <h2 className="text-3xl font-bold text-zinc-800">
-          Panel Administrativo
+          Iniciar Sesión
         </h2>
         <p className="text-sm text-zinc-500">
-          Ingresá tus credenciales para continuar
+          Ingresa tus credenciales para acceder a tu cuenta.
         </p>
       </div>
 
