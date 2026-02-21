@@ -1,6 +1,8 @@
 import type { INews, INewsCreate } from '@/types/News.type';
 import { apiClient } from '../lib/axios';
-
+interface SearchNewsResponse {
+  data: INews[];
+}
 export const getNews = async (): Promise<INews[]> => {
     const { data } = await apiClient.get('/news');
     return data.data;
@@ -49,10 +51,13 @@ export const deleteNew = async (id: string): Promise<void> => {
     await apiClient.delete(`/news/${id}`);
 };
 
-export const searchNews = async (query: string): Promise<INews[]> => {
-    const { data } = await apiClient.get('/news/search', {
-        params: { query }
-    });
-    return data.data;
-}
 
+
+export const searchNews = async (query: string): Promise<INews[]> => {
+  const { data } = await apiClient.get<SearchNewsResponse>(
+    "/news/search",
+    { params: { q: query } }
+  );
+
+  return data.data;
+};

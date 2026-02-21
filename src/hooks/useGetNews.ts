@@ -25,10 +25,18 @@ export const useGetNew = (id?: string) => {
   });
 };
 
-export const useSearchNews = (query: string) => {
-  return useQuery<INews[]>({
-    queryKey: ['searchNews', query],
-    queryFn: () => searchNews(query),
-    enabled: !!query,
-  });
+interface UseSearchNewsOptions {
+  enabled?: boolean;
 }
+export const useSearchNews = (
+  query: string,
+  options?: UseSearchNewsOptions
+) => {
+  return useQuery<INews[], Error>({
+    queryKey: ["search-news", query],
+    queryFn: () => searchNews(query),
+    enabled: options?.enabled ?? true,
+    staleTime: 1000 * 60 * 5,
+    retry: 1,
+  });
+};
