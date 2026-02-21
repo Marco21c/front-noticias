@@ -13,14 +13,6 @@ export default function LoginPage() {
                         <p className="text-gray-600 mt-2">Bienvenido de nuevo</p>
                     </div>
 
-                    {/* Título de la sección */}
-                    <div className="mb-6">
-                        <h2 className="text-2xl font-bold text-gray-900">Iniciar Sesión</h2>
-                        <p className="text-gray-600 mt-2">
-                            Ingresá tus credenciales para acceder
-                        </p>
-                    </div>
-
                     {/* Componente del formulario */}
                     <LoginForm />
 
