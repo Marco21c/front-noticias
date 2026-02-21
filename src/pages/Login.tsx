@@ -13,6 +13,7 @@ export default function LoginPage() {
                         <p className="text-gray-600 mt-2">Bienvenido de nuevo</p>
                     </div>
 
+
                     {/* Componente del formulario */}
                     <LoginForm />
 
