@@ -80,7 +80,7 @@ const LoginForm = () => {
 return (
     <Card className="w-full p-8 space-y-6 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
       
-      <div className="text-center space-y-2">
+       <div className="text-center space-y-2">
         <h2 className="text-3xl font-bold text-zinc-800">
           Iniciar Sesión
         </h2>
