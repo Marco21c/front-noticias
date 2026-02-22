@@ -53,11 +53,12 @@ export const deleteNew = async (id: string): Promise<void> => {
 
 
 
-export const searchNews = async (query: string): Promise<INews[]> => {
-  const { data } = await apiClient.get<SearchNewsResponse>(
+export const searchNews = async (query: string): Promise<any> => {
+  const response = await apiClient.get(
     "/news/search",
     { params: { q: query } }
   );
 
-  return data.data;
+ console.log("Respuesta de búsqueda:", response.data);
+  return response.data.data;
 };

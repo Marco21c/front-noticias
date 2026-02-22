@@ -28,11 +28,12 @@ export const useGetNew = (id?: string) => {
 interface UseSearchNewsOptions {
   enabled?: boolean;
 }
+
 export const useSearchNews = (
   query: string,
   options?: UseSearchNewsOptions
 ) => {
-  return useQuery<INews[], Error>({
+  return useQuery<any, Error>({
     queryKey: ["search-news", query],
     queryFn: () => searchNews(query),
     enabled: options?.enabled ?? true,
