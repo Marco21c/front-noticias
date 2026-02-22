@@ -1,5 +1,4 @@
-
-export default function Terms() {
+export default function Terms() {
   return (
     <main className="bg-white min-h-screen py-12 px-6">
       <div className="max-w-4xl mx-auto">

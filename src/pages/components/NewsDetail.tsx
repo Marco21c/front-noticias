@@ -18,7 +18,7 @@ export default function NewsDetail({ news }: Props) {
             </h1>
 
 
-            <div className="h-1 w-30 bg-yellow-500 mb-6" />
+            <div className="h-1 w-24 bg-yellow-500 mb-6" />
 
 
             <p className="text-2xl text-gray-800 mb-5 leading-relaxed">

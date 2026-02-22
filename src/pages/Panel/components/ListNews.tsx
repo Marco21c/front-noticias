@@ -11,42 +11,22 @@ interface Props {
 
 export default function ListNews({ category }: Props) {
   const { mutate: deleteNews } = useDeleteNew();
+  const allNewsQuery = useGetNews();
+  const categoryNewsQuery = useGetNewsPorCategories(category === "todas" ? "" : category);
 
-  const { data, isError, isLoading } =
-    category === "todas"
-      ? useGetNews()
-      : useGetNewsPorCategories(category);
+  const { data, isError, isLoading } = category === "todas" 
+    ? allNewsQuery 
+    : { 
+        data: categoryNewsQuery.data, 
+        isError: categoryNewsQuery.isError, 
+        isLoading: categoryNewsQuery.isLoading 
+      };
 
-return (
-  <div className="px-6 md:px-8 pb-12">
-    <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
-      {invertedData?.map((news) => (
-        <div
-          key={news.id}
-          className="relative bg-white rounded-2xl shadow-sm border border-zinc-200 hover:shadow-md transition"
-        >
-          {/* Botones flotantes */}
-          <div className="absolute top-3 right-3 flex gap-2 z-10">
-            <Button
-              size="icon"
-              variant="secondary"
-              onClick={() => navigate(`../edit/${news.id}`)}
-            >
-              <Pencil size={16} />
-            </Button>
-
-            <Button
-              size="icon"
-              variant="destructive"
-              onClick={() => {
-                if (confirm("¿Eliminar noticia?")) {
-                  deleteNews(news.id);
-                }
-              }}
-            >
-              <Trash2 size={16} />
-            </Button>
-          </div>
+  const navigate = useNavigate();
+  const invertedData = useMemo(
+    () => (data ? [...data].reverse() : []),
+    [data]
+  );
 
   if (isLoading)
     return (
@@ -57,20 +37,20 @@ return (
       </div>
     );
 
-  if (isError) return <p>Ocurrió un error</p>;
-  if (!data || data.length === 0) return <p>No hay noticias</p>;
+  if (isError) return <p className="p-6 text-zinc-500">Ocurrió un error</p>;
+  if (!data || data.length === 0) return <p className="p-6 text-zinc-500">No hay noticias</p>;
 
   return (
     <div className="px-6 md:px-8 pb-12">
       <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
         {invertedData.map((news) => (
           <PanelNewsCard
-            key={news._id}
+            key={news.id}
             {...news}
-            onEdit={() => navigate(`../edit/${news._id}`)}
+            onEdit={() => navigate(`../edit/${news.id}`)}
             onDelete={() => {
-              if (confirm("¿Eliminar noticia?")) {
-                deleteNews(news._id);
+              if (window.confirm("¿Eliminar noticia?")) {
+                deleteNews(news.id);
               }
             }}
           />

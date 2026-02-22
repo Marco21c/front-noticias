@@ -6,8 +6,8 @@ export default function Contact() {
     e.preventDefault();
 
     toast.success("Mensaje enviado!", {
-                description: "Tu mensaje ha sido enviado correctamente.",
-            });
+      description: "Tu mensaje ha sido enviado correctamente.",
+    });
 
     e.currentTarget.reset();
   };

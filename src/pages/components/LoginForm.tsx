@@ -29,7 +29,7 @@ const LoginForm = () => {
 
     const { login } = useAuth();
 
-    /* REACT HOOK FORM CONIGURATION */
+    /* REACT HOOK FORM CONFIGURATION */
     const {
         register, handleSubmit, formState: { errors }, // validation client errors
 
@@ -41,7 +41,7 @@ const LoginForm = () => {
     const onSubmit = async (data: LoginFormData) => {
         try {
             setIsLoading(true);
-            setServerError(null); // Clean logs errors
+            setServerError(null);
 
             /* API CALL */
             const response = await apiClient.post('/auth/login', data);
@@ -58,15 +58,15 @@ const LoginForm = () => {
             /* REDIRECT */
             navigate('/');
 
-        } catch (error: any) {
-            /* Handle Server Errors */
-            if (error.response?.data?.message) {
-                setServerError(error.response.data.message);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                const message = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
+                setServerError(message || "Login error. Please try again!");
                 toast.error("Error en los datos!", {
-                    description: error.response.data.message,
+                    description: message || "Ocurrió un error inesperado.",
                 });
             } else {
-                setServerError('Login error. Please try again!')
+                setServerError('Login error. Please try again!');
                 toast.error("Error en el inicio de sesión", {
                     description: "Ocurrió un error inesperado. Por favor intenta nuevamente.",
                 });

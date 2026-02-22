@@ -1,4 +1,3 @@
-
 import type { INews } from "@/types/News.type";
 import NewsCard from "../../components/ui/NewsCard";
 
@@ -6,10 +5,8 @@ type Props = {
   data: INews[];
 };
 
-export default function NewsList({data}:Props) {
-   
-    
-    const featuredNews = data[0]
+export default function OthersNews({data}: Props) {
+    const featuredNews = data[0];
     const defaultNews = data.slice(1, 3);
     const othersNews = data.slice(3, 8);
 

@@ -1,14 +1,12 @@
 import { useState } from "react";
-import { LayoutDashboard, Newspaper, PlusSquare, Folder, Menu, LogOut, } from "lucide-react";
-import { NavLink } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { LayoutDashboard, Newspaper, PlusSquare, Folder, Menu, LogOut } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const links = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/panel/dashboard" },
   { name: "Noticias", icon: Newspaper, href: "/panel/news" },
   { name: "Crear", icon: PlusSquare, href: "/panel/new" },
-  { name: "Categorias", icon: Folder, href: "/panel/categories" }
+  { name: "Categorías", icon: Folder, href: "/panel/categories" }
 ];
 
 export default function AdminSidebar() {

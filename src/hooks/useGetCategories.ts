@@ -13,6 +13,6 @@ export const useGetCategoryById = (id: string) => {
   return useQuery<ICategory>({
     queryKey: ["category", id],
     queryFn: () => getCategoryById(id),
-    enabled: !!id, 
+    enabled: !!id,
   });
-}
+};

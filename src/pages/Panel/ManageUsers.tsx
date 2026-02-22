@@ -8,13 +8,11 @@ const ManageUsers = () => {
     const [users, setUsers] = useState<IUser[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    /* Fetch all users */
     const fetchUsers = async () => {
         try {
             setIsLoading(true);
             const response = await apiClient.get<{ data: IUserBackend[] }>('/user');
             
-            // 👇 Transformar usuarios del backend al formato del frontend
             const transformedUsers: IUser[] = (response.data.data || []).map(user => ({
                 id: user._id,
                 name: user.name,
@@ -26,21 +24,22 @@ const ManageUsers = () => {
             }));
             
             setUsers(transformedUsers);
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const message = error instanceof Error 
+                ? error.message 
+                : "No se pudieron cargar los usuarios.";
             toast.error("Error al cargar usuarios", {
-                description: error.response?.data?.message || "No se pudieron cargar los usuarios.",
+                description: message,
             });
         } finally {
             setIsLoading(false);
         }
     };
 
-    /* Load users on component mount */
     useEffect(() => {
         fetchUsers();
     }, []);
 
-    /* Delete user */
     const handleDeleteUser = async (userId: string) => {
         if (!window.confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
             return;
@@ -51,15 +50,17 @@ const ManageUsers = () => {
             toast.success("Usuario eliminado", {
                 description: "El usuario ha sido eliminado exitosamente.",
             });
-            fetchUsers(); // Refresh list
-        } catch (error: any) {
+            fetchUsers();
+        } catch (error: unknown) {
+            const message = error instanceof Error 
+                ? error.message 
+                : "No se pudo eliminar el usuario.";
             toast.error("Error al eliminar usuario", {
-                description: error.response?.data?.message || "No se pudo eliminar el usuario.",
+                description: message,
             });
         }
     };
 
-    /* Get role badge color */
     const getRoleBadgeColor = (role: UserRole) => {
         switch (role) {
             case USER_ROLES.SUPERADMIN:
@@ -75,7 +76,6 @@ const ManageUsers = () => {
         }
     };
 
-    /* Get role display name in Spanish */
     const getRoleDisplayName = (role: UserRole) => {
         switch (role) {
             case USER_ROLES.SUPERADMIN:

@@ -38,7 +38,7 @@ const RegisterForm = () => {
             setIsLoading(true);
 
             /* API CALL */
-            const response = await apiClient.post('/user', data);
+            await apiClient.post('/user', data);
 
             toast.success("Registro exitoso!", {
                 description: "Tu cuenta ha sido creada correctamente.",
@@ -49,17 +49,13 @@ const RegisterForm = () => {
                 navigate('/login');
             }, 2000);
 
-        } catch (error: any) {
-            /* Handle Server Errors */
-            if (error.response?.data?.message) {
-                toast.error("Error en el registro", {
-                    description: error.response.data.message, 
-                });
-            } else {
-                toast.error("Error en el registro", {
-                    description: "Ocurrió un error inesperado. Por favor intenta nuevamente.",
-                });
-            }
+        } catch (error: unknown) {
+            const message = error instanceof Error 
+                ? error.message 
+                : "Ocurrió un error inesperado. Por favor intenta nuevamente.";
+            toast.error("Error en el registro", {
+                description: message,
+            });
         } finally {
             setIsLoading(false);
         }

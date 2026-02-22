@@ -1,17 +1,8 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import { USER_ROLES, type UserRole, type IUser } from "@/types/User.type"; 
-
-// Definicion de tipos
-interface User {
-    id: string;
-    name: string;
-    lastName: string;
-    email: string;
-    role: UserRole;
-}
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
+import { USER_ROLES, type UserRole, type IUser } from "@/types/User.type";
 
 interface AuthContextType {
-    user: IUser | null;  // 👈 Usa el tipo importado
+    user: IUser | null;
     token: string | null;
     isAuthenticated: boolean;
     isLoading: boolean;
@@ -28,38 +19,21 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    // Estados locales que alimentan el contexto
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<IUser | null>(null);
     const [token, setToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-    // Funcion para hacer login
-    const login = (newToken: string, userData: User) => {
-        // Guardar token en localStorage para persistencia
-        localStorage.setItem("token", newToken);
-        localStorage.setItem("user", JSON.stringify(userData));
-
-        // Actualizar estados
-        setToken(newToken);
-        setUser(userData);
-        setIsAuthenticated(true);
-    };
-
-    // Funcion para hacer logout
-    const logout = () => {
-        // Limpiar localStorage
+    const logout = useCallback(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
 
-        // Resetear el estado
         setToken(null);
         setUser(null);
         setIsAuthenticated(false);
-    };
+    }, []);
 
-    // Funcion para verificar si el usuario esta autenticado
-    const checkAuth = () => {
+    const checkAuth = useCallback(() => {
         setIsLoading(true);
 
         try {
@@ -67,41 +41,44 @@ export function AuthProvider({ children }: AuthProviderProps) {
             const savedUser = localStorage.getItem('user');
 
             if (savedToken && savedUser) {
-                const parsedUser = JSON.parse(savedUser) as User;
+                const parsedUser = JSON.parse(savedUser) as IUser;
                 
                 const validRoles = Object.values(USER_ROLES);
                 if (!validRoles.includes(parsedUser.role)) {
-                    console.warn('Rol inválido detectado en localStorage');
                     logout();
                     return;
                 }
 
-                // Si hay datos guardados y válidos, restauramos la sesión
                 setToken(savedToken);
                 setUser(parsedUser);
                 setIsAuthenticated(true);
             } else {
                 setIsAuthenticated(false);
             }
-        } catch (error) {
-            console.error('Error al verificar autenticación:', error);
-            // Si hay error parseando, limpiamos todo
+        } catch {
             logout();
             setIsAuthenticated(false);
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [logout]);
 
-    // Función para verificar roles
-    const hasRole = (roles: UserRole[]): boolean => {
+    const login = useCallback((newToken: string, userData: IUser) => {
+        localStorage.setItem("token", newToken);
+        localStorage.setItem("user", JSON.stringify(userData));
+
+        setToken(newToken);
+        setUser(userData);
+        setIsAuthenticated(true);
+    }, []);
+
+    const hasRole = useCallback((roles: UserRole[]): boolean => {
         return user ? roles.includes(user.role) : false;
-    };
+    }, [user]);
 
-    // Efecto para verificar autenticacion al montar la aplicacion
     useEffect(() => {
         checkAuth();
-    }, []);
+    }, [checkAuth]);
 
     const value: AuthContextType = {
         user,
@@ -121,7 +98,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     );
 }
 
-// Hook personalizado para usar el contexto
 export function useAuth() {
     const context = useContext(AuthContext);
 

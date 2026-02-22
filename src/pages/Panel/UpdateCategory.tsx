@@ -3,21 +3,22 @@ import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useGetCategories } from "@/hooks/useGetCategories";
 import { NavLink } from "react-router-dom";
 import { useDeleteCategory } from "@/hooks/useUpdateCategories";
+import { toast } from "sonner";
 
 export default function CategoriesList() {
   const { data: categories = [], isLoading } = useGetCategories();
   const { mutate: deleteCategory, isPending } = useDeleteCategory();
 
   const handleDelete = (id: string) => {
-
     deleteCategory(id, {
       onSuccess: () => {
-        console.log("Categoría eliminada correctamente");
+        toast.success("Categoría eliminada correctamente");
       },
-      onError: (error: any) => {
-        console.error(
-          error?.response?.data?.message || "Error al eliminar la categoría"
-        );
+      onError: (error: unknown) => {
+        const message = error instanceof Error 
+          ? error.message 
+          : "Error al eliminar la categoría";
+        toast.error(message);
       },
     });
   };

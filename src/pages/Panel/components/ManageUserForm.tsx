@@ -58,17 +58,13 @@ const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
                 onUserCreated();
             }
 
-        } catch (error: any) {
-            /* Handle Server Errors */
-            if (error.response?.data?.message) {
-                toast.error("Error al crear usuario", {
-                    description: error.response.data.message,
-                });
-            } else {
-                toast.error("Error al crear usuario", {
-                    description: "Ocurrió un error inesperado. Por favor intenta nuevamente.",
-                });
-            }
+        } catch (error: unknown) {
+            const message = error instanceof Error 
+                ? error.message 
+                : "Ocurrió un error inesperado. Por favor intenta nuevamente.";
+            toast.error("Error al crear usuario", {
+                description: message,
+            });
         } finally {
             setIsLoading(false);
         }

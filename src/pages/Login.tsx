@@ -15,7 +15,7 @@ export default function LoginPage() {
         <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
           {/* Título */}
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Bienvenido!</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Bienvenido</h2>
             <p className="text-gray-500 mt-2">
               Ingresa a tu cuenta
             </p>
@@ -61,12 +61,3 @@ export default function LoginPage() {
     </div>
   );
 }
- {/* Social login (opcional) */}
-            {/*
-            <div className="space-y-3 pt-4">
-              <button className="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors">
-                <img src="/google-icon.svg" alt="Google" className="w-5 h-5" />
-                <span className="text-sm font-medium text-gray-700">Continuar con Google</span>
-              </button>
-            </div>
-            */}

@@ -1,4 +1,3 @@
-// components/PanelProtectedRoute.tsx
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import type { UserRole } from '@/types/User.type';

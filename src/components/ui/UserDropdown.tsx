@@ -55,7 +55,7 @@ export default function UserDropdown({ userName, onLogout, role }: Props) {
           </button>
         </li>
 
-        { role === "admin" || role === "editor" && (
+        { (role === "admin" || role === "editor") && (
        <li>
          <NavLink to="/panel" className="flex items-center gap-2 w-full px-3 py-2 rounded-lg hover:bg-gray-100 transition">
            <LayoutPanelTop size={18} />

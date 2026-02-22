@@ -1,14 +1,13 @@
 import { useSearchParams } from "react-router-dom";
 import { useSearchNews } from "@/hooks/useGetNews";
 import NewsCard from "@/components/ui/NewsCard";
+import type { INews } from "@/types/News.type";
 
 export default function SearchResults() {
   const [searchParams] = useSearchParams();
 
   const query = searchParams.get("q")?.trim() ?? "";
   const shouldSearch = query.length > 0;
-
-  console.log("QUERY:", query, "shouldSearch:", shouldSearch);
 
   const {
     data,
@@ -50,14 +49,15 @@ export default function SearchResults() {
       )}
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item: any) => (
+        {items.map((item: INews) => (
           <NewsCard
-            key={item.id ?? item.slug}
+            key={item.id ?? item.slug ?? ""}
             title={item.title}
             summary={item.summary}
-            author={item.author?.name}
-            category={item.category?.name}
-            publicationDate={item.publicationDate}
+            author={item.author}
+            category={item.category}
+            mainImage={item.mainImage}
+            publicationDate={item.publicationDate ?? ""}
             variant="default"
           />
         ))}

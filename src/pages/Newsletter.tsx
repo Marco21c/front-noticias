@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -12,22 +12,22 @@ export default function Newsletter() {
   const navigate = useNavigate();
   const { subscription, isLoading, subscribe, updatePreferences, unsubscribe, isSubscribing, isUpdating, isUnsubscribing } = useNewsletter();
   const { data: categories = [] } = useGetCategories();
+  
+  const initialCategories = useMemo(() => subscription?.preferredCategories || [], [subscription]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
+    setSelectedCategories(initialCategories);
+  }, [initialCategories]);
+
+  useEffect(() => {
     if (!isAuthenticated) {
-      toast.warning("Inicia sesion para acceder al newsletter", {
+      toast.warning("Inicia sesión para acceder al newsletter", {
         description: "Serás redirigido al login...",
       });
       setTimeout(() => navigate("/login"), 2000);
     }
   }, [isAuthenticated, navigate]);
-
-  useEffect(() => {
-    if (subscription?.preferredCategories) {
-      setSelectedCategories(subscription.preferredCategories);
-    }
-  }, [subscription]);
 
   const handleToggleCategory = (categoryId: string) => {
     setSelectedCategories((prev) =>
@@ -48,13 +48,16 @@ export default function Newsletter() {
       { preferredCategories: selectedCategories },
       {
         onSuccess: () => {
-          toast.success("Suscripcion exitosa!", {
-            description: "Recibirás novedades de las categorias seleccionadas.",
+          toast.success("Suscripción exitosa!", {
+            description: "Recibirás novedades de las categorías seleccionadas.",
           });
         },
-        onError: (error: any) => {
+        onError: (error: unknown) => {
+          const message = error instanceof Error 
+            ? error.message 
+            : "Ocurrió un error inesperado.";
           toast.error("Error al suscribirse", {
-            description: error.response?.data?.message || "Ocurrio un error inesperado.",
+            description: message,
           });
         },
       }
@@ -73,12 +76,15 @@ export default function Newsletter() {
       {
         onSuccess: () => {
           toast.success("Preferencias actualizadas!", {
-            description: "Tus categorias han sido actualizadas.",
+            description: "Tus categorías han sido actualizadas.",
           });
         },
-        onError: (error: any) => {
+        onError: (error: unknown) => {
+          const message = error instanceof Error 
+            ? error.message 
+            : "Ocurrió un error inesperado.";
           toast.error("Error al actualizar", {
-            description: error.response?.data?.message || "Ocurrio un error inesperado.",
+            description: message,
           });
         },
       }
@@ -93,9 +99,12 @@ export default function Newsletter() {
         });
         setSelectedCategories([]);
       },
-      onError: (error: any) => {
+      onError: (error: unknown) => {
+        const message = error instanceof Error 
+          ? error.message 
+          : "Ocurrió un error inesperado.";
         toast.error("Error al desuscribirse", {
-          description: error.response?.data?.message || "Ocurrio un error inesperado.",
+          description: message,
         });
       },
     });
@@ -114,8 +123,8 @@ export default function Newsletter() {
           <h1 className="text-3xl font-bold text-gray-900">Newsletter</h1>
           <p className="text-gray-600 mt-2">
             {isSubscribed
-              ? "Actualiza tus preferencias o desuscribete"
-              : "Suscribete para recibir las ultimas novedades"}
+              ? "Actualiza tus preferencias o desuscríbete"
+              : "Suscríbete para recibir las últimas novedades"}
           </p>
         </div>
 
@@ -127,7 +136,7 @@ export default function Newsletter() {
           <>
             <div className="mb-8">
               <h2 className="text-lg font-semibold text-gray-800 mb-4">
-                Selecciona las categorias de tu interes:
+                Selecciona las categorías de tu interés:
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {categories.map((category) => (

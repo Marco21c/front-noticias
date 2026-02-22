@@ -12,12 +12,11 @@ export default function EditNew() {
   if (!id) return null;
 
   const onSubmit = (form: INewsCreate) => {
-    mutate({ id, payload:form },
-         {
-      onSuccess: () => navigate("/panel/news"),
-    }
+    mutate({ id, payload: form },
+      {
+        onSuccess: () => navigate("/panel/news"),
+      }
     );
-    
   };
 
   if (!data) return null;
@@ -28,7 +27,7 @@ export default function EditNew() {
   };
 
   return (
-   <div className="border border-secondary-300 justify-center rounded rounded-lg p-8 mr-4 ml-12 md:mr-12 md:ml-32 my-12 bg-secondary/90 flex">
+    <div className="border border-secondary-300 justify-center rounded-lg p-8 mr-4 ml-12 md:mr-12 md:ml-32 my-12 bg-secondary/90 flex">
 
     <FormNew
       defaultValues={defaultValues}

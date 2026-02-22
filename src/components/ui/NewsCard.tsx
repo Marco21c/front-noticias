@@ -7,8 +7,8 @@ type NewsCardsProps = {
   author: { name?: string };
   category: { id?: string; name?: string };
   mainImage?: string;
-  publicationDate: string;
-  variant: string;
+  publicationDate?: string | null;
+  variant: "default" | "highlighted" | "featured";
 };
 //Colores propios a cada categoria de noticia
 const categoryColors: Record<string, string> = {
@@ -84,10 +84,10 @@ export default function NewsCard({
       <span
         className={`
           mb-2 inline-block text-[11px] font-semibold uppercase tracking-widest px-2 py-1 rounded
-          ${categoryColors[category] ?? "text-gray-600 bg-gray-100"}
+          ${categoryColors[category?.name ?? ""] ?? "text-gray-600 bg-gray-100"}
   `}
 >
-          {category}
+          {category?.name ?? ""}
 </span>
 
         {/* Título */}
@@ -125,10 +125,12 @@ export default function NewsCard({
 
         {/* Footer */}
         <div className="mt-3 text-xs text-gray-500 flex gap-3">
-          <span>{author}</span>
-          <time>
-            {new Date(publicationDate).toLocaleDateString("es-AR")}
-          </time>
+          <span>{author?.name ?? ""}</span>
+          {publicationDate && (
+            <time dateTime={publicationDate}>
+              {new Date(publicationDate).toLocaleDateString("es-AR")}
+            </time>
+          )}
         </div>
       </div>
     </article>

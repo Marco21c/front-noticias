@@ -2,13 +2,13 @@ import { Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type Props = {
-  _id: string;
+  id: string;
   title: string;
   summary: string;
-  author: string;
-  category: string;
+  author: { name?: string };
+  category: { id?: string; name?: string };
   mainImage?: string;
-  publicationDate: string;
+  publicationDate?: string | null;
   onEdit: () => void;
   onDelete: () => void;
 };
@@ -62,10 +62,10 @@ export default function PanelNewsCard({
           <span
             className={`
               inline-block rounded px-2 py-1 text-xs font-bold uppercase tracking-widest border border-current/10
-              ${categoryColors[category] ?? "bg-gray-100 text-gray-700"}
+              ${categoryColors[category?.name || ""] ?? "bg-gray-100 text-gray-700"}
             `}
           >
-            {category}
+            {category?.name}
           </span>
 
           <div className="flex gap-1 opacity-70 group-hover:opacity-100 transition">
@@ -90,9 +90,9 @@ export default function PanelNewsCard({
         <p className="text-sm text-zinc-600 line-clamp-3">{summary}</p>
 
         <div className="pt-3 border-t border-zinc-200 flex items-center justify-between text-xs text-zinc-500">
-          <span>{author}</span>
+          <span>{author?.name}</span>
           <time>
-            {new Date(publicationDate).toLocaleDateString("es-AR")}
+            {publicationDate ? new Date(publicationDate).toLocaleDateString("es-AR") : ""}
           </time>
         </div>
       </div>

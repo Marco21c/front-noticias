@@ -3,8 +3,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGetCategories } from "@/hooks/useGetCategories";
 import type { INewsCreate } from "@/types/News.type";
+import { X } from "lucide-react";
 
-interface Props {
+interface FormNewProps {
   defaultValues?: Partial<INewsCreate>;
   onSubmit: (data: INewsCreate) => void;
   isPending?: boolean;
@@ -13,7 +14,7 @@ interface Props {
   submitText?: string;
 }
 
-export default function FormNew({ defaultValues, onSubmit, isPending, title = "Crear noticia", submitText = "Guardar", serverError }: Props) {
+export default function FormNew({ defaultValues, onSubmit, isPending, title = "Crear noticia", submitText = "Guardar", serverError }: FormNewProps) {
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<INewsCreate>({ defaultValues });
   const { data: categories = [] } = useGetCategories();
@@ -122,7 +123,7 @@ export default function FormNew({ defaultValues, onSubmit, isPending, title = "C
           >
             {tag}
             <button type="button" onClick={() => removeTag(tag)}>
-              ✕
+              <X size={14} />
             </button>
           </span>
         ))}

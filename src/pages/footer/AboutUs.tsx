@@ -1,6 +1,4 @@
-
-
-export default function AbouUs() {
+export default function AboutUs() {
   return (
     <main className="bg-white min-h-screen py-12 px-6">
       <div className="max-w-4xl mx-auto">

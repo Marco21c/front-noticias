@@ -52,11 +52,12 @@ const LoginForm = () => {
       });
 
       navigate("/panel/dashboard");
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error 
+        ? error.message 
+        : "Ocurrió un error inesperado. Intenta nuevamente.";
       toast.error("Error en el inicio de sesión", {
-        description:
-          error.response?.data?.message ||
-          "Ocurrió un error inesperado. Intenta nuevamente.",
+        description: message,
       });
     } finally {
       setIsLoading(false);

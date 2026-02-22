@@ -14,12 +14,11 @@ import { toast } from "sonner";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-   const hidden = useHideOnScroll();
+  const hidden = useHideOnScroll();
   const navigate = useNavigate();
   const { user, logout, isAuthenticated } = useAuth();
   const { data: categories = [] } = useGetCategories();
-  console.log(categories);
-   const handleSearch = (query: string) => {
+  const handleSearch = (query: string) => {
     navigate(`/search?q=${encodeURIComponent(query)}`);
   }
 

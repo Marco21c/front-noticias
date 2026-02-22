@@ -9,7 +9,7 @@ import OthersNews from "./components/OthersNews";
 
 export default function NewsCategory() {
     const { id } = useParams();
-     const { data, isLoading, isError }  = useGetNewsPorCategories (id!);
+    const { data, isLoading, isError } = useGetNewsPorCategories(id!);
 
           
     const invertedData = useMemo(
@@ -17,14 +17,13 @@ export default function NewsCategory() {
     [data]
   );
 
-   if (isLoading) return <div className="space-y-3 mt-10">
+  if (isLoading) return <div className="space-y-3 mt-10">
       <Skeleton className="h-40 w-full rounded-xl" />
       <Skeleton className="h-4 w-3/4" />
       <Skeleton className="h-4 w-1/2" />
     </div>
     if (isError) return <p>Ocurrió un error</p>
     if (!data || data.length === 0) return <p>No hay noticias</p>
-  
 
   
 return (

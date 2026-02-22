@@ -4,9 +4,9 @@ import DefaultLayout from "./pages/components/DefaultLayout";
 import { Skeleton } from "./components/ui/skeleton";
 import { AuthProvider } from "./contexts/AuthContext";
 import { PanelProtectedRoute } from "./pages/components/PanelProtectedRoute";
-import LoginPanel from "./pages/Panel/LoginPanel";
-import  { USER_ROLES } from "./types/User.type";
-import ManageUsers from "./pages/Panel/ManageUsers";
+import LoginPanel from "./pages/panel/LoginPanel";
+import { USER_ROLES } from "./types/User.type";
+import ManageUsers from "./pages/panel/ManageUsers";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -19,15 +19,15 @@ const AboutUs = lazy(() => import("./pages/footer/AboutUs"));
 const Policies = lazy(() => import("./pages/footer/Policies"));
 const TermsConditions = lazy(() => import("./pages/footer/Terms"));
 const Contact = lazy(() => import("./pages/footer/Contact"));
-const PanelUser = lazy(() => import("./pages/Panel/components/PanelUser"));
-const DashboardPanel = lazy(() => import("./pages/Panel/DashboardPanel"));
-const UpdateNew = lazy(() => import("./pages/Panel/UpdateNew"));
-const EditNew = lazy(() => import("./pages/Panel/EditNew"));
-const AddNew = lazy(() => import("./pages/Panel/AddNew"));
-const UpdateCategory = lazy(() => import("./pages/Panel/UpdateCategory"));
+const PanelUser = lazy(() => import("./pages/panel/components/PanelUser"));
+const DashboardPanel = lazy(() => import("./pages/panel/DashboardPanel"));
+const UpdateNew = lazy(() => import("./pages/panel/UpdateNew"));
+const EditNew = lazy(() => import("./pages/panel/EditNew"));
+const AddNew = lazy(() => import("./pages/panel/AddNew"));
+const UpdateCategory = lazy(() => import("./pages/panel/UpdateCategory"));
 const SearchResults = lazy(() => import("./pages/SearchResults"));
-const EditCategory = lazy(() => import("./pages/Panel/EditCategory"));
-const AddCategory = lazy(() => import("./pages/Panel/AddCategory"));
+const EditCategory = lazy(() => import("./pages/panel/EditCategory"));
+const AddCategory = lazy(() => import("./pages/panel/AddCategory"));
 
 
 const router = createBrowserRouter([

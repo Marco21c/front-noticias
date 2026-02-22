@@ -1,11 +1,12 @@
 import { useCreateCategory } from "@/hooks/useUpdateCategories";
 import FormCategories from "./components/FormCategories";
 import { useNavigate } from "react-router-dom";
+import type { ICategory } from "@/types/Category.type";
 
 export default function AddCategory() {
   const { mutate: createCategory, isPending } = useCreateCategory();
   const navigate = useNavigate();
-  const handleSubmit = (data: any) => {
+  const handleSubmit = (data: Partial<ICategory>) => {
     createCategory(data, {
       onSuccess: () => {
         navigate("/panel/categories"); 

@@ -19,7 +19,7 @@ export default function Footer() {
   const { data: categories = [] } = useGetCategories();
   
   return (
-    <footer className="bg-secondary/40 border-top border-2 mt-12">
+    <footer className="bg-secondary/40 border-t border-2 mt-12">
       <ScrollToTop />
       <div className="max-w-7xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-4">
         <div>
@@ -74,23 +74,23 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-4">Seguinos</h3>
           <div className="flex gap-4">
-            <a className="hover:text-black/70 transition cursor-pointer" target="_blank">
+            <a href="#" className="hover:text-black/70 transition cursor-pointer" target="_blank" rel="noopener noreferrer">
               <Facebook size={25} />
             </a>
-            <a className="hover:text-black/70 transition cursor-pointer" target="_blank">
+            <a href="#" className="hover:text-black/70 transition cursor-pointer" target="_blank" rel="noopener noreferrer">
               <Twitter size={25} />
             </a>
-            <a className="hover:text-black/70 transition cursor-pointer" target="_blank">
+            <a href="#" className="hover:text-black/70 transition cursor-pointer" target="_blank" rel="noopener noreferrer">
               <Instagram size={25} />
             </a>
-            <a className="hover:text-black/70 transition cursor-pointer" target="_blank">
+            <a href="#" className="hover:text-black/70 transition cursor-pointer" target="_blank" rel="noopener noreferrer">
               <Youtube size={25} />
             </a>
           </div>
         </div>
       </div>
       
-      <div className="border-t border-4 text-center text-xs text-neutral-500 py-4">
+      <div className="border-t border-gray-200 text-center text-xs text-neutral-500 py-4">
         © {new Date().getFullYear()} WebNoticias — Todos los derechos reservados
       </div>
     </footer>

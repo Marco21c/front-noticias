@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useGetNews } from "@/hooks/useGetNews";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AlertTriangle, Newspaper } from "lucide-react";
 
 import NewsList from "./components/NewsList";
 import NewsFeatured from "./components/NewsFeatured";
@@ -23,39 +24,39 @@ export default function Home() {
       </div>
     );
 
-if (isError) {
-  return (
-    <div className="mt-20 flex flex-col items-center text-center">
-      <span className="mb-4 text-4xl">⚠️</span>
+  if (isError) {
+    return (
+      <div className="mt-20 flex flex-col items-center text-center">
+        <AlertTriangle className="mb-4 w-12 h-12 text-red-500" />
 
-      <h2 className="mb-2 font-serif text-2xl font-bold">
-        Ocurrió un error
-      </h2>
+        <h2 className="mb-2 font-serif text-2xl font-bold">
+          Ocurrió un error
+        </h2>
 
-      <p className="max-w-md text-gray-600">
-        No pudimos cargar las noticias en este momento.
-        Por favor, intentá nuevamente más tarde.
-      </p>
-    </div>
-  );
-}
+        <p className="max-w-md text-gray-600">
+          No pudimos cargar las noticias en este momento.
+          Por favor, intentá nuevamente más tarde.
+        </p>
+      </div>
+    );
+  }
 
-if (!data || data.length === 0) {
-  return (
-    <div className="mt-20 flex flex-col items-center text-center">
-      <span className="mb-4 text-4xl">📰</span>
+  if (!data || data.length === 0) {
+    return (
+      <div className="mt-20 flex flex-col items-center text-center">
+        <Newspaper className="mb-4 w-12 h-12 text-gray-400" />
 
-      <h2 className="mb-2 font-serif text-2xl font-bold">
-        No hay noticias disponibles
-      </h2>
+        <h2 className="mb-2 font-serif text-2xl font-bold">
+          No hay noticias disponibles
+        </h2>
 
-      <p className="max-w-md text-gray-600">
-        Todavía no se publicaron noticias.
-        Volvé más tarde para ver las novedades.
-      </p>
-    </div>
-  );
-}
+        <p className="max-w-md text-gray-600">
+          Todavía no se publicaron noticias.
+          Volvé más tarde para ver las novedades.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <main className="max-w-6xl mx-auto px-4 pb-16">
@@ -64,7 +65,7 @@ if (!data || data.length === 0) {
         <h1 className="font-serif text-3xl md:text-4xl font-bold mb-2">
           Destacadas
         </h1>
-        <div className="h-1 w-30 bg-yellow-500 mb-8" />
+        <div className="h-1 w-24 bg-yellow-500 mb-8" />
 
         <NewsList data={invertedData.slice(0, 5)} />
       </section>

@@ -1,4 +1,3 @@
-
 export default function Policies(){
   return (
     <main className="bg-white min-h-screen py-12 px-6">
@@ -13,7 +12,6 @@ export default function Policies(){
             protegemos sus datos.
           </p>
 
-          {/* Datos recopilados */}
           <section>
             <h2 className="font-semibold text-lg mb-2">Datos que recopilamos</h2>
             <p>
@@ -23,7 +21,6 @@ export default function Policies(){
             </p>
           </section>
 
-          {/* Uso */}
           <section>
             <h2 className="font-semibold text-lg mb-2">Uso de la información</h2>
             <ul className="list-disc ml-6 space-y-1">
@@ -34,7 +31,6 @@ export default function Policies(){
             </ul>
           </section>
 
-          {/* Cookies */}
           <section>
             <h2 className="font-semibold text-lg mb-2">Cookies</h2>
             <p>
@@ -44,7 +40,6 @@ export default function Policies(){
             </p>
           </section>
 
-          {/* Seguridad */}
           <section>
             <h2 className="font-semibold text-lg mb-2">Protección de datos</h2>
             <p>
@@ -54,7 +49,6 @@ export default function Policies(){
             </p>
           </section>
 
-          {/* Terceros */}
           <section>
             <h2 className="font-semibold text-lg mb-2">Servicios de terceros</h2>
             <p>
@@ -64,7 +58,6 @@ export default function Policies(){
             </p>
           </section>
 
-          {/* Derechos */}
           <section>
             <h2 className="font-semibold text-lg mb-2">Derechos del usuario</h2>
             <p>
@@ -74,7 +67,6 @@ export default function Policies(){
             </p>
           </section>
 
-          {/* Cambios */}
           <section>
             <h2 className="font-semibold text-lg mb-2">Cambios en la política</h2>
             <p>
@@ -83,13 +75,12 @@ export default function Policies(){
             </p>
           </section>
 
-          {/* Contacto */}
           <section>
             <h2 className="font-semibold text-lg mb-2">Contacto</h2>
             <p>
               Para consultas relacionadas con privacidad:
               <br />
-              📧 contacto-privacidad@webnoticias.com
+              contacto-privacidad@webnoticias.com
             </p>
           </section>
         </div>

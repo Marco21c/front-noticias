@@ -10,7 +10,7 @@ export default function RegisterPage() {
                     {/* Logo mobile (solo visible en pantallas chicas) */}
                     <div className="md:hidden text-center mb-8">
                         <h1 className="text-3xl font-bold text-gray-900">Tu Proyecto</h1>
-                        <p className="text-gray-600 mt-2">Bienvenido!</p>
+                        <p className="text-gray-600 mt-2">Bienvenido</p>
                     </div>
 
                     {/* Título de la sección */}

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useCreateNew } from "@/hooks/useUpdateNew";
-import FormNew from "@/pages/Panel/components/FormNew";
+import FormNew from "@/pages/panel/components/FormNew";
 import { toast } from "sonner";
 import type { INewsCreate } from "@/types/News.type";
 
@@ -11,14 +11,14 @@ export default function AddNew() {
   const onSubmit = (data: INewsCreate) => {
     mutate(data, {
       onSuccess: () => {
-        toast.success("Noticia creada correctamente", {  });
+        toast.success("Noticia creada correctamente");
         navigate("/panel/news");
       },
     });
   };
 
-return (
-  <div className="px-6 md:px-12 py-10">
+  return (
+    <div className="px-6 md:px-12 py-10">
     
     <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
       
