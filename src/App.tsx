@@ -46,7 +46,7 @@ const router = createBrowserRouter([
     ]
   },
 
-  // LOGIN PANEL AISLADO
+  // PANEL AISLADO
   {
     path: "/panel",
     element: <LoginPanel />

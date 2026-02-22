@@ -78,7 +78,7 @@ const LoginForm = () => {
     }
 
 return (
-    <Card className="w-full p-8 space-y-6 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+    <Card className="w-full p-6 space-y-6 shadow-[0_10px_30px_rgba(0,0,0,0.25)] overflow-auto">
       
        <div className="text-center space-y-2">
         <h2 className="text-3xl font-bold text-zinc-800">
