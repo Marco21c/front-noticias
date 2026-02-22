@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCategories } from "@/services/category.services";
+import { getCategories, getCategoryById } from "@/services/category.services";
 import type { ICategory } from "@/types/Category.type";
 
 export const useGetCategories = () => {
@@ -8,3 +8,11 @@ export const useGetCategories = () => {
     queryFn: getCategories,
   });
 };
+
+export const useGetCategoryById = (id: string) => {
+  return useQuery<ICategory>({
+    queryKey: ["category", id],
+    queryFn: () => getCategoryById(id),
+    enabled: !!id, 
+  });
+}
