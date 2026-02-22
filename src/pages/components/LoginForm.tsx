@@ -10,44 +10,48 @@ import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-/* VALIDATION SCHEMA */
+/**
+ * Esquema de validacion para el formulario de inicio de sesion.
+ */
 const loginSchema = z.object({
     email: z.string().email('Invalid email.'),
     password: z.string().min(6, 'Password must be at least 6 characters long.'),
 });
 
-
 type LoginFormData = z.infer<typeof loginSchema>;
 
+/**
+ * Componente de formulario para el inicio de sesion de usuarios.
+ * Permite a los usuarios autenticarse con email y contrasena.
+ * 
+ * @component
+ * @returns {JSX.Element} Formulario de login con validacion
+ */
 const LoginForm = () => {
-    /* Local States */
     const [isLoading, setIsLoading] = useState(false);
     const [serverError, setServerError] = useState<string | null>(null);
-
-    /* Navigation Hooks */
     const navigate = useNavigate();
-
     const { login } = useAuth();
 
-    /* REACT HOOK FORM CONFIGURATION */
     const {
-        register, handleSubmit, formState: { errors }, // validation client errors
-
+        register, handleSubmit, formState: { errors },
     } = useForm<LoginFormData>({
-        resolver: zodResolver(loginSchema), // Zod validations before submit
+        resolver: zodResolver(loginSchema),
     });
 
-    /* SUBMIT FUNCTION */
+    /**
+     * Maneja el envio del formulario de login.
+     * Autentica al usuario y redirige a la pagina principal.
+     * 
+     * @param {LoginFormData} data - Credenciales del usuario
+     */
     const onSubmit = async (data: LoginFormData) => {
         try {
             setIsLoading(true);
             setServerError(null);
 
-            /* API CALL */
             const response = await apiClient.post('/auth/login', data);
 
-
-            /* SAVE TOKEN */
             const { token, user } = response.data.data;
             login(token, user);
 
@@ -55,7 +59,6 @@ const LoginForm = () => {
                 { description: `Bienvenido ${response.data.data.user.name}`
             })
 
-            /* REDIRECT */
             navigate('/');
 
         } catch (error: unknown) {
@@ -63,18 +66,17 @@ const LoginForm = () => {
                 const message = (error as { response?: { data?: { message?: string } } })?.response?.data?.message;
                 setServerError(message || "Login error. Please try again!");
                 toast.error("Error en los datos!", {
-                    description: message || "Ocurrió un error inesperado.",
+                    description: message || "Ocurrio un error inesperado.",
                 });
             } else {
                 setServerError('Login error. Please try again!');
-                toast.error("Error en el inicio de sesión", {
-                    description: "Ocurrió un error inesperado. Por favor intenta nuevamente.",
+                toast.error("Error en el inicio de sesion", {
+                    description: "Ocurrio un error inesperado. Por favor intenta nuevamente.",
                 });
             }
         } finally {
             setIsLoading(false);
         }
-
     }
 
 return (
@@ -82,7 +84,7 @@ return (
       
        <div className="text-center space-y-2">
         <h2 className="text-3xl font-bold text-zinc-800">
-          Iniciar Sesión
+          Iniciar Sesion
         </h2>
         <p className="text-sm text-zinc-500">
           Ingresa tus credenciales para acceder a tu cuenta.
@@ -91,7 +93,6 @@ return (
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         
-        {/* EMAIL */}
         <div className="space-y-2">
           <label htmlFor="email" className="text-sm font-medium">
             Email
@@ -110,10 +111,9 @@ return (
           )}
         </div>
 
-        {/* PASSWORD */}
         <div className="space-y-2">
           <label htmlFor="password" className="text-sm font-medium">
-            Contraseña
+            Contrasena
           </label>
           <Input
             id="password"
@@ -129,7 +129,6 @@ return (
           )}
         </div>
 
-        {/* BUTTON */}
         <Button
           type="submit"
           variant="warning"
@@ -137,10 +136,9 @@ return (
           className="w-full"
           disabled={isLoading}
         >
-          {isLoading ? "Iniciando Sesión..." : "Iniciar Sesión"}
+          {isLoading ? "Iniciando Sesion..." : "Iniciar Sesion"}
         </Button>
 
-        {/* SERVER ERROR */}
         {serverError && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
             {serverError}

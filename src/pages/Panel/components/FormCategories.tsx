@@ -9,6 +9,14 @@ interface FormCategoriesProps {
   submitLabel?: string;
 }
 
+/**
+ * Formulario reutilizable para crear y editar categorias.
+ * Incluye campos para nombre, descripcion y estado de activacion.
+ * 
+ * @component
+ * @param {FormCategoriesProps} props - Propiedades del formulario
+ * @returns {JSX.Element} Formulario de categoria
+ */
 export default function FormCategories({
   initialValues,
   onSubmit,
@@ -47,7 +55,7 @@ export default function FormCategories({
         )}
       </div>
       <div>
-        <label className="label pb-4">Descripción</label>
+        <label className="label pb-4">Descripcion</label>
         <textarea
           className="textarea textarea-bordered w-full border rounded-xl border-gray-300 p-2"
           {...register("description")}

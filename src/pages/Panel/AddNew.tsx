@@ -4,10 +4,22 @@ import FormNew from "@/pages/panel/components/FormNew";
 import { toast } from "sonner";
 import type { INewsCreate } from "@/types/News.type";
 
+/**
+ * Pagina para crear una nueva noticia.
+ * Muestra el formulario de creacion y una vista previa placeholder.
+ * 
+ * @component
+ * @returns {JSX.Element} Pagina con formulario de creacion de noticia
+ */
 export default function AddNew() {
   const navigate = useNavigate();
   const { mutate, isPending, error } = useCreateNew();
 
+  /**
+   * Maneja el envio del formulario de creacion de noticia.
+   * 
+   * @param {INewsCreate} data - Datos de la nueva noticia
+   */
   const onSubmit = (data: INewsCreate) => {
     mutate(data, {
       onSuccess: () => {
@@ -22,7 +34,6 @@ export default function AddNew() {
     
     <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
       
-      {/* Formulario */}
       <div className="lg:col-span-2 bg-white rounded-2xl border border-zinc-200 shadow-sm p-8">
         <FormNew
           onSubmit={onSubmit}
@@ -33,7 +44,6 @@ export default function AddNew() {
         />
       </div>
 
-      {/* Vista previa */}
       <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500 mb-6">
           Vista previa

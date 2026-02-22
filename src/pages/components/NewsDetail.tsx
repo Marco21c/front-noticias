@@ -5,6 +5,15 @@ type Props = {
     news: INews;
 };
 
+/**
+ * Componente de detalle completo de una noticia.
+ * Muestra el titulo, resumen, contenido, imagen y puntos destacados.
+ * 
+ * @component
+ * @param {Props} props - Propiedades del componente
+ * @param {INews} props.news - Datos de la noticia a mostrar
+ * @returns {JSX.Element} Articulo con el contenido completo de la noticia
+ */
 export default function NewsDetail({ news }: Props) {
     return (
         <article className="mx-auto max-w-3xl px-4 py-10">
@@ -27,7 +36,7 @@ export default function NewsDetail({ news }: Props) {
 
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-8">
                 <span>Por {news.author.name}</span>
-                <span className="text-yellow-600">•</span>
+                <span className="text-yellow-600">*</span>
                 <time>
                     {dayjs(news.publicationDate).format("DD [de] MMMM [de] YYYY")}
                 </time>
@@ -42,7 +51,6 @@ export default function NewsDetail({ news }: Props) {
                 />
             )}
 
-            {/* Línea horizontal */}
             <div className="h-px w-full bg-yellow-500 mb-8" />
 
 

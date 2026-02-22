@@ -1,4 +1,8 @@
- export const baseStyles = `
+/**
+ * Estilos base para los enlaces de navegacion.
+ * Incluye efectos de hover con animacion de subrayado.
+ */
+export const baseStyles = `
   relative inline-block px-3 py-1 mb-2
   font-medium md:text-base text-xs
   after:content-['']

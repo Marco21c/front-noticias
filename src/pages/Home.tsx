@@ -7,6 +7,13 @@ import NewsList from "./components/NewsList";
 import NewsFeatured from "./components/NewsFeatured";
 import OthersNews from "./components/OthersNews";
 
+/**
+ * Pagina principal del sitio que muestra las noticias organizadas por relevancia.
+ * Las noticias se dividen en tres secciones: Destacadas, Importantes y Otras.
+ * 
+ * @component
+ * @returns {JSX.Element} Pagina de inicio con grid de noticias
+ */
 export default function Home() {
   const { data, isLoading, isError } = useGetNews();
 
@@ -30,12 +37,12 @@ export default function Home() {
         <AlertTriangle className="mb-4 w-12 h-12 text-red-500" />
 
         <h2 className="mb-2 font-serif text-2xl font-bold">
-          Ocurrió un error
+          Ocurrio un error
         </h2>
 
         <p className="max-w-md text-gray-600">
           No pudimos cargar las noticias en este momento.
-          Por favor, intentá nuevamente más tarde.
+          Por favor, intenta nuevamente mas tarde.
         </p>
       </div>
     );
@@ -51,8 +58,8 @@ export default function Home() {
         </h2>
 
         <p className="max-w-md text-gray-600">
-          Todavía no se publicaron noticias.
-          Volvé más tarde para ver las novedades.
+          Todavia no se publicaron noticias.
+          Volve mas tarde para ver las novedades.
         </p>
       </div>
     );
@@ -60,7 +67,6 @@ export default function Home() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 pb-16">
-      {/* ===== DESTACADAS ===== */}
       <section className="mt-12">
         <h1 className="font-serif text-3xl md:text-4xl font-bold mb-2">
           Destacadas
@@ -70,7 +76,6 @@ export default function Home() {
         <NewsList data={invertedData.slice(0, 5)} />
       </section>
 
-      {/* ===== IMPORTANTES ===== */}
       {invertedData.length >= 5 && (
         <section className="mt-16">
           <h2 className="font-serif text-2xl md:text-3xl font-bold mb-2">
@@ -82,7 +87,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* ===== OTRAS NOTICIAS ===== */}
       {invertedData.length >= 8 && (
         <section className="mt-16">
           <h2 className="mt-14 mb-6 text-xl font-serif font-semibold border-l-4 border-gray-400 pl-3">

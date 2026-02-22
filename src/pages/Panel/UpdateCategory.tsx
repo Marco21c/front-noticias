@@ -5,26 +5,37 @@ import { NavLink } from "react-router-dom";
 import { useDeleteCategory } from "@/hooks/useUpdateCategories";
 import { toast } from "sonner";
 
+/**
+ * Pagina de listado y gestion de categorias.
+ * Muestra una tabla con todas las categorias y permite crear, editar y eliminar.
+ * 
+ * @component
+ * @returns {JSX.Element} Tabla de categorias con acciones
+ */
 export default function CategoriesList() {
   const { data: categories = [], isLoading } = useGetCategories();
   const { mutate: deleteCategory, isPending } = useDeleteCategory();
 
+  /**
+   * Maneja la eliminacion de una categoria.
+   * @param {string} id - ID de la categoria a eliminar
+   */
   const handleDelete = (id: string) => {
     deleteCategory(id, {
       onSuccess: () => {
-        toast.success("Categoría eliminada correctamente");
+        toast.success("Categoria eliminada correctamente");
       },
       onError: (error: unknown) => {
         const message = error instanceof Error 
           ? error.message 
-          : "Error al eliminar la categoría";
+          : "Error al eliminar la categoria";
         toast.error(message);
       },
     });
   };
 
   if (isLoading) {
-    return <p className="p-6 text-zinc-500">Cargando categorías...</p>;
+    return <p className="p-6 text-zinc-500">Cargando categorias...</p>;
   }
 
   const hasCategories = categories.length > 0;
@@ -35,17 +46,17 @@ export default function CategoriesList() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-semibold text-zinc-900">
-              Categorías
+              Categorias
             </h1>
             <p className="text-sm text-zinc-500 mt-1">
-              Gestiona las categorías de las noticias ({categories.length})
+              Gestiona las categorias de las noticias ({categories.length})
             </p>
           </div>
 
           <NavLink to="/panel/categories/new">
             <Button className="flex items-center gap-2">
               <Plus size={16} />
-              Nueva categoría
+              Nueva categoria
             </Button>
           </NavLink>
         </div>
@@ -97,12 +108,12 @@ export default function CategoriesList() {
           ) : (
             <div className="py-16 flex flex-col items-center justify-center text-center">
               <p className="text-zinc-500 mb-4">
-                No hay categorías creadas
+                No hay categorias creadas
               </p>
               <NavLink to="/panel/categories/new">
                 <Button className="flex items-center gap-2">
                   <Plus size={16} />
-                  Crear primera categoría
+                  Crear primera categoria
                 </Button>
               </NavLink>
             </div>

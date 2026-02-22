@@ -5,9 +5,22 @@ type Props = {
   onSearch?: (value: string) => void;
 };
 
+/**
+ * Barra de busqueda para encontrar noticias.
+ * Permite buscar por termino y ejecuta el callback onSearch al enviar.
+ * 
+ * @component
+ * @param {Props} props - Propiedades del componente
+ * @param {(value: string) => void} [props.onSearch] - Callback al enviar busqueda
+ * @returns {JSX.Element} Formulario de busqueda
+ */
 export default function SearchBar({onSearch}: Props) {
     const [value, setValue] = useState("");
 
+    /**
+     * Maneja el envio del formulario de busqueda.
+     * @param {React.FormEvent} e - Evento de formulario
+     */
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSearch?.(value);
@@ -25,4 +38,3 @@ export default function SearchBar({onSearch}: Props) {
     </form>
   )
 }
-

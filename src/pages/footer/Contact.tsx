@@ -1,7 +1,18 @@
 import type { FormEvent } from "react";
 import { toast } from "sonner";
 
+/**
+ * Pagina de contacto con formulario para enviar mensajes.
+ * Muestra un mensaje de exito tras el envio (solo frontend).
+ * 
+ * @component
+ * @returns {JSX.Element} Formulario de contacto
+ */
 export default function Contact() {
+  /**
+   * Maneja el envio del formulario de contacto.
+   * @param {FormEvent<HTMLFormElement>} e - Evento de formulario
+   */
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -16,7 +27,7 @@ export default function Contact() {
     <main className="min-h-screen py-12 px-6">
       <div className="max-w-2xl mx-auto bg-secondary/80 p-8 rounded-2xl shadow-md">
         <h1 className="text-3xl font-bold mb-8 mx-4">Contactanos</h1>
-        <p className="text-neutral-600 mb-6 mx-4">Escríbenos y nos pondremos en contacto contigo lo antes posible.</p>
+        <p className="text-neutral-600 mb-6 mx-4">Escribenos y nos pondremos en contacto contigo lo antes posible.</p>
         <form
           onSubmit={handleSubmit}
           className="space-y-5 p-6 rounded-2xl shadow-sm"
@@ -47,7 +58,7 @@ export default function Contact() {
             <textarea
               required
               rows={5}
-              placeholder="Escribí tu mensaje..."
+              placeholder="Escribi tu mensaje..."
               className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black/20 resize-none"
             />
           </div>

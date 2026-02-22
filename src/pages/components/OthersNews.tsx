@@ -5,6 +5,16 @@ type Props = {
   data: INews[];
 };
 
+/**
+ * Componente que muestra noticias adicionales en un layout complejo.
+ * La primera noticia es featured, las siguientes dos son default,
+ * y las ultimas cinco tambien son default.
+ * 
+ * @component
+ * @param {Props} props - Propiedades del componente
+ * @param {INews[]} props.data - Lista de noticias a mostrar (hasta 8)
+ * @returns {JSX.Element} Grid complejo de noticias adicionales
+ */
 export default function OthersNews({data}: Props) {
     const featuredNews = data[0];
     const defaultNews = data.slice(1, 3);

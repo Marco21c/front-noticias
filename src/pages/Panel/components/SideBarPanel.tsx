@@ -1,17 +1,40 @@
 import { useState } from "react";
 import { LayoutDashboard, Newspaper, PlusSquare, Folder, Menu, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
+/**
+ * Enlaces de navegacion del panel de administracion.
+ * Cada enlace contiene un nombre, icono y ruta de destino.
+ */
 const links = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/panel/dashboard" },
   { name: "Noticias", icon: Newspaper, href: "/panel/news" },
   { name: "Crear", icon: PlusSquare, href: "/panel/new" },
-  { name: "Categorías", icon: Folder, href: "/panel/categories" }
+  { name: "Categorias", icon: Folder, href: "/panel/categories" }
 ];
 
+/**
+ * Barra lateral de navegacion para el panel de administracion.
+ * Proporciona navegacion a las diferentes secciones del panel
+ * y permite cerrar sesion.
+ * 
+ * @component
+ * @returns {JSX.Element} Barra lateral colapsable con enlaces de navegacion
+ */
 export default function AdminSidebar() {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  /**
+   * Maneja el cierre de sesion del usuario.
+   * Cierra la sesion y redirige a la pagina principal.
+   */
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <aside
@@ -24,9 +47,7 @@ export default function AdminSidebar() {
         flex flex-col justify-between
       `}
     >
-      {/* Top */}
       <div>
-        {/* Header */}
         <div className="flex items-center justify-between px-4 py-5 border-b border-zinc-800">
           {open && (
             <h1 className="text-sm font-semibold tracking-wide text-white">
@@ -42,7 +63,6 @@ export default function AdminSidebar() {
           </button>
         </div>
 
-        {/* Nav */}
         <nav className="flex flex-col gap-1 p-3 mt-4">
           {links.map(({ name, icon: Icon, href }) => (
             <NavLink
@@ -69,10 +89,9 @@ export default function AdminSidebar() {
         </nav>
       </div>
 
-      {/* Bottom */}
       <div className="p-4 border-t border-zinc-800">
         <button
-          onClick={() => navigate("/")}
+          onClick={handleLogout}
           className="flex items-center gap-3 w-full px-3 py-2 rounded-xl
                     text-sm font-medium text-zinc-400
                     hover:bg-red-500/10 hover:text-red-400

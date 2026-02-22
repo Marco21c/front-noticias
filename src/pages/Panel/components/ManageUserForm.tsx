@@ -7,14 +7,17 @@ import { toast } from "sonner";
 import { Button } from '@/components/ui/button';
 import { USER_ROLES } from '@/types/User.type';
 
-/* VALIDATION SCHEMA */
+/**
+ * Esquema de validacion para el formulario de creacion de usuarios.
+ * Valida que los campos cumplan con los requisitos minimos de longitud y formato.
+ */
 const manageUserSchema = z.object({
     name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.'),
     lastName: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.'),
-    email: z.email('Email inválido.'),
-    password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres.'),
+    email: z.email('Email invalido.'),
+    password: z.string().min(6, 'La contrasena debe tener al menos 6 caracteres.'),
     role: z.enum([USER_ROLES.ADMIN, USER_ROLES.EDITOR, USER_ROLES.USER] as const, {
-        message: 'Debe seleccionar un rol válido.'
+        message: 'Debe seleccionar un rol valido.'
     })
 });
 
@@ -24,11 +27,19 @@ interface ManageUserFormProps {
     onUserCreated?: () => void;
 }
 
+/**
+ * Componente de formulario para la creacion de usuarios desde el panel de administracion.
+ * Permite crear usuarios con roles de administrador, editor o usuario.
+ * Incluye validacion de campos y descripcion de cada rol disponible.
+ * 
+ * @component
+ * @param {ManageUserFormProps} props - Propiedades del componente
+ * @param {() => void} props.onUserCreated - Callback que se ejecuta tras crear un usuario exitosamente
+ * @returns {JSX.Element} Formulario de creacion de usuarios
+ */
 const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
-    /* Local States */
     const [isLoading, setIsLoading] = useState(false);
 
-    /* REACT HOOK FORM CONFIGURATION */
     const {
         register,
         handleSubmit,
@@ -38,22 +49,24 @@ const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
         resolver: zodResolver(manageUserSchema),
     });
 
-    /* SUBMIT FUNCTION */
+    /**
+     * Maneja el envio del formulario de creacion de usuario.
+     * Realiza la peticion POST al servidor y ejecuta el callback de exito.
+     * 
+     * @param {ManageUserFormData} data - Datos validados del formulario
+     */
     const onSubmit = async (data: ManageUserFormData) => {
         try {
             setIsLoading(true);
 
-            /* API CALL */
             await apiClient.post('/user', data);
 
             toast.success("Usuario creado exitosamente!", {
                 description: `El usuario ${data.name} ${data.lastName} con rol ${data.role} ha sido creado.`,
             });
 
-            /* Reset form after successful creation */
             reset();
 
-            /* Callback to refresh user list if provided */
             if (onUserCreated) {
                 onUserCreated();
             }
@@ -61,7 +74,7 @@ const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
         } catch (error: unknown) {
             const message = error instanceof Error 
                 ? error.message 
-                : "Ocurrió un error inesperado. Por favor intenta nuevamente.";
+                : "Ocurrio un error inesperado. Por favor intenta nuevamente.";
             toast.error("Error al crear usuario", {
                 description: message,
             });

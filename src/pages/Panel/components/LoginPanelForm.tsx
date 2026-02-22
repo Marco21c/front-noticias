@@ -11,14 +11,23 @@ import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import type { UserRole } from "@/types/User.type";
 
-/* VALIDATION */
+/**
+ * Esquema de validacion para el formulario de login del panel.
+ */
 const loginSchema = z.object({
-  email: z.string().email("Email inválido."),
-  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres."),
+  email: z.string().email("Email invalido."),
+  password: z.string().min(6, "La contrasena debe tener al menos 6 caracteres."),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
+/**
+ * Componente de formulario para el inicio de sesion en el panel de administracion.
+ * Autentica al usuario y lo redirige al dashboard.
+ * 
+ * @component
+ * @returns {JSX.Element} Formulario de login del panel
+ */
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -32,6 +41,11 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  /**
+   * Maneja el envio del formulario de login del panel.
+   * 
+   * @param {LoginFormData} data - Credenciales del usuario
+   */
   const onSubmit = async (data: LoginFormData) => {
     try {
       setIsLoading(true);
@@ -47,7 +61,7 @@ const LoginForm = () => {
         role: user.role as UserRole,
       });
 
-      toast.success("Sesión iniciada!", {
+      toast.success("Sesion iniciada!", {
         description: `Bienvenido ${user.name} ${user.lastName}`,
       });
 
@@ -55,8 +69,8 @@ const LoginForm = () => {
     } catch (error: unknown) {
       const message = error instanceof Error 
         ? error.message 
-        : "Ocurrió un error inesperado. Intenta nuevamente.";
-      toast.error("Error en el inicio de sesión", {
+        : "Ocurrio un error inesperado. Intenta nuevamente.";
+      toast.error("Error en el inicio de sesion", {
         description: message,
       });
     } finally {
@@ -68,11 +82,10 @@ const LoginForm = () => {
     <div className="flex justify-center mt-16 px-4">
       <Card className="w-full max-w-md p-8 space-y-6">
         <h2 className="text-2xl font-bold text-center">
-          Iniciar Sesión
+          Iniciar Sesion
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* EMAIL */}
           <div className="space-y-1">
             <label className="text-sm font-medium">Email</label>
             <Input
@@ -88,12 +101,11 @@ const LoginForm = () => {
             )}
           </div>
 
-          {/* PASSWORD */}
           <div className="space-y-1">
-            <label className="text-sm font-medium">Contraseña</label>
+            <label className="text-sm font-medium">Contrasena</label>
             <Input
               type="password"
-              placeholder="Ingresa tu contraseña"
+              placeholder="Ingresa tu contrasena"
               disabled={isLoading}
               {...register("password")}
             />
@@ -111,7 +123,7 @@ const LoginForm = () => {
             className="w-full"
             disabled={isLoading}
           >
-            {isLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
+            {isLoading ? "Iniciando sesion..." : "Iniciar Sesion"}
           </Button>
         </form>
       </Card>
@@ -120,4 +132,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-

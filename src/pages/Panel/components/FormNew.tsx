@@ -14,6 +14,15 @@ interface FormNewProps {
   submitText?: string;
 }
 
+/**
+ * Formulario reutilizable para crear y editar noticias.
+ * Incluye campos para titulo, resumen, imagen, contenido, tipo, categoria
+ * y palabras clave (highlights).
+ * 
+ * @component
+ * @param {FormNewProps} props - Propiedades del formulario
+ * @returns {JSX.Element} Formulario completo de noticia
+ */
 export default function FormNew({ defaultValues, onSubmit, isPending, title = "Crear noticia", submitText = "Guardar", serverError }: FormNewProps) {
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<INewsCreate>({ defaultValues });
@@ -24,7 +33,10 @@ export default function FormNew({ defaultValues, onSubmit, isPending, title = "C
   );
   const [input, setInput] = useState("");
 
-
+  /**
+   * Agrega un nuevo tag a la lista de highlights.
+   * @param {string} value - Valor del tag a agregar
+   */
   const addTag = (value: string) => {
     const clean = value.trim();
     if (!clean || tags.includes(clean)) return;
@@ -34,12 +46,20 @@ export default function FormNew({ defaultValues, onSubmit, isPending, title = "C
     setValue("highlights", updated);
   };
 
+  /**
+   * Elimina un tag de la lista de highlights.
+   * @param {string} tag - Tag a eliminar
+   */
   const removeTag = (tag: string) => {
     const updated = tags.filter((t) => t !== tag);
     setTags(updated);
     setValue("highlights", updated);
   };
 
+  /**
+   * Maneja eventos de teclado para agregar tags.
+   * @param {React.KeyboardEvent<HTMLInputElement>} e - Evento de teclado
+   */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
@@ -60,9 +80,9 @@ export default function FormNew({ defaultValues, onSubmit, isPending, title = "C
         </div>
       )}
       <input
-        placeholder="Título"
+        placeholder="Titulo"
         className="w-full border p-2 rounded-lg"
-        {...register("title", { required: "El título es obligatorio" })}
+        {...register("title", { required: "El titulo es obligatorio" })}
       />
       {errors.title && <p className="text-red-500">{errors.title.message}</p>}
 
@@ -103,7 +123,7 @@ export default function FormNew({ defaultValues, onSubmit, isPending, title = "C
         {...register("category", { required: true })}
         className="w-full border p-2 rounded-lg"
       >
-        <option value="">Seleccionar categoría</option>
+        <option value="">Seleccionar categoria</option>
         {categories.map((c) => (
           <option key={c.id} value={c.id}>
             {c.name}
@@ -112,7 +132,6 @@ export default function FormNew({ defaultValues, onSubmit, isPending, title = "C
       </select>
       {errors.category && <p className="text-red-500">{errors.category.message}</p>}
 
-      {/* TAGS */}
       <input type="hidden" {...register("highlights")} />
 
       <div className="border rounded-lg p-2 flex flex-wrap gap-2">

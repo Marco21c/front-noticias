@@ -10,7 +10,10 @@ type NewsCardsProps = {
   publicationDate?: string | null;
   variant: "default" | "highlighted" | "featured";
 };
-//Colores propios a cada categoria de noticia
+
+/**
+ * Colores asignados a cada categoria para la visualizacion de badges.
+ */
 const categoryColors: Record<string, string> = {
   education: "text-orange-700 bg-orange-200",
   technology: "text-blue-700 bg-blue-100",
@@ -19,10 +22,16 @@ const categoryColors: Record<string, string> = {
   politic: "text-purple-700 bg-purple-100",
   economy: "text-yellow-700 bg-yellow-100",
   science: "text-indigo-700 bg-indigo-100"
-
 };
 
-
+/**
+ * Tarjeta de noticia reutilizable con diferentes variantes visuales.
+ * Soporta tres variantes: highlighted (grande), featured (mediana) y default (pequena).
+ * 
+ * @component
+ * @param {NewsCardsProps} props - Propiedades del componente
+ * @returns {JSX.Element} Tarjeta de noticia con link o sin el
+ */
 export default function NewsCard({
   title,
   slug,
@@ -46,7 +55,6 @@ export default function NewsCard({
     >
 
 
-      {/* Imagen */}
       {mainImage && (
         <div
           className={`
@@ -74,13 +82,11 @@ export default function NewsCard({
         
       )}
 
-      {/* Contenido */}
       <div className={`
               space-y-2
               ${variant === "highlighted" ? "space-y-3" : ""}
   `}
 >
-        {/* Categoría */}
       <span
         className={`
           mb-2 inline-block text-[11px] font-semibold uppercase tracking-widest px-2 py-1 rounded
@@ -90,7 +96,6 @@ export default function NewsCard({
           {category?.name ?? ""}
 </span>
 
-        {/* Título */}
         <h2
           className={`
             font-bold leading-tight tracking-tight font-serif
@@ -108,7 +113,6 @@ export default function NewsCard({
           {title}
         </h2>
 
-        {/* Resumen */}
         <p
           className={`
             mt-2 text-gray-700 leading-relaxed
@@ -123,7 +127,6 @@ export default function NewsCard({
           {summary}
         </p>
 
-        {/* Footer */}
         <div className="mt-3 text-xs text-gray-500 flex gap-3">
           <span>{author?.name ?? ""}</span>
           {publicationDate && (

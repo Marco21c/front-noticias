@@ -4,13 +4,26 @@ import type { INewsCreate } from "@/types/News.type";
 import { useGetNew } from "@/hooks/useGetNews";
 import { useUpdateNew } from "@/hooks/useUpdateNew";
 
+/**
+ * Pagina para editar una noticia existente.
+ * Carga los datos de la noticia y permite modificarlos.
+ * 
+ * @component
+ * @returns {JSX.Element | null} Formulario de edicion o null si no hay ID
+ */
 export default function EditNew() {
   const { id } = useParams();
   const { data } = useGetNew(id);
   const { mutate, isPending } = useUpdateNew();
   const navigate = useNavigate();
+  
   if (!id) return null;
 
+  /**
+   * Maneja el envio del formulario de edicion.
+   * 
+   * @param {INewsCreate} form - Datos actualizados de la noticia
+   */
   const onSubmit = (form: INewsCreate) => {
     mutate({ id, payload: form },
       {

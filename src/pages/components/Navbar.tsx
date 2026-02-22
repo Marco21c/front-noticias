@@ -11,26 +11,52 @@ import useHideOnScroll from "@/components/ui/useHideOnScroll";
 import { useAuth } from "@/contexts/AuthContext";
 import UserDropdown from "@/components/ui/UserDropdown";
 import { toast } from "sonner";
+import { USER_ROLES, type UserRole } from "@/types/User.type";
 
+/**
+ * Barra de navegacion principal del sitio.
+ * Incluye logo, buscador, menu de usuario y navegacion por categorias.
+ * Se adapta a dispositivos moviles con un menu lateral desplegable.
+ * 
+ * @component
+ * @returns {JSX.Element} Barra de navegacion con menu responsive
+ */
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const hidden = useHideOnScroll();
   const navigate = useNavigate();
   const { user, logout, isAuthenticated } = useAuth();
   const { data: categories = [] } = useGetCategories();
+
+  /**
+   * Maneja la busqueda de noticias redirigiendo a la pagina de resultados.
+   * @param {string} query - Termino de busqueda ingresado por el usuario
+   */
   const handleSearch = (query: string) => {
     navigate(`/search?q=${encodeURIComponent(query)}`);
-  }
+  };
 
+  /**
+   * Maneja el click en el boton de newsletter.
+   * Verifica si el usuario esta autenticado antes de permitir la suscripcion.
+   */
   const handleNewsletterClick = () => {
     if (!isAuthenticated) {
       toast.warning("Inicia sesion para suscribirte", {
-        description: "Serás redirigido al login...",
+        description: "Seras redirigido al login...",
       });
       setTimeout(() => navigate('/login'), 2000);
     } else {
       navigate('/newsletter');
     }
+  };
+  
+  /**
+   * Obtiene el rol del usuario o un valor por defecto.
+   * @returns {UserRole} Rol del usuario autenticado
+   */
+  const getUserRole = (): UserRole => {
+    return user?.role ?? USER_ROLES.USER;
   };
   
   return (
@@ -47,7 +73,11 @@ export default function Navbar() {
              { isAuthenticated
              ? (
               <div className="flex">
-                <UserDropdown userName={user?.name || "Usuario"} onLogout={logout} role={user?.role || "Usuario"} />
+                <UserDropdown 
+                  userName={user?.name ?? "Usuario"} 
+                  onLogout={logout} 
+                  role={getUserRole()} 
+                />
               </div>
              )
              : (<Button variant={"warning"} size={"sm"} onClick={() => navigate("/login")}> <User className="hidden sm:block" /> Ingresar </Button>)}
@@ -64,7 +94,7 @@ export default function Navbar() {
           <ul className="mx-auto flex max-w-7xl gap-6 px-4 py-2 border-b border-gray-300">
             <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
             {categories.map((category) => (
-              <NavItem key={category.id} name={category.name} id={category.id} />
+              <NavItem key={category.id} name={category.name} />
             ))}
           </ul>
         </nav>

@@ -3,6 +3,14 @@ import { useGetCategories } from "@/hooks/useGetCategories";
 import { useState } from "react";
 import ListNews from "./components/ListNews";
 
+/**
+ * Pagina de gestion de noticias del panel.
+ * Permite filtrar noticias por categoria y muestra una lista
+ * con opciones de edicion y eliminacion.
+ * 
+ * @component
+ * @returns {JSX.Element} Lista de noticias con filtro por categoria
+ */
 export default function UpdateNew() {
   const [category, setCategory] = useState("todas");
   const { data: categories = [] } = useGetCategories();
@@ -10,7 +18,6 @@ export default function UpdateNew() {
   return (
     <div className="p-6 md:p-8">
       
-      {/* Filtro de categorías */}
       <div className="bg-white rounded-2xl shadow-sm border border-zinc-200 p-6 mb-8">
         <ul className="flex flex-wrap justify-center gap-4">
           <li>
@@ -35,9 +42,7 @@ export default function UpdateNew() {
         </ul>
       </div>
 
-      {/* Lista */}
       <ListNews category={category} />
     </div>
   );
 }
-

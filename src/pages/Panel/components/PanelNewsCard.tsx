@@ -13,6 +13,9 @@ type Props = {
   onDelete: () => void;
 };
 
+/**
+ * Colores asignados a cada categoria para la visualizacion.
+ */
 const categoryColors: Record<string, string> = {
   education: "text-orange-700 bg-orange-200",
   technology: "text-blue-700 bg-blue-100",
@@ -23,6 +26,14 @@ const categoryColors: Record<string, string> = {
   science: "text-indigo-700 bg-indigo-100",
 };
 
+/**
+ * Tarjeta de noticia para el panel de administracion.
+ * Muestra informacion de la noticia con botones de edicion y eliminacion.
+ * 
+ * @component
+ * @param {Props} props - Propiedades del componente
+ * @returns {JSX.Element} Tarjeta con imagen, titulo, resumen y acciones
+ */
 export default function PanelNewsCard({
   title,
   summary,

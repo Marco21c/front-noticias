@@ -7,6 +7,13 @@ import { useMemo } from "react";
 import OthersNews from "./components/OthersNews";
 
 
+/**
+ * Pagina que muestra las noticias de una categoria especifica.
+ * Organiza las noticias en secciones de destacadas, importantes y otras.
+ * 
+ * @component
+ * @returns {JSX.Element} Pagina de categoria con grid de noticias
+ */
 export default function NewsCategory() {
     const { id } = useParams();
     const { data, isLoading, isError } = useGetNewsPorCategories(id!);
@@ -22,17 +29,16 @@ export default function NewsCategory() {
       <Skeleton className="h-4 w-3/4" />
       <Skeleton className="h-4 w-1/2" />
     </div>
-    if (isError) return <p>Ocurrió un error</p>
+    if (isError) return <p>Ocurrio un error</p>
     if (!data || data.length === 0) return <p>No hay noticias</p>
 
   
 return (
   <main className="max-w-6xl mx-auto px-4 pb-20">
 
-    {/* TÍTULO DE CATEGORÍA */}
     <header className="mt-12 mb-10">
       <p className="uppercase tracking-widest text-sm text-yellow-600 font-semibold mb-2">
-        Categoría
+        Categoria
       </p>
 
       <h1 className="text-4xl md:text-5xl font-serif font-bold capitalize">
@@ -42,12 +48,10 @@ return (
       <div className="h-1 w-24 bg-yellow-500 mt-4" />
     </header>
 
-    {/* NOTICIAS PRINCIPALES */}
     <section className="mb-16">
       <NewsList data={invertedData.slice(0, 5)} />
     </section>
 
-    {/* IMPORTANTES */}
     {data.length >= 5 && (
       <section className="mb-16">
         <h2 className="text-2xl font-bold mb-4">
@@ -59,7 +63,6 @@ return (
       </section>
     )}
 
-    {/* OTRAS */}
     {data.length >= 10 && (
       <section>
         <h2 className="text-2xl font-bold mb-4">

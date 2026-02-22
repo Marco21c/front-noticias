@@ -3,6 +3,14 @@ import { useSearchNews } from "@/hooks/useGetNews";
 import NewsCard from "@/components/ui/NewsCard";
 import type { INews } from "@/types/News.type";
 
+/**
+ * Pagina de resultados de busqueda de noticias.
+ * Muestra las noticias que coinciden con el termino de busqueda
+ * ingresado por el usuario mediante el parametro de URL "q".
+ * 
+ * @component
+ * @returns {JSX.Element} Pagina con grid de resultados de busqueda
+ */
 export default function SearchResults() {
   const [searchParams] = useSearchParams();
 
@@ -16,14 +24,13 @@ export default function SearchResults() {
     error,
   } = useSearchNews(query, { enabled: shouldSearch });
 
-
-  const items = data?.items ?? [];
+  const items = data ?? [];
 
   if (!query) {
     return (
       <main className="mx-auto max-w-7xl px-4 py-6">
         <p className="text-gray-600">
-          Ingresá un término para buscar noticias.
+          Ingresa un termino para buscar noticias.
         </p>
       </main>
     );
@@ -53,6 +60,7 @@ export default function SearchResults() {
           <NewsCard
             key={item.id ?? item.slug ?? ""}
             title={item.title}
+            slug={item.slug}
             summary={item.summary}
             author={item.author}
             category={item.category}

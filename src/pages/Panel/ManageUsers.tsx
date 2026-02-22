@@ -4,10 +4,21 @@ import { apiClient } from '@/lib/axios';
 import { USER_ROLES, type UserRole, type IUser, type IUserBackend } from '@/types/User.type';
 import { toast } from 'sonner';
 
+/**
+ * Pagina de gestion de usuarios para administradores.
+ * Permite ver, crear y eliminar usuarios del sistema.
+ * Solo accesible para usuarios con rol superadmin o admin.
+ * 
+ * @component
+ * @returns {JSX.Element} Tabla de usuarios con formulario de creacion
+ */
 const ManageUsers = () => {
     const [users, setUsers] = useState<IUser[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
+    /**
+     * Obtiene la lista de usuarios desde el servidor.
+     */
     const fetchUsers = async () => {
         try {
             setIsLoading(true);
@@ -40,8 +51,12 @@ const ManageUsers = () => {
         fetchUsers();
     }, []);
 
+    /**
+     * Elimina un usuario del sistema.
+     * @param {string} userId - ID del usuario a eliminar
+     */
     const handleDeleteUser = async (userId: string) => {
-        if (!window.confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+        if (!window.confirm('Estas seguro de que deseas eliminar este usuario?')) {
             return;
         }
 
@@ -61,6 +76,11 @@ const ManageUsers = () => {
         }
     };
 
+    /**
+     * Obtiene las clases CSS para el badge de rol.
+     * @param {UserRole} role - Rol del usuario
+     * @returns {string} Clases CSS para el badge
+     */
     const getRoleBadgeColor = (role: UserRole) => {
         switch (role) {
             case USER_ROLES.SUPERADMIN:
@@ -76,6 +96,11 @@ const ManageUsers = () => {
         }
     };
 
+    /**
+     * Obtiene el nombre para mostrar de un rol.
+     * @param {UserRole} role - Rol del usuario
+     * @returns {string} Nombre localizado del rol
+     */
     const getRoleDisplayName = (role: UserRole) => {
         switch (role) {
             case USER_ROLES.SUPERADMIN:
@@ -94,16 +119,14 @@ const ManageUsers = () => {
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Gestión de Usuarios</h1>
-                <p className="text-gray-600">Panel de administración para crear y gestionar usuarios del sistema</p>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">Gestion de Usuarios</h1>
+                <p className="text-gray-600">Panel de administracion para crear y gestionar usuarios del sistema</p>
             </div>
 
-            {/* User Creation Form */}
             <div className="mb-12">
                 <ManageUserForm onUserCreated={fetchUsers} />
             </div>
 
-            {/* Users List */}
             <div className="bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">Lista de Usuarios</h2>
 
@@ -130,7 +153,7 @@ const ManageUsers = () => {
                                         Rol
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Fecha de Creación
+                                        Fecha de Creacion
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Acciones

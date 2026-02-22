@@ -18,12 +18,31 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
+/**
+ * Proveedor de contexto de autenticacion para la aplicacion.
+ * Gestiona el estado de autenticacion del usuario, token y permisos.
+ * Persiste la sesion en localStorage y valida el estado al iniciar.
+ * 
+ * @component
+ * @param {AuthProviderProps} props - Propiedades del componente
+ * @param {ReactNode} props.children - Componentes hijos que tendran acceso al contexto
+ * @returns {JSX.Element} Proveedor de contexto de autenticacion
+ * 
+ * @example
+ * <AuthProvider>
+ *   <App />
+ * </AuthProvider>
+ */
 export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<IUser | null>(null);
     const [token, setToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
+    /**
+     * Cierra la sesion del usuario actual.
+     * Elimina el token y datos de usuario del localStorage y resetea el estado.
+     */
     const logout = useCallback(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -33,6 +52,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setIsAuthenticated(false);
     }, []);
 
+    /**
+     * Verifica el estado de autenticacion desde localStorage.
+     * Valida que el rol del usuario sea valido y restaura la sesion.
+     */
     const checkAuth = useCallback(() => {
         setIsLoading(true);
 
@@ -63,6 +86,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
     }, [logout]);
 
+    /**
+     * Inicia sesion con el token y datos de usuario proporcionados.
+     * Persiste la sesion en localStorage y actualiza el estado.
+     * 
+     * @param {string} newToken - Token de autenticacion JWT
+     * @param {IUser} userData - Datos del usuario autenticado
+     */
     const login = useCallback((newToken: string, userData: IUser) => {
         localStorage.setItem("token", newToken);
         localStorage.setItem("user", JSON.stringify(userData));
@@ -72,6 +102,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setIsAuthenticated(true);
     }, []);
 
+    /**
+     * Verifica si el usuario actual tiene uno de los roles especificados.
+     * 
+     * @param {UserRole[]} roles - Lista de roles a verificar
+     * @returns {boolean} True si el usuario tiene uno de los roles
+     */
     const hasRole = useCallback((roles: UserRole[]): boolean => {
         return user ? roles.includes(user.role) : false;
     }, [user]);
@@ -98,6 +134,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     );
 }
 
+/**
+ * Hook para acceder al contexto de autenticacion.
+ * Debe usarse dentro de un AuthProvider.
+ * 
+ * @returns {AuthContextType} Objeto con estado y funciones de autenticacion
+ * @throws {Error} Si se usa fuera de AuthProvider
+ * 
+ * @example
+ * const { user, isAuthenticated, login, logout } = useAuth();
+ */
 export function useAuth() {
     const context = useContext(AuthContext);
 

@@ -29,7 +29,10 @@ const SearchResults = lazy(() => import("./pages/SearchResults"));
 const EditCategory = lazy(() => import("./pages/panel/EditCategory"));
 const AddCategory = lazy(() => import("./pages/panel/AddCategory"));
 
-
+/**
+ * Configuracion de rutas de la aplicacion.
+ * Incluye rutas publicas, del panel de administracion y protegidas.
+ */
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,13 +53,11 @@ const router = createBrowserRouter([
     ]
   },
 
-  // PANEL AISLADO
   {
     path: "/panel",
     element: <LoginPanel />
   },
 
-  // PANEL PROTEGIDO
   {
     path: "/panel",
     element: (
@@ -132,7 +133,13 @@ const router = createBrowserRouter([
   }
 ]);
 
-
+/**
+ * Componente raiz de la aplicacion.
+ * Configura los proveedores de contexto (AuthProvider) y el router.
+ * 
+ * @component
+ * @returns {JSX.Element} Aplicacion completa con routing y autenticacion
+ */
 function App() {
   return (
     <AuthProvider>

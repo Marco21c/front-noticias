@@ -7,8 +7,10 @@ import { apiClient } from "@/lib/axios";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
-
-/* VALIDATION SCHEMA */
+/**
+ * Esquema de validacion para el formulario de registro de usuarios.
+ * Define las reglas de validacion para nombre, apellido, email y contrasena.
+ */
 const registerSchema = z.object({
     name: z.string().min(3, 'Name must be at least 3 characters long.'),
     lastName: z.string().min(3, 'Last name must be at least 3 characters long.'),
@@ -18,33 +20,41 @@ const registerSchema = z.object({
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
+/**
+ * Componente de formulario para el registro de nuevos usuarios.
+ * Permite a los usuarios crear una cuenta proporcionando nombre, apellido,
+ * email y contrasena. Incluye validacion del lado del cliente y manejo de errores.
+ * 
+ * @component
+ * @returns {JSX.Element} Formulario de registro con campos validados
+ */
 const RegisterForm = () => {
-    /* Local States */
     const [isLoading, setIsLoading] = useState(false);
-
-    /* Navigation Hooks */
     const navigate = useNavigate();
 
-    /* REACT HOOK FORM CONFIGURATION */
     const {
-        register, handleSubmit, formState: { errors }, // validation client errors
+        register, handleSubmit, formState: { errors },
     } = useForm<RegisterFormData>({
-        resolver: zodResolver(registerSchema), // Zod validations before submit
+        resolver: zodResolver(registerSchema),
     });
 
-    /* SUBMIT FUNCTION */
+    /**
+     * Maneja el envio del formulario de registro.
+     * Realiza la peticion al servidor para crear un nuevo usuario
+     * y redirige al login en caso de exito.
+     * 
+     * @param {RegisterFormData} data - Datos del formulario validados
+     */
     const onSubmit = async (data: RegisterFormData) => {
         try {
             setIsLoading(true);
 
-            /* API CALL */
             await apiClient.post('/user', data);
 
             toast.success("Registro exitoso!", {
                 description: "Tu cuenta ha sido creada correctamente.",
             });
 
-            /* REDIRECT */
             setTimeout(() => {
                 navigate('/login');
             }, 2000);
@@ -52,14 +62,13 @@ const RegisterForm = () => {
         } catch (error: unknown) {
             const message = error instanceof Error 
                 ? error.message 
-                : "Ocurrió un error inesperado. Por favor intenta nuevamente.";
+                : "Ocurrio un error inesperado. Por favor intenta nuevamente.";
             toast.error("Error en el registro", {
                 description: message,
             });
         } finally {
             setIsLoading(false);
         }
-
     }
 
     return (

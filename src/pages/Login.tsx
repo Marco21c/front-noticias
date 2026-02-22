@@ -1,19 +1,23 @@
 import LoginForm from "./components/LoginForm";
 import { Link } from "react-router-dom";
 
+/**
+ * Pagina de inicio de sesion para usuarios del sitio publico.
+ * Muestra un formulario de login y enlaces a registro y recuperacion de contrasena.
+ * 
+ * @component
+ * @returns {JSX.Element} Pagina de login centrada
+ */
 export default function LoginPage() {
   return (
     <div className="h-screen flex items-center justify-center px-4 bg-gray-50">
       <div className="w-full max-w-md">
-        {/* Branding mobile */}
         <div className="md:hidden text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Tu Proyecto</h1>
-          <p className="text-gray-500 mt-2">Accedé a tu cuenta</p>
+          <p className="text-gray-500 mt-2">Accede a tu cuenta</p>
         </div>
 
-        {/* Contenedor login */}
         <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-          {/* Título */}
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900">Bienvenido</h2>
             <p className="text-gray-500 mt-2">
@@ -21,28 +25,25 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Formulario */}
           <LoginForm />
 
-          {/* Links */}
           <div className="mt-6 space-y-4">
             <div className="text-center">
               <Link
-                to="/forgot-password"
+                to="/register"
                 className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
               >
-                ¿Olvidaste tu contraseña?
+                Olvidaste tu contrasena?
               </Link>
             </div>
 
-            {/* Divisor */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-400">
-                  ¿No tenés cuenta?
+                  No tienes cuenta?
                 </span>
               </div>
             </div>

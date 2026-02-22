@@ -5,6 +5,15 @@ type Props = {
   data: INews[];
 };
 
+/**
+ * Componente que muestra noticias en un grid de 4 columnas.
+ * Todas las noticias se muestran con variante 'featured'.
+ * 
+ * @component
+ * @param {Props} props - Propiedades del componente
+ * @param {INews[]} props.data - Lista de noticias a mostrar
+ * @returns {JSX.Element} Grid de noticias destacadas
+ */
 export default function NewsFeatured({data}: Props) {
     return (
         <>

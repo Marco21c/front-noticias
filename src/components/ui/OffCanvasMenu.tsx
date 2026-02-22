@@ -3,15 +3,27 @@ import type { ICategory } from "@/types/Category.type";
 import NavItem from "./NavItem";
 import { NavLink } from "react-router-dom";
 import { baseStyles } from "@/styles/styleLinkNav";
+
 type Props = {
   open: boolean;
   onClose: () => void;
   categories: ICategory[];
 };
 
-export default function OffCanvasMenu({ open, onClose, categories }:Props) {
- 
-    return (
+/**
+ * Menu lateral desplegable para dispositivos moviles.
+ * Muestra las categorias y enlaces de navegacion principal.
+ * 
+ * @component
+ * @param {Props} props - Propiedades del componente
+ * @param {boolean} props.open - Estado de visibilidad del menu
+ * @param {() => void} props.onClose - Funcion para cerrar el menu
+ * @param {ICategory[]} props.categories - Lista de categorias a mostrar
+ * @returns {JSX.Element} Menu lateral animado con overlay
+ */
+export default function OffCanvasMenu({ open, onClose, categories }: Props) {
+  
+  return (
     <>
       {open && (
         <div
@@ -34,7 +46,7 @@ export default function OffCanvasMenu({ open, onClose, categories }:Props) {
         <nav className="flex flex-col gap-2 p-4">
             <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
           {categories.map((category) => (
-                <NavItem key={category.id} name={category.name} id={category.id} />
+                <NavItem key={category.id} name={category.name} />
           ))}
         </nav>
       </aside>

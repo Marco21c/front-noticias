@@ -9,6 +9,15 @@ interface Props {
   category: string;
 }
 
+/**
+ * Componente de lista de noticias para el panel de administracion.
+ * Permite filtrar por categoria y muestra tarjetas con opciones de edicion y eliminacion.
+ * 
+ * @component
+ * @param {Props} props - Propiedades del componente
+ * @param {string} props.category - Categoria para filtrar (vacío muestra todas)
+ * @returns {JSX.Element} Grid de tarjetas de noticias
+ */
 export default function ListNews({ category }: Props) {
   const { mutate: deleteNews } = useDeleteNew();
   const allNewsQuery = useGetNews();
@@ -37,7 +46,7 @@ export default function ListNews({ category }: Props) {
       </div>
     );
 
-  if (isError) return <p className="p-6 text-zinc-500">Ocurrió un error</p>;
+  if (isError) return <p className="p-6 text-zinc-500">Ocurrio un error</p>;
   if (!data || data.length === 0) return <p className="p-6 text-zinc-500">No hay noticias</p>;
 
   return (
@@ -49,7 +58,7 @@ export default function ListNews({ category }: Props) {
             {...news}
             onEdit={() => navigate(`../edit/${news.id}`)}
             onDelete={() => {
-              if (window.confirm("¿Eliminar noticia?")) {
+              if (window.confirm("Eliminar noticia?")) {
                 deleteNews(news.id);
               }
             }}

@@ -7,6 +7,14 @@ import { useGetCategories } from "@/hooks/useGetCategories";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Pagina de suscripcion al newsletter.
+ * Permite a los usuarios autenticados suscribirse, actualizar preferencias
+ * o cancelar su suscripcion al newsletter.
+ * 
+ * @component
+ * @returns {JSX.Element | null} Formulario de newsletter o null si no autenticado
+ */
 export default function Newsletter() {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -22,13 +30,17 @@ export default function Newsletter() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      toast.warning("Inicia sesión para acceder al newsletter", {
-        description: "Serás redirigido al login...",
+      toast.warning("Inicia sesion para acceder al newsletter", {
+        description: "Seras redirigido al login...",
       });
       setTimeout(() => navigate("/login"), 2000);
     }
   }, [isAuthenticated, navigate]);
 
+  /**
+   * Alterna la seleccion de una categoria.
+   * @param {string} categoryId - ID de la categoria a alternar
+   */
   const handleToggleCategory = (categoryId: string) => {
     setSelectedCategories((prev) =>
       prev.includes(categoryId)
@@ -37,6 +49,9 @@ export default function Newsletter() {
     );
   };
 
+  /**
+   * Maneja la suscripcion al newsletter.
+   */
   const handleSubscribe = () => {
     if (selectedCategories.length === 0) {
       toast.error("Selecciona al menos una categoria", {
@@ -48,14 +63,14 @@ export default function Newsletter() {
       { preferredCategories: selectedCategories },
       {
         onSuccess: () => {
-          toast.success("Suscripción exitosa!", {
-            description: "Recibirás novedades de las categorías seleccionadas.",
+          toast.success("Suscripcion exitosa!", {
+            description: "Recibiras novedades de las categorias seleccionadas.",
           });
         },
         onError: (error: unknown) => {
           const message = error instanceof Error 
             ? error.message 
-            : "Ocurrió un error inesperado.";
+            : "Ocurrio un error inesperado.";
           toast.error("Error al suscribirse", {
             description: message,
           });
@@ -64,6 +79,9 @@ export default function Newsletter() {
     );
   };
 
+  /**
+   * Maneja la actualizacion de preferencias del newsletter.
+   */
   const handleUpdatePreferences = () => {
     if (selectedCategories.length === 0) {
       toast.error("Selecciona al menos una categoria", {
@@ -76,13 +94,13 @@ export default function Newsletter() {
       {
         onSuccess: () => {
           toast.success("Preferencias actualizadas!", {
-            description: "Tus categorías han sido actualizadas.",
+            description: "Tus categorias han sido actualizadas.",
           });
         },
         onError: (error: unknown) => {
           const message = error instanceof Error 
             ? error.message 
-            : "Ocurrió un error inesperado.";
+            : "Ocurrio un error inesperado.";
           toast.error("Error al actualizar", {
             description: message,
           });
@@ -91,6 +109,9 @@ export default function Newsletter() {
     );
   };
 
+  /**
+   * Maneja la cancelacion de la suscripcion.
+   */
   const handleUnsubscribe = () => {
     unsubscribe(undefined, {
       onSuccess: () => {
@@ -102,7 +123,7 @@ export default function Newsletter() {
       onError: (error: unknown) => {
         const message = error instanceof Error 
           ? error.message 
-          : "Ocurrió un error inesperado.";
+          : "Ocurrio un error inesperado.";
         toast.error("Error al desuscribirse", {
           description: message,
         });
@@ -123,8 +144,8 @@ export default function Newsletter() {
           <h1 className="text-3xl font-bold text-gray-900">Newsletter</h1>
           <p className="text-gray-600 mt-2">
             {isSubscribed
-              ? "Actualiza tus preferencias o desuscríbete"
-              : "Suscríbete para recibir las últimas novedades"}
+              ? "Actualiza tus preferencias o desuscribete"
+              : "Suscribete para recibir las ultimas novedades"}
           </p>
         </div>
 
@@ -136,7 +157,7 @@ export default function Newsletter() {
           <>
             <div className="mb-8">
               <h2 className="text-lg font-semibold text-gray-800 mb-4">
-                Selecciona las categorías de tu interés:
+                Selecciona las categorias de tu interes:
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {categories.map((category) => (
