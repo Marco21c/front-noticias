@@ -22,11 +22,16 @@ export default function EditNew() {
 
   if (!data) return null;
 
+  const defaultValues = {
+    ...data,
+    category: data.category?.id || '',
+  };
+
   return (
    <div className="border border-secondary-300 justify-center rounded rounded-lg p-8 mr-4 ml-12 md:mr-12 md:ml-32 my-12 bg-secondary/90 flex">
 
     <FormNew
-      defaultValues={data}
+      defaultValues={defaultValues}
       onSubmit={onSubmit}
       isPending={isPending}
       title="Editar noticia"

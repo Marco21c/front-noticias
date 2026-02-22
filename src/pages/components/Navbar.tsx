@@ -5,24 +5,35 @@ import SearchBar from "./SearchBar";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import OffCanvasMenu from "../../components/ui/OffCanvasMenu";
-import { categories } from "@/mocks/categoriesMocks";
+import { useGetCategories } from "@/hooks/useGetCategories";
 import { baseStyles } from "@/styles/styleLinkNav";
 import useHideOnScroll from "@/components/ui/useHideOnScroll";
 import { useAuth } from "@/contexts/AuthContext";
 import UserDropdown from "@/components/ui/UserDropdown";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
    const hidden = useHideOnScroll();
   const navigate = useNavigate();
   const { user, logout, isAuthenticated } = useAuth();
-
-   const handleSearch = () => {
-    //parametro => query: string
-    //aqui va a ir la consulta para mostrar la noticia o por palabra 😎😛
-    console.log("Búsqueda:");
+  const { data: categories = [] } = useGetCategories();
+  console.log(categories);
+   const handleSearch = (query: string) => {
+    navigate(`/search?q=${encodeURIComponent(query)}`);
   }
- 
+
+  const handleNewsletterClick = () => {
+    if (!isAuthenticated) {
+      toast.warning("Inicia sesion para suscribirte", {
+        description: "Serás redirigido al login...",
+      });
+      setTimeout(() => navigate('/login'), 2000);
+    } else {
+      navigate('/newsletter');
+    }
+  };
+  
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b border-gray-300 bg-white">
@@ -41,7 +52,7 @@ export default function Navbar() {
               </div>
              )
              : (<Button variant={"warning"} size={"sm"} onClick={() => navigate("/login")}> <User className="hidden sm:block" /> Ingresar </Button>)}
-            <Button variant={"outline"} size={"sm"}> <Bell className="hidden sm:block" /> Suscribirse </Button>
+            <Button variant={"outline"} size={"sm"} onClick={handleNewsletterClick}> <Bell className="hidden sm:block" /> Newsletter </Button>
           </div>
         </div>
       </header>
@@ -54,7 +65,7 @@ export default function Navbar() {
           <ul className="mx-auto flex max-w-7xl gap-6 px-4 py-2 border-b border-gray-300">
             <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
             {categories.map((category) => (
-              <NavItem key={category._id} name={category.name} _id={category._id} />
+              <NavItem key={category.id} name={category.name} id={category.id} />
             ))}
           </ul>
         </nav>

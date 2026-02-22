@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { categories } from "@/mocks/categoriesMocks";
-import type { ICategory } from "@/types/Category.type";
+import { useGetCategories } from "@/hooks/useGetCategories";
 import type { INewsCreate } from "@/types/News.type";
 
 interface Props {
@@ -10,13 +9,14 @@ interface Props {
   onSubmit: (data: INewsCreate) => void;
   isPending?: boolean;
   title?: string;
-   serverError?: string | null;
+  serverError?: string | null;
   submitText?: string;
 }
 
-export default function FormNew({ defaultValues, onSubmit, isPending, title = "Crear noticia", submitText = "Guardar", serverError}: Props) {
-  
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<INewsCreate>({ defaultValues});
+export default function FormNew({ defaultValues, onSubmit, isPending, title = "Crear noticia", submitText = "Guardar", serverError }: Props) {
+
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<INewsCreate>({ defaultValues });
+  const { data: categories = [] } = useGetCategories();
 
   const [tags, setTags] = useState<string[]>(
     defaultValues?.highlights || []
@@ -53,7 +53,7 @@ export default function FormNew({ defaultValues, onSubmit, isPending, title = "C
       className="space-y-4 p-6 bg-white/90 rounded-2xl shadow-xl text-sm max-w-2xl"
     >
       <h2 className="text-2xl font-semibold text-center">{title}</h2>
-       {serverError && (
+      {serverError && (
         <div className="bg-red-100 text-red-600 p-3 rounded-lg text-sm">
           {serverError}
         </div>
@@ -73,18 +73,11 @@ export default function FormNew({ defaultValues, onSubmit, isPending, title = "C
       {errors.summary && <p className="text-red-500">{errors.summary.message}</p>}
 
       <input
-        placeholder="Autor"
-        className="w-full border p-2 rounded-lg"
-        {...register("author", { required: "El autor es obligatorio" })}
-      />
-      {errors.author && <p className="text-red-500">{errors.author.message}</p>}
-
-      <input
         placeholder="Url Imagen"
         className="w-full border p-2 rounded-lg"
         {...register("mainImage", { required: "La imagen es obligatoria" })}
       />
-        {errors.mainImage && <p className="text-red-500">{errors.mainImage.message}</p>}
+      {errors.mainImage && <p className="text-red-500">{errors.mainImage.message}</p>}
 
       <textarea
         rows={6}
@@ -92,25 +85,26 @@ export default function FormNew({ defaultValues, onSubmit, isPending, title = "C
         className="w-full border p-2 rounded-lg"
         {...register("content", { required: "El contenido es obligatorio" })}
       />
-       {errors.content && <p className="text-red-500">{errors.content.message}</p>}
+      {errors.content && <p className="text-red-500">{errors.content.message}</p>}
 
       <select
         {...register("variant", { required: true })}
         className="w-full border p-2 rounded-lg"
       >
         <option value="">Seleccionar tipo</option>
-        <option value="published">Publicación</option>
-        <option value="draft">Borrador</option>
+        <option value="highlighted">Destacada</option>
+        <option value="featured">Principal</option>
+        <option value="default">Por defecto</option>
       </select>
-        {errors.variant && <p className="text-red-500">{errors.variant.message}</p>}
- 
+      {errors.variant && <p className="text-red-500">{errors.variant.message}</p>}
+
       <select
         {...register("category", { required: true })}
         className="w-full border p-2 rounded-lg"
       >
         <option value="">Seleccionar categoría</option>
-        {categories.map((c: ICategory) => (
-          <option key={c._id} value={c.name}>
+        {categories.map((c) => (
+          <option key={c.id} value={c.id}>
             {c.name}
           </option>
         ))}

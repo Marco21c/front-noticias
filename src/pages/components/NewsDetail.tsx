@@ -2,66 +2,66 @@ import dayjs from "dayjs";
 import type { INews } from "../../types/News.type";
 
 type Props = {
-news: INews;
+    news: INews;
 };
 
 export default function NewsDetail({ news }: Props) {
-return (
-    <article className="mx-auto max-w-3xl px-4 py-10">
-    
-    <p className="text-m uppercase tracking-widest text-yellow-600 mb-3 font-extrabold">
-        {news.category}
-    </p>
+    return (
+        <article className="mx-auto max-w-3xl px-4 py-10">
 
-    <h1 className="font-serif text-4xl md:text-6xl font-bold leading-tight mb-4">
-        {news.title}
-    </h1>
+            <p className="text-m uppercase tracking-widest text-yellow-600 mb-3 font-extrabold">
+                {news.category.name}
+            </p>
 
-
-    <div className="h-1 w-30 bg-yellow-500 mb-6" />
+            <h1 className="font-serif text-4xl md:text-6xl font-bold leading-tight mb-4">
+                {news.title}
+            </h1>
 
 
-    <p className="text-2xl text-gray-800 mb-5 leading-relaxed">
-        {news.summary}
-    </p>
-
-    <div className="flex items-center gap-2 text-sm text-gray-500 mb-8">
-        <span>Por {news.author}</span>
-        <span className="text-yellow-600">•</span>
-        <time>
-            {dayjs(news.publicationDate).format("DD [de] MMMM [de] YYYY")}
-        </time>
-    </div>
+            <div className="h-1 w-30 bg-yellow-500 mb-6" />
 
 
-    {news.mainImage && (
-        <img
-        src={news.mainImage}
-        alt={news.title}
-        className="w-full rounded-md mb-10"
-        />
-    )}
+            <p className="text-2xl text-gray-800 mb-5 leading-relaxed">
+                {news.summary}
+            </p>
 
-      {/* Línea horizontal */}
-    <div className="h-px w-full bg-yellow-500 mb-8" />
+            <div className="flex items-center gap-2 text-sm text-gray-500 mb-8">
+                <span>Por {news.author.name}</span>
+                <span className="text-yellow-600">•</span>
+                <time>
+                    {dayjs(news.publicationDate).format("DD [de] MMMM [de] YYYY")}
+                </time>
+            </div>
 
 
-    <div className="prose prose-lg max-w-none leading-relaxed">
-        {news.content}
-    </div>
+            {news.mainImage && (
+                <img
+                    src={news.mainImage}
+                    alt={news.title}
+                    className="w-full rounded-md mb-10"
+                />
+            )}
 
-    {news.highlights?.length > 0 && (
-        <aside className="mt-12 border-l-4 border-yellow-400 pl-4 bg-yellow-50 py-4 rounded-r">
-        <h3 className="font-semibold mb-3 text-yellow-700">
-            Claves de la noticia
-        </h3>
-        <ul className="list-disc ml-4 space-y-1 text-gray-700">
-            {news.highlights.map((item, index) => (
-            <li key={index}>{item}</li>
-            ))}
-        </ul>
-        </aside>
-    )}
-    </article>
-);
+            {/* Línea horizontal */}
+            <div className="h-px w-full bg-yellow-500 mb-8" />
+
+
+            <div className="prose prose-lg max-w-none leading-relaxed">
+                {news.content}
+            </div>
+
+            {news.highlights?.length > 0 && (
+                <aside className="mt-12 border-l-4 border-yellow-400 pl-4 bg-yellow-50 py-4 rounded-r">
+                    <h3 className="font-semibold mb-3 text-yellow-700">
+                        Claves de la noticia
+                    </h3>
+                    <ul className="list-disc ml-4 space-y-1 text-gray-700">
+                        {news.highlights.map((item, index) => (
+                            <li key={index}>{item}</li>
+                        ))}
+                    </ul>
+                </aside>
+            )}
+        </article>
+    );
 }

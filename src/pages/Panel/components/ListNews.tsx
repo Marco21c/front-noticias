@@ -17,12 +17,36 @@ export default function ListNews({ category }: Props) {
       ? useGetNews()
       : useGetNewsPorCategories(category);
 
-  const navigate = useNavigate();
+return (
+  <div className="px-6 md:px-8 pb-12">
+    <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+      {invertedData?.map((news) => (
+        <div
+          key={news.id}
+          className="relative bg-white rounded-2xl shadow-sm border border-zinc-200 hover:shadow-md transition"
+        >
+          {/* Botones flotantes */}
+          <div className="absolute top-3 right-3 flex gap-2 z-10">
+            <Button
+              size="icon"
+              variant="secondary"
+              onClick={() => navigate(`../edit/${news.id}`)}
+            >
+              <Pencil size={16} />
+            </Button>
 
-  const invertedData = useMemo(
-    () => (data ? [...data].reverse() : []),
-    [data]
-  );
+            <Button
+              size="icon"
+              variant="destructive"
+              onClick={() => {
+                if (confirm("¿Eliminar noticia?")) {
+                  deleteNews(news.id);
+                }
+              }}
+            >
+              <Trash2 size={16} />
+            </Button>
+          </div>
 
   if (isLoading)
     return (

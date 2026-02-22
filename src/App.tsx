@@ -14,6 +14,7 @@ const Register = lazy(() => import("./pages/Register"));
 const NewsCategory = lazy(() => import("./pages/NewsCategory"));
 const News = lazy(() => import("./pages/News"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Newsletter = lazy(() => import("./pages/Newsletter"));
 const AboutUs = lazy(() => import("./pages/footer/AboutUs"));
 const Policies = lazy(() => import("./pages/footer/Policies"));
 const TermsConditions = lazy(() => import("./pages/footer/Terms"));
@@ -24,30 +25,26 @@ const UpdateNew = lazy(() => import("./pages/Panel/UpdateNew"));
 const EditNew = lazy(() => import("./pages/Panel/EditNew"));
 const AddNew = lazy(() => import("./pages/Panel/AddNew"));
 const UpdateCategory = lazy(() => import("./pages/Panel/UpdateCategory"));
-
+const SearchResults = lazy(() => import("./pages/SearchResults"));
 const router = createBrowserRouter([
-// PUBLIC LAYOUT
-{
-  path: "/",
-  element: <DefaultLayout />,
-  children: [
-    { index: true, element: <Home /> },
-    { path: "register", element: <Register /> },
-    { path: "category/:id", element: <NewsCategory /> },
-    { path: "news/:slug", element: <News /> },
-    { path: "terms-and-conditions", element: <TermsConditions /> },
-    { path: "policies", element: <Policies /> },
-    { path: "about-us", element: <AboutUs /> },
-    { path: "contact", element: <Contact /> },
-    { path: "*", element: <NotFound /> }
-  ]
-},
-
-// LOGIN AISLADO (SIN LAYOUT)
-{
-  path: "/login",
-  element: <Login />
-},
+  {
+    path: "/",
+    element: <DefaultLayout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
+      { path: "search", element: <SearchResults /> },
+      { path: "category/:id", element: <NewsCategory /> },
+      { path: "news/:slug", element: <News /> },
+      { path: "terms-and-conditions", element: <TermsConditions /> },
+      { path: "policies", element: <Policies /> },
+      { path: "about-us", element: <AboutUs /> },
+      { path: "contact", element: <Contact /> },
+      { path: "newsletter", element: <Newsletter /> },
+      { path: "*", element: <NotFound /> }
+    ]
+  },
 
   // PANEL AISLADO
   {

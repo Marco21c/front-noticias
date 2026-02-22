@@ -34,7 +34,7 @@ export default function OffCanvasMenu({ open, onClose, categories }:Props) {
         <nav className="flex flex-col gap-2 p-4">
             <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
           {categories.map((category) => (
-                <NavItem key={category._id} name={category.name} _id={category._id} />
+                <NavItem key={category.id} name={category.name} id={category.id} />
           ))}
         </nav>
       </aside>

@@ -4,8 +4,8 @@ type NewsCardsProps = {
   title: string;
   slug?: string;
   summary: string;
-  author: string;
-  category: string;
+  author: { name?: string };
+  category: { id?: string; name?: string };
   mainImage?: string;
   publicationDate: string;
   variant: string;
@@ -34,14 +34,16 @@ export default function NewsCard({
   variant,
 }: NewsCardsProps) {
   const cardContent = (
-        <article
-          className={`
-          group
-          py-6
-          border-b border-gray-200
+    <article
+      className={`
+          group overflow-hidden bg-white rounded-xl
+          border border-zinc-200
+          shadow-sm
+          hover:shadow-md
+          transition-all duration-300
           ${variant === "highlighted" ? "col-span-full" : ""}
   `}
->
+    >
 
 
       {/* Imagen */}
@@ -52,10 +54,10 @@ export default function NewsCard({
             ${variant === "highlighted"
               ? "h-96"
               : variant === "featured"
-              ? "h-64"
-              : "h-48"}
+                ? "h-64"
+                : "h-48"}
     `}
-  >
+        >
 
 {variant === "highlighted" && (
   <span className="absolute top-4 left-4 z-10 bg-yellow-400 text-black text-[11px] font-bold uppercase px-3 py-1 tracking-widest">
@@ -110,10 +112,9 @@ export default function NewsCard({
         <p
           className={`
             mt-2 text-gray-700 leading-relaxed
-            ${
-              variant === "highlighted"
-                ? "text-lg"
-                : variant === "featured"
+            ${variant === "highlighted"
+              ? "text-lg"
+              : variant === "featured"
                 ? "text-sm"
                 : "text-xs line-clamp-3"
             }
