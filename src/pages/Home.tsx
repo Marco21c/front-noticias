@@ -1,19 +1,12 @@
 import { useMemo } from "react";
-import { useGetNews } from "@/hooks/useGetNews";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useGetNews } from "@/features/news/hooks/useGetNews";
+import { Skeleton } from "@/shared/components/ui/skeleton";
 import { AlertTriangle, Newspaper } from "lucide-react";
 
-import NewsList from "./components/NewsList";
-import NewsFeatured from "./components/NewsFeatured";
-import OthersNews from "./components/OthersNews";
+import NewsList from "@/features/news/components/NewsList";
+import NewsFeatured from "@/features/news/components/NewsFeatured";
+import OthersNews from "@/features/news/components/OthersNews";
 
-/**
- * Pagina principal del sitio que muestra las noticias organizadas por relevancia.
- * Las noticias se dividen en tres secciones: Destacadas, Importantes y Otras.
- * 
- * @component
- * @returns {JSX.Element} Pagina de inicio con grid de noticias
- */
 export default function Home() {
   const { data, isLoading, isError } = useGetNews();
 

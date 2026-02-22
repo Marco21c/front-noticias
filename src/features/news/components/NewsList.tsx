@@ -1,0 +1,65 @@
+import type { INews } from "@/features/news/types/News.type";
+import NewsCard from "./NewsCard";
+
+type Props = {
+  data: INews[];
+};
+
+export default function NewsList({ data }: Props) {
+
+  const highlightedNews = data[0];
+  const featuredNews = data[1];
+  const defaultNews = data.slice(2, 5);
+
+  return (
+    <>
+      <section className="mt-8 grid grid-cols-1 divide-x divide-y md:grid-cols-4 md:grid-rows-3 gap-2">
+
+        {highlightedNews && (
+          <div className="md:col-span-3 md:row-span-2 divide-x divide-y">
+            <NewsCard
+              title={highlightedNews.title}
+              slug={highlightedNews.slug}
+              summary={highlightedNews.summary}
+              author={highlightedNews.author}
+              category={highlightedNews.category}
+              mainImage={highlightedNews.mainImage}
+              publicationDate={highlightedNews.publicationDate}
+              variant={'highlighted'}
+            />
+          </div>
+        )}
+
+        {featuredNews && (
+          <div className="md:col-start-4 md:row-span-3 divide-x divide-y">
+            <NewsCard
+              title={featuredNews.title}
+              slug={featuredNews.slug}
+              summary={featuredNews.summary}
+              author={featuredNews.author}
+              category={featuredNews.category}
+              mainImage={featuredNews.mainImage}
+              publicationDate={featuredNews.publicationDate}
+              variant={'featured'}
+            />
+          </div>
+        )}
+
+        {defaultNews.map(item => (
+          <div key={item.title} className="md:col-span-1 md:row-start-3 divide-x divide-y">
+            <NewsCard
+              title={item.title}
+              slug={item.slug}
+              summary={item.summary}
+              author={item.author}
+              category={item.category}
+              publicationDate={item.publicationDate}
+              variant={'default'}
+            />
+          </div>
+        ))}
+
+      </section>
+    </>
+  );
+}

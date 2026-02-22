@@ -1,12 +1,5 @@
 import { Link } from "react-router-dom";
 
-/**
- * Pagina de error 404 para rutas no encontradas.
- * Muestra un mensaje de error y un boton para volver al inicio.
- * 
- * @component
- * @returns {JSX.Element} Pagina 404 con mensaje y link de regreso
- */
 export default function NotFound() {
   return (
     <main className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center">

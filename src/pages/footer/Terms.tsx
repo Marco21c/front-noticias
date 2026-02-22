@@ -1,10 +1,3 @@
-/**
- * Pagina de Terminos y Condiciones.
- * Establece las reglas de uso del sitio web.
- * 
- * @component
- * @returns {JSX.Element} Pagina informativa de terminos
- */
 export default function Terms() {
   return (
     <main className="bg-white min-h-screen py-12 px-6">

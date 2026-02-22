@@ -1,10 +1,3 @@
-/**
- * Pagina "Sobre Nosotros" con informacion de la empresa.
- * Describe la mision, valores y equipo del medio.
- * 
- * @component
- * @returns {JSX.Element} Pagina informativa sobre la empresa
- */
 export default function AboutUs() {
   return (
     <main className="bg-white min-h-screen py-12 px-6">

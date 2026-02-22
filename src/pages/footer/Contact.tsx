@@ -1,18 +1,7 @@
 import type { FormEvent } from "react";
 import { toast } from "sonner";
 
-/**
- * Pagina de contacto con formulario para enviar mensajes.
- * Muestra un mensaje de exito tras el envio (solo frontend).
- * 
- * @component
- * @returns {JSX.Element} Formulario de contacto
- */
 export default function Contact() {
-  /**
-   * Maneja el envio del formulario de contacto.
-   * @param {FormEvent<HTMLFormElement>} e - Evento de formulario
-   */
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

@@ -1,10 +1,3 @@
-/**
- * Pagina de Politica de Privacidad.
- * Informa sobre la recopilacion, uso y proteccion de datos personales.
- * 
- * @component
- * @returns {JSX.Element} Pagina informativa de privacidad
- */
 export default function Policies(){
   return (
     <main className="bg-white min-h-screen py-12 px-6">
