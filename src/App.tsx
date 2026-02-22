@@ -26,6 +26,10 @@ const EditNew = lazy(() => import("./pages/Panel/EditNew"));
 const AddNew = lazy(() => import("./pages/Panel/AddNew"));
 const UpdateCategory = lazy(() => import("./pages/Panel/UpdateCategory"));
 const SearchResults = lazy(() => import("./pages/SearchResults"));
+const EditCategory = lazy(() => import("./pages/Panel/EditCategory"));
+const AddCategory = lazy(() => import("./pages/Panel/AddCategory"));
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -80,7 +84,22 @@ const router = createBrowserRouter([
           </PanelProtectedRoute>
         )
       },
-
+      {
+        path: "categories/:id/edit",
+        element: (
+          <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}>
+            <EditCategory />
+          </PanelProtectedRoute>
+        )
+      },
+      { 
+         path: "categories/new",
+         element: (
+          <PanelProtectedRoute allowedRoles={[USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN]}> 
+            <AddCategory />
+          </PanelProtectedRoute>
+         )  
+      },
       {
         path: "edit/:id",
         element: (
