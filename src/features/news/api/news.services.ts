@@ -13,13 +13,13 @@ export const postNew = async (newData: INewsCreate): Promise<INews> => {
         .replace(/[^a-z0-9 ]/g, "")
         .trim()
         .replace(/\s+/g, "-");
-    
+
     const payload = {
         ...newData,
         slug,
         variant: newData.variant || 'default',
     };
-    
+
     const { data } = await apiClient.post("/news", payload);
     return data.data;
 };
@@ -49,9 +49,9 @@ export const deleteNew = async (id: string): Promise<void> => {
 };
 
 export const searchNews = async (query: string): Promise<INews[]> => {
-  const response = await apiClient.get(
-    "/news/search",
-    { params: { q: query } }
-  );
-  return response.data.data;
+    const response = await apiClient.get(
+        "/news/search",
+        { params: { q: query } }
+    );
+    return response.data.data.items;
 };
