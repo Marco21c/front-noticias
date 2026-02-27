@@ -6,9 +6,9 @@ interface NavItemProps {
   id?: string;
 }
 
-export default function NavItem({ name }: NavItemProps) {
+export default function NavItem({ name, id }: NavItemProps) {
   return (
-    <NavLink to={`/category/${name}`} className={baseStyles}>
+    <NavLink to={`/category/${id}`} className={baseStyles}>
          {name}
     </NavLink>
   );

@@ -74,7 +74,7 @@ export default function Navbar() {
           <ul className="mx-auto flex max-w-7xl gap-6 px-4 py-2 border-b border-gray-300">
             <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
             {categories.map((category) => (
-              <NavItem key={category.id} name={category.name} />
+              <NavItem key={category.id} name={category.name} id={category.id} />
             ))}
           </ul>
         </nav>

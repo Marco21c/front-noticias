@@ -24,11 +24,13 @@ export const postNew = async (newData: INewsCreate): Promise<INews> => {
     return data.data;
 };
 
-export const getNewsByCategory = async (category: string): Promise<INews[]> => {
-    const { data } = await apiClient.get('/news/category', {
-        params: { category }
-    });
-    return data.data;
+export const getNewsByCategory = async (
+  categoryId: string
+): Promise<INews[]> => {
+  const { data } = await apiClient.get('/news/category', {
+    params: { category: categoryId }
+  });
+  return data.data;
 };
 
 export const getNewById = async (id: string): Promise<INews> => {

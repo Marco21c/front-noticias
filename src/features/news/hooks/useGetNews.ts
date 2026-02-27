@@ -9,12 +9,12 @@ export const useGetNews = () => {
   })
 };
 
-export const useGetNewsPorCategories = (category: string) => {
+export const useGetNewsPorCategories = (categoryId?: string) => {
   return useQuery<INews[]>({
-    queryKey: ['news', category],
-    queryFn: () => getNewsByCategory(category),
-    enabled: !!category 
-  })
+    queryKey: ['news', categoryId],
+    queryFn: () => getNewsByCategory(categoryId!),
+    enabled: !!categoryId
+  });
 };
 
 export const useGetNew = (id?: string) => {
