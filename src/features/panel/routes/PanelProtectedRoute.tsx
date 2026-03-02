@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/features/auth/context/AuthContext';
-import type { UserRole } from '@/features/auth/types/User.type';
+import type { UserRole } from '@/features/auth/types/User.type.ts';
 
 interface PanelProtectedRouteProps {
     children: React.ReactNode;

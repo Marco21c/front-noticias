@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Button } from "@/shared/components/ui/button";
 import { useGetCategories } from "@/features/categories/hooks/useGetCategories";
-import type { INewsCreate } from "@/features/news/types/News.type";
+import type { INewsCreate } from "@/features/news/types/News.type.ts";
 import { X } from "lucide-react";
 
 interface FormNewProps {

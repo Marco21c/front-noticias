@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { User, LogOut, Settings, LayoutPanelTop } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { Button } from "@/shared/components/ui/button";
-import { USER_ROLES, type UserRole } from "@/features/auth/types/User.type";
+import { USER_ROLES, type UserRole } from "@/features/auth/types/User.type.ts";
 
 type Props = {
   userName: string;

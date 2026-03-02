@@ -11,7 +11,7 @@ import useHideOnScroll from "@/shared/hooks/useHideOnScroll";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import UserDropdown from "@/features/auth/components/UserDropdown";
 import { toast } from "sonner";
-import { USER_ROLES, type UserRole } from "@/features/auth/types/User.type";
+import { USER_ROLES, type UserRole } from "@/features/auth/types/User.type.ts";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);

@@ -1,4 +1,4 @@
-import type { INewsCreate } from "@/features/news/types/News.type";
+import type { INewsCreate } from "@/features/news/types/News.type.ts";
 import { deleteNew, postNew, updateNew } from "@/features/news/api/news.services";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 

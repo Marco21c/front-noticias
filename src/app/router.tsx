@@ -1,10 +1,9 @@
 import { lazy, Suspense } from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import { PanelProtectedRoute } from "@/features/panel/routes/PanelProtectedRoute";
-import LoginPanel from "@/features/panel/pages/LoginPanel";
-import { USER_ROLES } from "@/features/auth/types/User.type";
+import { USER_ROLES } from "@/features/auth/types/User.type.ts";
 import ManageUsers from "@/features/panel/pages/ManageUsers";
 
 const Home = lazy(() => import("@/pages/Home"));
@@ -14,10 +13,6 @@ const NewsCategory = lazy(() => import("@/features/news/pages/NewsCategory"));
 const News = lazy(() => import("@/features/news/pages/News"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const Newsletter = lazy(() => import("@/features/newsletter/pages/Newsletter"));
-const AboutUs = lazy(() => import("@/pages/footer/AboutUs"));
-const Policies = lazy(() => import("@/pages/footer/Policies"));
-const TermsConditions = lazy(() => import("@/pages/footer/Terms"));
-const Contact = lazy(() => import("@/pages/footer/Contact"));
 const PanelUser = lazy(() => import("@/features/panel/components/PanelUser"));
 const DashboardPanel = lazy(() => import("@/features/panel/pages/DashboardPanel"));
 const UpdateNew = lazy(() => import("@/features/panel/pages/UpdateNew"));
@@ -39,18 +34,9 @@ export const router = createBrowserRouter([
       { path: "search", element: <SearchResults /> },
       { path: "category/:id", element: <NewsCategory /> },
       { path: "news/:slug", element: <News /> },
-      { path: "terms-and-conditions", element: <TermsConditions /> },
-      { path: "policies", element: <Policies /> },
-      { path: "about-us", element: <AboutUs /> },
-      { path: "contact", element: <Contact /> },
       { path: "newsletter", element: <Newsletter /> },
       { path: "*", element: <NotFound /> }
     ]
-  },
-
-  {
-    path: "/panel",
-    element: <LoginPanel />
   },
 
   {
@@ -71,6 +57,7 @@ export const router = createBrowserRouter([
       </Suspense>
     ),
     children: [
+      { index: true, element: <Navigate to="/panel/dashboard" replace /> },
       { path: "dashboard", element: <DashboardPanel /> },
 
       {

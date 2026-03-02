@@ -1,5 +1,5 @@
 import { useAuth } from '@/features/auth/context/AuthContext';
-import { USER_ROLES } from '@/features/auth/types/User.type';
+import { USER_ROLES } from '@/features/auth/types/User.type.ts';
 
 export function useRoleAccess() {
     const { user, hasRole } = useAuth();

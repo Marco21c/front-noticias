@@ -9,7 +9,7 @@ import { Card } from "@/shared/components/ui/card";
 import { apiClient } from "@/shared/lib/axios";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import { toast } from "sonner";
-import type { UserRole } from "@/features/auth/types/User.type";
+import type { UserRole } from "@/features/auth/types/User.type.ts";
 
 const loginSchema = z.object({
   email: z.string().email("Email invalido."),

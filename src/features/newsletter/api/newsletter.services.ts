@@ -1,5 +1,5 @@
 import { apiClient } from '@/shared/lib/axios';
-import type { INewsletter, SubscribeRequest, UpdatePreferencesRequest } from '@/features/newsletter/types/Newsletter.type';
+import type { INewsletter, SubscribeRequest, UpdatePreferencesRequest } from '@/features/newsletter/types/Newsletter.type.ts';
 
 export const subscribeNewsletter = async (data: SubscribeRequest): Promise<INewsletter> => {
   const response = await apiClient.post('/newsletter/subscribe', data);

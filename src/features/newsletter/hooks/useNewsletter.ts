@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { subscribeNewsletter, updatePreferences, unsubscribeNewsletter, getMySubscription } from "@/features/newsletter/api/newsletter.services";
-import type { SubscribeRequest, UpdatePreferencesRequest } from "@/features/newsletter/types/Newsletter.type";
+import type { SubscribeRequest, UpdatePreferencesRequest } from "@/features/newsletter/types/Newsletter.type.ts";
 
 export const useNewsletter = () => {
   const queryClient = useQueryClient();

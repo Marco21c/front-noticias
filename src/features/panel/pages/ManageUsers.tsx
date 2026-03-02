@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ManageUserForm from '../components/ManageUserForm';
 import { apiClient } from '@/shared/lib/axios';
-import { USER_ROLES, type UserRole, type IUser, type IUserBackend } from '@/features/auth/types/User.type';
+import { USER_ROLES, type UserRole, type IUser, type IUserBackend } from '@/features/auth/types/User.type.ts';
 import { toast } from 'sonner';
 
 const ManageUsers = () => {
