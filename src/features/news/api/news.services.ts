@@ -3,7 +3,8 @@ import { apiClient } from '@/shared/lib/axios';
 
 export const getNews = async (): Promise<INews[]> => {
     const { data } = await apiClient.get('/news');
-    return data.data;
+    console.log("Buenas: ",data.data.items);
+    return data.data.items;
 };
 
 export const postNew = async (newData: INewsCreate): Promise<INews> => {

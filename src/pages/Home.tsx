@@ -9,7 +9,6 @@ import OthersNews from "@/features/news/components/OthersNews";
 
 export default function Home() {
   const { data, isLoading, isError } = useGetNews();
-
   const invertedData = useMemo(
     () => (data ? [...data].reverse() : []),
     [data]
