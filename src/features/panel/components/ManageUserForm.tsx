@@ -40,7 +40,6 @@ const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
             setIsLoading(true);
 
             await apiClient.post('/user', data);
-
             toast.success("Usuario creado exitosamente!", {
                 description: `El usuario ${data.name} ${data.lastName} con rol ${data.role} ha sido creado.`,
             });

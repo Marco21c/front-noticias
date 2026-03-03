@@ -56,5 +56,6 @@ export const searchNews = async (query: string): Promise<INews[]> => {
         "/news/search",
         { params: { q: query } }
     );
+    console.log("Resultados de busqueda: ", response.data.data.items);
     return response.data.data.items;
 };
