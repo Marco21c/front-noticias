@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useCreateNew } from "@/features/news/hooks/useUpdateNew";
 import FormNew from "@/features/panel/components/FormNew";
 import { toast } from "sonner";
-import type { INewsCreate } from "@/features/news/types/News.type";
+import type { INewsCreate } from "@/features/news/types/News.type.ts";
 
 export default function AddNew() {
   const navigate = useNavigate();

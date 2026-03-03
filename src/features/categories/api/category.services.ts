@@ -1,5 +1,5 @@
 import { apiClient } from '@/shared/lib/axios';
-import type { ICategory } from '@/features/categories/types/Category.type';
+import type { ICategory } from '@/features/categories/types/Category.type.ts';
 
 export const getCategories = async (): Promise<ICategory[]> => {
     const { data } = await apiClient.get('/categories');

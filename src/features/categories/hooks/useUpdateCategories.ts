@@ -4,7 +4,7 @@ import {
   updateCategory,
   deleteCategory,
 } from "@/features/categories/api/category.services";
-import type { ICategory } from "@/features/categories/types/Category.type";
+import type { ICategory } from "@/features/categories/types/Category.type.ts";
 
 interface UpdateCategoryParams {
   id: string;

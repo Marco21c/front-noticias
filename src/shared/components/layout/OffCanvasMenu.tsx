@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import type { ICategory } from "@/features/categories/types/Category.type";
+import type { ICategory } from "@/features/categories/types/Category.type.ts";
 import NavItem from "./NavItem";
 import { NavLink } from "react-router-dom";
 import { baseStyles } from "@/shared/styles/styleLinkNav";
@@ -35,7 +35,7 @@ export default function OffCanvasMenu({ open, onClose, categories }: Props) {
         <nav className="flex flex-col gap-2 p-4">
             <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
           {categories.map((category) => (
-                <NavItem key={category.id} name={category.name} />
+                <NavItem key={category.id} name={category.name} id={category.id} />
           ))}
         </nav>
       </aside>

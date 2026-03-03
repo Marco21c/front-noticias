@@ -1,9 +1,10 @@
-import type { INews, INewsCreate } from '@/features/news/types/News.type';
+import type { INews, INewsCreate } from '@/features/news/types/News.type.ts';
 import { apiClient } from '@/shared/lib/axios';
 
 export const getNews = async (): Promise<INews[]> => {
     const { data } = await apiClient.get('/news');
-    return data.data;
+    console.log("Buenas: ",data.data.items);
+    return data.data.items;
 };
 
 export const postNew = async (newData: INewsCreate): Promise<INews> => {
@@ -24,11 +25,13 @@ export const postNew = async (newData: INewsCreate): Promise<INews> => {
     return data.data;
 };
 
-export const getNewsByCategory = async (category: string): Promise<INews[]> => {
-    const { data } = await apiClient.get('/news/category', {
-        params: { category }
-    });
-    return data.data;
+export const getNewsByCategory = async (
+  categoryId: string
+): Promise<INews[]> => {
+  const { data } = await apiClient.get('/news/category', {
+    params: { category: categoryId }
+  });
+  return data.data;
 };
 
 export const getNewById = async (id: string): Promise<INews> => {
@@ -53,5 +56,6 @@ export const searchNews = async (query: string): Promise<INews[]> => {
         "/news/search",
         { params: { q: query } }
     );
+    console.log("Resultados de busqueda: ", response.data.data.items);
     return response.data.data.items;
 };

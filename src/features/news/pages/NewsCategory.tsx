@@ -21,7 +21,7 @@ export default function NewsCategory() {
       <Skeleton className="h-4 w-3/4" />
       <Skeleton className="h-4 w-1/2" />
     </div>
-    if (isError) return <p>Ocurrio un error</p>
+    if (isError) return <p>No existen noticias para esta categoria</p>
     if (!data || data.length === 0) return <p>No hay noticias</p>
 
   
@@ -34,7 +34,7 @@ return (
       </p>
 
       <h1 className="text-4xl md:text-5xl font-serif font-bold capitalize">
-        {id}
+        {data[0]?.category.name}
       </h1>
 
       <div className="h-1 w-24 bg-yellow-500 mt-4" />

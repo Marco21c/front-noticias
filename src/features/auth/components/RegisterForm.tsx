@@ -30,7 +30,7 @@ const RegisterForm = () => {
         try {
             setIsLoading(true);
 
-            await apiClient.post('/user', data);
+            await apiClient.post('/auth/register', data);
 
             toast.success("Registro exitoso!", {
                 description: "Tu cuenta ha sido creada correctamente.",

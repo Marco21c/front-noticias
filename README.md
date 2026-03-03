@@ -75,31 +75,36 @@ La aplicación estará disponible en `http://localhost:5173`.
 ```
 front-noticias/
 ├── src/
-│   ├── components/        # Componentes reutilizables
-│   │   └── ui/           # Componentes base de UI
-│   ├── contexts/         # Contextos de React (AuthContext)
-│   ├── hooks/            # Custom hooks
-│   ├── lib/              # Configuraciones (axios, utils)
-│   ├── pages/            # Páginas principales
-│   │   ├── components/   # Componentes de páginas
-│   │   ├── footer/       # Componentes del footer
-│   │   └── Panel/        # Panel de administración
-│   ├── services/         # Servicios de API
-│   ├── styles/           # Estilos globales
-│   ├── types/            # Definiciones de tipos TypeScript
-│   ├── App.tsx           # Componente principal
-│   └── main.tsx          # Punto de entrada
-└── public/               # Archivos estáticos
+│   ├── app/                    # Configuración principal (router, providers)
+│   ├── features/               # Funcionalidades por dominio
+│   │   ├── auth/              # Autenticación y usuarios
+│   │   ├── news/              # Noticias
+│   │   ├── categories/        # Categorías
+│   │   ├── panel/             # Panel de administración
+│   │   └── newsletter/        # Suscripciones
+│   ├── layouts/               # Layouts de la aplicación
+│   ├── pages/                 # Páginas principales
+│   └── shared/                # Componentes y utilidades compartidas
+│       ├── components/       # Componentes UI
+│       │   ├── layout/       # Navbar, Footer, etc.
+│       │   └── ui/           # Componentes shadcn/ui
+│       ├── hooks/            # Hooks personalizados
+│       ├── lib/              # Utilidades (axios, utils)
+│       └── styles/           # Estilos globales
+├── public/                    # Archivos estáticos
+└── components.json            # Configuración shadcn/ui
 ```
 
 ### Roles de usuario
 
 El sistema implementa cuatro niveles de acceso:
 
-- **Superadmin**: Acceso completo, incluyendo gestión de usuarios
-- **Admin**: Gestión completa de noticias y categorías
-- **Editor**: Creación y edición de noticias
-- **User**: Solo lectura de noticias
+| Rol | Descripción | Permisos |
+|-----|-------------|----------|
+| **Superadmin** | Administrador total | Gestionar usuarios, noticias, categorías |
+| **Admin** | Administrador de contenido | Noticias, categorías |
+| **Editor** | Creador de contenido | Crear y editar noticias |
+| **User** | Usuario registrado | Solo lectura de noticias |
 
 ### Componentes principales
 
@@ -107,43 +112,58 @@ El sistema implementa cuatro niveles de acceso:
 - Home - Página principal con noticias destacadas
 - News - Visualización detallada de noticias
 - NewsCategory - Noticias filtradas por categoría
-- Login - Autenticación de usuarios
-- Register - Registro de nuevos usuarios
+- SearchResults - Resultados de búsqueda
+- Login/Register - Autenticación de usuarios
+- Newsletter - Suscripción al newsletter
 
-**Panel de administración:**
+**Panel de administración (`/panel`):**
 - DashboardPanel - Panel principal
 - AddNew - Creación de noticias
 - EditNew - Edición de noticias
 - UpdateNew - Listado y filtro de noticias
+- AddCategory - Crear categoría
+- EditCategory - Editar categoría
 - UpdateCategory - Gestión de categorías
-- ManageUsers - Gestión de usuarios (Superadmin)
-- LoginPanel - Acceso al panel
+- ManageUsers - Gestión de usuarios (Admin/Superadmin)
 
-**Componentes reutilizables:**
-- Navbar - Navegación principal
+**Componentes compartidos:**
+- Navbar - Navegación principal con búsqueda
+- OffCanvasMenu - Menú móvil
+- SideBarPanel - Sidebar del panel de admin
 - SearchBar - Búsqueda de noticias
 - NewsList - Lista de noticias
+- NewsFeatured - Noticias destacadas
 - NewsDetail - Detalle de noticia
 - NewsCard - Tarjeta de noticia
 - Footer - Pie de página
+- UserDropdown - Menú de usuario
 
 ## API Integration
 
 ### Servicios
 
-El frontend consume la API REST del backend a través de servicios organizados:
+El frontend consume la API REST del backend a través de servicios organizados por dominio:
 
-**News Service (`src/services/news.services.ts`):**
+**News Service (`src/features/news/api/news.services.ts`):**
 - `getNews()` - Obtiene todas las noticias
 - `getNewById(id)` - Obtiene una noticia por ID
-- `getNewsByCategory(category)` - Obtiene noticias por categoría
+- `getNewsByCategory(categoryId)` - Obtiene noticias por categoría
+- `searchNews(query)` - Busca noticias
 - `postNew(data)` - Crea una nueva noticia
 - `updateNew({ id, payload })` - Actualiza una noticia
 - `deleteNew(id)` - Elimina una noticia
 
-**Category Service (`src/services/category.services.ts`):**
+**Category Service (`src/features/categories/api/category.services.ts`):**
 - `getCategories()` - Obtiene todas las categorías
 - `getCategoryById(id)` - Obtiene una categoría por ID
+- `createCategory(data)` - Crea una categoría
+- `updateCategory(id, data)` - Actualiza una categoría
+- `deleteCategory(id)` - Elimina una categoría
+
+**Newsletter Service (`src/features/newsletter/api/newsletter.services.ts`):**
+- `subscribeNewsletter(data)` - Suscribe al newsletter
+- `updatePreferences(data)` - Actualiza preferencias
+- `unsubscribeNewsletter()` - Cancela suscripción
 
 ### Tipos principales
 
@@ -214,9 +234,10 @@ interface ICategory {
 ### Autenticación y Autorización
 - Sistema de login con JWT
 - Registro de usuarios
-- Context API para gestión de autenticación
-- Rutas protegidas por rol
+- Context API para gestión de autenticación (`AuthContext`)
+- Rutas protegidas por rol (`PanelProtectedRoute`)
 - Hook personalizado para control de acceso (`useRoleAccess`)
+- Sidebar dinámico según permisos del usuario
 
 ### Gestión de Noticias
 - Creación, edición y eliminación de noticias

@@ -11,7 +11,7 @@ import useHideOnScroll from "@/shared/hooks/useHideOnScroll";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import UserDropdown from "@/features/auth/components/UserDropdown";
 import { toast } from "sonner";
-import { USER_ROLES, type UserRole } from "@/features/auth/types/User.type";
+import { USER_ROLES, type UserRole } from "@/features/auth/types/User.type.ts";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -74,7 +74,7 @@ export default function Navbar() {
           <ul className="mx-auto flex max-w-7xl gap-6 px-4 py-2 border-b border-gray-300">
             <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
             {categories.map((category) => (
-              <NavItem key={category.id} name={category.name} />
+              <NavItem key={category.id} name={category.name} id={category.id} />
             ))}
           </ul>
         </nav>

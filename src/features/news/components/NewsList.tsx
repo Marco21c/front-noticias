@@ -1,4 +1,4 @@
-import type { INews } from "@/features/news/types/News.type";
+import type { INews } from "@/features/news/types/News.type.ts";
 import NewsCard from "./NewsCard";
 
 type Props = {

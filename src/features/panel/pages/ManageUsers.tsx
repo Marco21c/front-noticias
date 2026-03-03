@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ManageUserForm from '../components/ManageUserForm';
 import { apiClient } from '@/shared/lib/axios';
-import { USER_ROLES, type UserRole, type IUser, type IUserBackend } from '@/features/auth/types/User.type';
+import { USER_ROLES, type UserRole, type IUser, type IUserBackend } from '@/features/auth/types/User.type.ts';
 import { toast } from 'sonner';
 
 const ManageUsers = () => {
@@ -12,9 +12,9 @@ const ManageUsers = () => {
         try {
             setIsLoading(true);
             const response = await apiClient.get<{ data: IUserBackend[] }>('/user');
-            
-            const transformedUsers: IUser[] = (response.data.data || []).map(user => ({
-                id: user._id,
+             console.log("Usuarios obtenidos: ", response.data.data.items);
+            const transformedUsers: IUser[] = (response.data.data.items || []).map(user => ({
+                id: user.id,
                 name: user.name,
                 lastName: user.lastName,
                 email: user.email,
@@ -46,6 +46,7 @@ const ManageUsers = () => {
         }
 
         try {
+            console.log("Eliminando usuario con ID: ", userId);
             await apiClient.delete(`/user/${userId}`);
             toast.success("Usuario eliminado", {
                 description: "El usuario ha sido eliminado exitosamente.",

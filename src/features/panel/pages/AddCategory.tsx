@@ -1,7 +1,7 @@
 import { useCreateCategory } from "@/features/categories/hooks/useUpdateCategories";
 import FormCategories from "../components/FormCategories";
 import { useNavigate } from "react-router-dom";
-import type { ICategory } from "@/features/categories/types/Category.type";
+import type { ICategory } from "@/features/categories/types/Category.type.ts";
 
 export default function AddCategory() {
   const { mutate: createCategory, isPending } = useCreateCategory();

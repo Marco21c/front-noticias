@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { apiClient } from '@/shared/lib/axios';
 import { toast } from "sonner";
 import { Button } from '@/shared/components/ui/button';
-import { USER_ROLES } from '@/features/auth/types/User.type';
+import { USER_ROLES } from '@/features/auth/types/User.type.ts';
 
 const manageUserSchema = z.object({
     name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.'),
@@ -40,7 +40,6 @@ const ManageUserForm = ({ onUserCreated }: ManageUserFormProps) => {
             setIsLoading(true);
 
             await apiClient.post('/user', data);
-
             toast.success("Usuario creado exitosamente!", {
                 description: `El usuario ${data.name} ${data.lastName} con rol ${data.role} ha sido creado.`,
             });

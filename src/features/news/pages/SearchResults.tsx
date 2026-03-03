@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { useSearchNews } from "@/features/news/hooks/useGetNews";
 import NewsCard from "@/features/news/components/NewsCard";
-import type { INews } from "@/features/news/types/News.type";
+import type { INews } from "@/features/news/types/News.type.ts";
 
 export default function SearchResults() {
   const [searchParams] = useSearchParams();

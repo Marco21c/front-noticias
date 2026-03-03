@@ -1,19 +1,23 @@
 import { useState } from "react";
-import { LayoutDashboard, Newspaper, PlusSquare, Folder, Menu, LogOut } from "lucide-react";
+import { LayoutDashboard, Newspaper, PlusSquare, Folder, Menu, LogOut, Users } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "@/features/auth/context/AuthContext";
+import { USER_ROLES } from "@/features/auth/types/User.type.ts";
 
-const links = [
-  { name: "Dashboard", icon: LayoutDashboard, href: "/panel/dashboard" },
-  { name: "Noticias", icon: Newspaper, href: "/panel/news" },
-  { name: "Crear", icon: PlusSquare, href: "/panel/new" },
-  { name: "Categorias", icon: Folder, href: "/panel/categories" }
+const allLinks = [
+  { name: "Dashboard", icon: LayoutDashboard, href: "/panel/dashboard", roles: [USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN] },
+  { name: "Noticias", icon: Newspaper, href: "/panel/news", roles: [USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN] },
+  { name: "Crear", icon: PlusSquare, href: "/panel/new", roles: [USER_ROLES.EDITOR, USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN] },
+  { name: "Categorias", icon: Folder, href: "/panel/categories", roles: [USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN] },
+  { name: "Usuarios", icon: Users, href: "/panel/users", roles: [USER_ROLES.ADMIN, USER_ROLES.SUPERADMIN] }
 ];
 
 export default function AdminSidebar() {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, hasRole } = useAuth();
+
+  const links = allLinks.filter(link => hasRole(link.roles));
 
   const handleLogout = () => {
     logout();

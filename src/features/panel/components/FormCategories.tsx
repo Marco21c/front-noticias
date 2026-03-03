@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import type { ICategory } from "@/features/categories/types/Category.type";
+import type { ICategory } from "@/features/categories/types/Category.type.ts";
 import { Button } from "@/shared/components/ui/button";
 
 interface FormCategoriesProps {

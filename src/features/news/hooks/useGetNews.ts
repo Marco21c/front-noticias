@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getNewsByCategory, getNews, getNewById, searchNews } from "@/features/news/api/news.services";
-import type { INews } from "@/features/news/types/News.type";
+import type { INews } from "@/features/news/types/News.type.ts";
 
 export const useGetNews = () => {
   return useQuery<INews[]>({
@@ -9,12 +9,12 @@ export const useGetNews = () => {
   })
 };
 
-export const useGetNewsPorCategories = (category: string) => {
+export const useGetNewsPorCategories = (categoryId?: string) => {
   return useQuery<INews[]>({
-    queryKey: ['news', category],
-    queryFn: () => getNewsByCategory(category),
-    enabled: !!category 
-  })
+    queryKey: ['news', categoryId],
+    queryFn: () => getNewsByCategory(categoryId!),
+    enabled: !!categoryId
+  });
 };
 
 export const useGetNew = (id?: string) => {
