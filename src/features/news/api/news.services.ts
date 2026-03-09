@@ -3,10 +3,11 @@ import { apiClient } from '@/shared/lib/axios';
 
 /**
  * Obtiene todas las noticias disponibles y publicadas del backend.
+ * @param {number} [limit=50] Límite de resultados a traer
  * @returns {Promise<INews[]>} Array de noticias
  */
-export const getNews = async (): Promise<INews[]> => {
-    const { data } = await apiClient.get('/news');
+export const getNews = async (limit: number = 50): Promise<INews[]> => {
+    const { data } = await apiClient.get('/news', { params: { limit } });
     return data.data.items;
 };
 

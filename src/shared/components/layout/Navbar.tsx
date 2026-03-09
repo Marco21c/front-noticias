@@ -41,7 +41,7 @@ export default function Navbar() {
   
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-gray-300 bg-white">
+      <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md transition-colors duration-300">
 
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
@@ -67,11 +67,11 @@ export default function Navbar() {
       </header>
        <nav className={` hidden md:block
             border-t border-gray-100
-            sticky top-[64px] z-40 bg-white
+            sticky top-[64px] z-40 bg-white/80 backdrop-blur-md
             transition-transform duration-300
             ${hidden ? "-translate-y-full" : "translate-y-0"}`} >
 
-          <ul className="mx-auto flex max-w-7xl gap-6 px-4 py-2 border-b border-gray-300">
+          <ul className="mx-auto flex max-w-7xl gap-6 px-4 py-2 border-b border-gray-200">
             <NavLink to={"/"} className={baseStyles}> Ultimas noticias</NavLink>
             {categories.map((category) => (
               <NavItem key={category.id} name={category.name} id={category.id} />

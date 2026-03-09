@@ -12,13 +12,13 @@ type NewsCardsProps = {
 };
 
 const categoryColors: Record<string, string> = {
-  education: "text-orange-700 bg-orange-200",
-  technology: "text-blue-700 bg-blue-100",
-  health: "text-green-700 bg-green-100",
-  sports: "text-red-700 bg-red-100",
-  politic: "text-purple-700 bg-purple-100",
-  economy: "text-yellow-700 bg-yellow-100",
-  science: "text-indigo-700 bg-indigo-100"
+  education: "text-orange-800 bg-orange-100",
+  technology: "text-blue-800 bg-blue-100",
+  health: "text-emerald-800 bg-emerald-100",
+  sports: "text-red-800 bg-red-100",
+  politic: "text-purple-800 bg-purple-100",
+  economy: "text-yellow-800 bg-yellow-100",
+  science: "text-indigo-800 bg-indigo-100"
 };
 
 export default function NewsCard({
@@ -33,53 +33,39 @@ export default function NewsCard({
 }: NewsCardsProps) {
   const cardContent = (
     <article
-      className={`
-          group overflow-hidden bg-white rounded-xl
-          border border-zinc-200
-          shadow-sm
-          hover:shadow-md
-          transition-all duration-300
-          ${variant === "highlighted" ? "col-span-full" : ""}
-  `}
+      className="group flex flex-col h-full bg-transparent transition-all duration-300"
     >
 
-
-      {mainImage && (
+      {/* Imagen (Oculta en Default) */}
+      {variant !== "default" && mainImage && (
         <div
           className={`
-            relative mb-3 overflow-hidden
+            relative overflow-hidden bg-zinc-100 flex flex-col items-center justify-center
             ${variant === "highlighted"
-              ? "h-96"
-              : variant === "featured"
-                ? "h-64"
-                : "h-48"}
-    `}
+              ? "h-80 md:h-[400px] mb-4 md:mb-6"
+              : "aspect-video mb-3"}
+          `}
         >
-
-{variant === "highlighted" && (
-  <span className="absolute top-4 left-4 z-10 bg-yellow-400 text-black text-[11px] font-bold uppercase px-3 py-1 tracking-widest">
-    Exclusiva
-  </span>
-)}
+          {variant === "highlighted" && (
+            <span className="absolute top-4 left-4 z-10 bg-black text-white text-[10px] uppercase font-bold px-3 py-1 tracking-widest">
+              Exclusiva
+            </span>
+          )}
+          
           <img
             src={mainImage}
             alt={title}
-            className="h-full w-full object-cover transition group-hover:brightness-95"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-200" />
         </div>
-        
       )}
 
-      <div className={`
-              space-y-2
-              ${variant === "highlighted" ? "space-y-3" : ""}
-  `}
->
+      {/* Cuerpo de la Noticia */}
+      <div className="flex flex-col flex-1">
       <span
         className={`
-          mb-2 inline-block text-[11px] font-semibold uppercase tracking-widest px-2 py-1 rounded
-          ${categoryColors[category?.name ?? ""] ?? "text-gray-600 bg-gray-100"}
+          inline-block text-[10px] font-bold uppercase tracking-widest mb-3
+          ${categoryColors[category?.name ?? ""] ?? "text-gray-600"}
   `}
 >
           {category?.name ?? ""}
@@ -87,15 +73,14 @@ export default function NewsCard({
 
         <h2
           className={`
-            font-bold leading-tight tracking-tight font-serif
-            group-hover:text-black
+            font-bold leading-tight tracking-tight font-serif text-gray-900 group-hover:underline decoration-2 underline-offset-4
         
             ${
               variant === "highlighted"
-                ? "text-3xl md:text-4xl"
+                ? "text-4xl md:text-5xl lg:text-6xl mb-3"
                 : variant === "featured"
-                ? "text-xl"
-                : "text-base"
+                ? "text-2xl"
+                : "text-xl"
             }
           `}
         >
@@ -104,24 +89,29 @@ export default function NewsCard({
 
         <p
           className={`
-            mt-2 text-gray-700 leading-relaxed
+            mt-1 text-gray-700 leading-relaxed font-serif
             ${variant === "highlighted"
-              ? "text-lg"
+              ? "text-lg md:text-xl font-light"
               : variant === "featured"
-                ? "text-sm"
-                : "text-xs line-clamp-3"
+                ? "text-sm line-clamp-3 mt-3"
+                : "text-base line-clamp-3 mt-3"
             }
           `}
         >
           {summary}
         </p>
 
-        <div className="mt-3 text-xs text-gray-500 flex gap-3">
-          <span>{author?.name ?? ""}</span>
+        <div className={`
+            mt-4 pt-3 border-t border-gray-200 text-xs font-sans font-medium text-gray-500 flex items-center gap-2 uppercase tracking-wide
+        `}>
+          <span className="text-gray-900">{author?.name ?? ""}</span>
           {publicationDate && (
-            <time dateTime={publicationDate}>
-              {new Date(publicationDate).toLocaleDateString("es-AR")}
-            </time>
+            <>
+              <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+              <time dateTime={publicationDate}>
+                {new Date(publicationDate).toLocaleDateString("es-AR", { month: 'short', day: 'numeric', year: 'numeric' })}
+              </time>
+            </>
           )}
         </div>
       </div>

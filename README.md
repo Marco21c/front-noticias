@@ -133,10 +133,10 @@ El sistema implementa cuatro niveles de acceso:
 - OffCanvasMenu - Menú móvil
 - SideBarPanel - Sidebar del panel de admin
 - SearchBar - Búsqueda de noticias
-- NewsList - Lista de noticias
-- NewsFeatured - Noticias destacadas
+- NewsList - Lista de noticias (Mampostería y Hero Vertical)
+- NewsFeatured - Noticias destacadas (Grid Periodística de 4 columnas)
 - NewsDetail - Detalle de noticia
-- NewsCard - Tarjeta de noticia
+- NewsCard - Tarjeta de noticia (Estilo Diario Clásico sin bordes y tipografía Serif)
 - FormNew - Controlador de React-Hook-Form + Dropzone (Persistencia de SessionStorage)
 - Footer - Pie de página
 - UserDropdown - Menú de usuario
@@ -246,6 +246,7 @@ interface ICategory {
 - Sidebar dinámico según permisos del usuario
 
 ### Gestión de Noticias
+- Diseño Editorial Clásico: Layouts en cuadrícula rígida (CSS Grid con separadores físicos), tipografía Serif y supresión de elementos flotantes genéricos simulando un diario de papel.
 - Creación, edición y eliminación de noticias
 - Editor de Texto Enriquecido integrado (WYSIWYG) para el cuerpo de noticias con configuración de documentos (Negritas, listas, cursivas).
 - Motor inteligente "Draft": Guarda automáticamente el progreso de escritura (texto e imágenes) en `sessionStorage` para restaurarlo si cierras la ventana
@@ -254,7 +255,7 @@ interface ICategory {
 - Búsqueda de noticias
 - Vista detallada de noticias
 - Formateo de fechas
-- Variantes de visualización (highlighted, featured, default)
+- Variantes de visualización (highlighted, featured, default) adaptadas matemáticamente a densidades de Lectura de Texto.
 
 ### Gestión de Categorías
 - Categorías dinámicas desde la API

@@ -9,10 +9,38 @@ import OthersNews from "@/features/news/components/OthersNews";
 
 export default function Home() {
   const { data, isLoading, isError } = useGetNews();
-  const invertedData = useMemo(
-    () => (data ? [...data].reverse() : []),
-    [data]
-  );
+  const { heroNews, importantNews, otherNews } = useMemo(() => {
+    if (!data) return { heroNews: [], importantNews: [], otherNews: [] };
+
+    // Ordenar todas las noticias desde la más reciente a la más vieja
+    const sortedData = [...data].sort((a, b) => new Date(b.publicationDate!).getTime() - new Date(a.publicationDate!).getTime());
+
+    const highlighted = sortedData.filter(n => n.variant === 'highlighted');
+    const featured = sortedData.filter(n => n.variant === 'featured');
+    const defaults = sortedData.filter(n => n.variant === 'default' || !n.variant);
+
+    // 1. Destacadas: 1 destacada principal, 1 importante y 3 por defecto
+    const mainHighlighted = highlighted.slice(0, 1);
+    const firstFeatured = featured.slice(0, 1);
+    const firstDefaults = defaults.slice(0, 3);
+    const heroNews = [...mainHighlighted, ...firstFeatured, ...firstDefaults];
+
+    // 2. Importantes: Las 4 noticias que le siguen a la importante
+    const importantNews = featured.slice(1, 5);
+
+    // 3. Otras noticias: La destacada que envejeció + llenar con defaults
+    const remainingHighlighted = highlighted.slice(1);
+    const remainingFeatured = featured.slice(5);
+    const remainingDefaults = defaults.slice(3);
+    
+    const pool = [...remainingHighlighted, ...remainingFeatured, ...remainingDefaults].sort(
+      (a, b) => new Date(b.publicationDate!).getTime() - new Date(a.publicationDate!).getTime()
+    );
+    // Tomar 7 para el listado inferior
+    const otherNews = pool.slice(0, 7);
+
+    return { heroNews, importantNews, otherNews };
+  }, [data]);
 
   if (isLoading)
     return (
@@ -58,35 +86,32 @@ export default function Home() {
   }
 
   return (
-    <main className="max-w-6xl mx-auto px-4 pb-16">
-      <section className="mt-12">
-        <h1 className="font-serif text-3xl md:text-4xl font-bold mb-2">
+    <main className="max-w-6xl mx-auto px-4 pb-20">
+      <section className="mt-8">
+        <h1 className="font-sans text-sm uppercase tracking-[0.2em] font-bold mb-4 text-gray-900 border-b-2 border-black pb-2">
           Destacadas
         </h1>
-        <div className="h-1 w-24 bg-yellow-500 mb-8" />
 
-        <NewsList data={invertedData.slice(0, 5)} />
+        <NewsList data={heroNews} />
       </section>
 
-      {invertedData.length >= 5 && (
+      {importantNews.length > 0 && (
         <section className="mt-16">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold mb-2">
+          <h2 className="font-sans text-sm uppercase tracking-[0.2em] font-bold mb-4 text-gray-900 border-b-2 border-black pb-2">
             Importantes
           </h2>
-          <div className="h-px w-full bg-yellow-500 mb-6" />
 
-          <NewsFeatured data={invertedData.slice(5, 9)} />
+          <NewsFeatured data={importantNews} />
         </section>
       )}
 
-      {invertedData.length >= 8 && (
+      {otherNews.length > 0 && (
         <section className="mt-16">
-          <h2 className="mt-14 mb-6 text-xl font-serif font-semibold border-l-4 border-gray-400 pl-3">
+          <h2 className="font-sans text-sm uppercase tracking-[0.2em] font-bold mb-4 text-gray-900 border-b-2 border-black pb-2">
             Otras noticias
           </h2>
-          <div className="h-px w-full bg-yellow-400 mb-6" />
 
-          <OthersNews data={invertedData.slice(9, 17)} />
+          <OthersNews data={otherNews} />
         </section>
       )}
     </main>

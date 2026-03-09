@@ -4,12 +4,13 @@ import type { INews } from "@/features/news/types/News.type.ts";
 
 /**
  * Hook principal para solicitar todas las noticias genéricamente publicadas al feed.
+ * Pide hasta 50 resultados para abastecer las portadas complejas.
  * @returns UseQueryResult administrado por TanStack
  */
-export const useGetNews = () => {
+export const useGetNews = (limit: number = 50) => {
   return useQuery<INews[]>({
-    queryKey: ['news'],
-    queryFn: getNews,
+    queryKey: ['news', limit],
+    queryFn: () => getNews(limit),
   })
 };
 
