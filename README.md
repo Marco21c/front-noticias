@@ -15,10 +15,12 @@ Sistema de gestión de noticias con interfaz de usuario completa que incluye fun
 - Gestión de usuarios (solo para Superadmin)
 - Búsqueda y filtrado de noticias
 - Visualización detallada de noticias
+- Interceptor inteligente de Formularios para persistir borradores ("Drafts") localmente
+- Subida visual Drag & Drop para las pre-imágenes de Portada
 - Notificaciones con Sonner
-- Validación de formularios con React Hook Form
-- Gestión de estado del servidor con React Query
-- Rutas protegidas según roles de usuario
+- Validación de formularios y Types con React Hook Form + Zod
+- Gestión de estado del servidor y caché con React Query
+- Rutas protegidas según roles de usuario y permisos dinámicos
 
 ## Instalación
 
@@ -135,6 +137,7 @@ El sistema implementa cuatro niveles de acceso:
 - NewsFeatured - Noticias destacadas
 - NewsDetail - Detalle de noticia
 - NewsCard - Tarjeta de noticia
+- FormNew - Controlador de React-Hook-Form + Dropzone (Persistencia de SessionStorage)
 - Footer - Pie de página
 - UserDropdown - Menú de usuario
 
@@ -223,6 +226,9 @@ interface ICategory {
 - react-hook-form ^7.71.1
 - zod ^4.3.5
 - @hookform/resolvers ^5.2.2
+- react-dropzone ^14.3.5 (Subidas arrastrar y soltar)
+- react-quill-new (Editor de texto enriquecido WYSIWYG)
+- dompurify (Sanitización anti-XSS)
 
 ### Utilidades
 - react-router-dom ^7.12.0
@@ -241,6 +247,9 @@ interface ICategory {
 
 ### Gestión de Noticias
 - Creación, edición y eliminación de noticias
+- Editor de Texto Enriquecido integrado (WYSIWYG) para el cuerpo de noticias con configuración de documentos (Negritas, listas, cursivas).
+- Motor inteligente "Draft": Guarda automáticamente el progreso de escritura (texto e imágenes) en `sessionStorage` para restaurarlo si cierras la ventana
+- Drag & Drop visual para previsualizar Portadas (`react-dropzone`)
 - Visualización de noticias por categoría
 - Búsqueda de noticias
 - Vista detallada de noticias

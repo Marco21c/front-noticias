@@ -3,10 +3,10 @@ import SideBarPanel from "./SideBarPanel";
 
 export default function PanelUser() {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen overflow-hidden">
       <SideBarPanel />
 
-      <main className="flex-1 bg-gray-100 p-6">
+      <main className="flex-1 bg-gray-100 p-6 overflow-y-auto">
         <Outlet />
       </main>
     </div>

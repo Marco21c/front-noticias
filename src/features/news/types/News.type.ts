@@ -27,7 +27,7 @@ export interface INewsCreate {
   content: string;
   highlights?: string[];
   category: string;
-  mainImage?: string;
+  mainImage?: string | File;
   source?: string | null;
   variant?: NewsVariant;
 }

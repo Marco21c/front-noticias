@@ -22,6 +22,7 @@ const UpdateCategory = lazy(() => import("@/features/panel/pages/UpdateCategory"
 const SearchResults = lazy(() => import("@/features/news/pages/SearchResults"));
 const EditCategory = lazy(() => import("@/features/panel/pages/EditCategory"));
 const AddCategory = lazy(() => import("@/features/panel/pages/AddCategory"));
+const LoginPanel = lazy(() => import("@/features/panel/pages/LoginPanel"));
 import ErrorPage from "@/pages/ErrorPage";
 
 export const router = createBrowserRouter([
@@ -39,6 +40,15 @@ export const router = createBrowserRouter([
       { path: "newsletter", element: <Newsletter /> },
       { path: "*", element: <NotFound /> }
     ]
+  },
+
+  {
+    path: "/panel/login",
+    element: (
+      <Suspense fallback={<div>Cargando...</div>}>
+        <LoginPanel />
+      </Suspense>
+    )
   },
 
   {

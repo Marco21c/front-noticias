@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { useCreateNew } from "@/features/news/hooks/useUpdateNew";
 import FormNew from "@/features/panel/components/FormNew";
+import NewsPreview from "@/features/panel/components/NewsPreview";
 import { toast } from "sonner";
+import { useState } from "react";
 import type { INewsCreate } from "@/features/news/types/News.type.ts";
 
 export default function AddNew() {
   const navigate = useNavigate();
   const { mutate, isPending, error } = useCreateNew();
+  const [previewData, setPreviewData] = useState<Partial<INewsCreate>>({});
 
   const onSubmit = (data: INewsCreate) => {
     mutate(data, {
@@ -29,20 +32,13 @@ export default function AddNew() {
           serverError={error?.message || null}
           title="Crear noticia"
           submitText="Crear"
+          onPreviewChange={setPreviewData}
+          draftKey="new_article_draft"
         />
       </div>
 
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500 mb-6">
-          Vista previa
-        </h2>
-
-        <div className="rounded-xl border border-zinc-100 p-4">
-          <div className="bg-zinc-100 h-40 rounded-md mb-4"></div>
-          <div className="h-4 bg-zinc-200 rounded w-3/4 mb-2"></div>
-          <div className="h-3 bg-zinc-100 rounded w-full mb-1"></div>
-          <div className="h-3 bg-zinc-100 rounded w-5/6"></div>
-        </div>
+      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6 max-h-[850px] overflow-y-auto">
+        <NewsPreview data={previewData} />
       </div>
 
     </div>

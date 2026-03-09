@@ -19,7 +19,7 @@ export function PanelProtectedRoute({ children, allowedRoles }: PanelProtectedRo
     }
 
     if (!isAuthenticated) {
-        return <Navigate to="/panel" replace />;
+        return <Navigate to="/panel/login" replace />;
     }
 
     if (allowedRoles && !hasRole(allowedRoles)) {

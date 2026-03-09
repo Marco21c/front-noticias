@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import DOMPurify from "dompurify";
 import type { INews } from "@/features/news/types/News.type.ts";
 
 type Props = {
@@ -45,9 +46,10 @@ export default function NewsDetail({ news }: Props) {
             <div className="h-px w-full bg-yellow-500 mb-8" />
 
 
-            <div className="prose prose-lg max-w-none leading-relaxed">
-                {news.content}
-            </div>
+            <div 
+                className="prose prose-lg max-w-none leading-relaxed prose-headings:font-bold prose-headings:text-gray-900 prose-a:text-blue-600 prose-img:rounded-md"
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(news.content) }}
+            />
 
             {news.highlights?.length > 0 && (
                 <aside className="mt-12 border-l-4 border-yellow-400 pl-4 bg-yellow-50 py-4 rounded-r">

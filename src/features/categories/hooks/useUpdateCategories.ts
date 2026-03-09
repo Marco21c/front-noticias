@@ -11,6 +11,11 @@ interface UpdateCategoryParams {
   category: Partial<ICategory>;
 }
 
+/**
+ * Construye una mutación React Query para dar de alta una categoría.
+ * Invalida el caché de la llave `categories` forzando refetch una vez completado exitosamente.
+ * @returns UseMutationResult con función asíncrona inyectada
+ */
 export const useCreateCategory = () => {
   const queryClient = useQueryClient();
 
@@ -23,6 +28,10 @@ export const useCreateCategory = () => {
   });
 };
 
+/**
+ * Construye una mutación para editar información de una categoría cargada.
+ * @returns UseMutationResult para ejecutar { id, categoryPayload } asíncronamente
+ */
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
 
@@ -35,6 +44,11 @@ export const useUpdateCategory = () => {
   });
 };
 
+/**
+ * Construye una mutación dedicada de baja física para categorías.
+ * Causa Side-Effects en caché invalidando llave `categories`.
+ * @returns UseMutationResult para un método Delete.
+ */
 export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
 

@@ -2,6 +2,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { subscribeNewsletter, updatePreferences, unsubscribeNewsletter, getMySubscription } from "@/features/newsletter/api/newsletter.services";
 import type { SubscribeRequest, UpdatePreferencesRequest } from "@/features/newsletter/types/Newsletter.type.ts";
 
+/**
+ * Hook compuesto (Facade) que agrupa toda la funcionalidad del sistema de Newsletter para una Vista.
+ * Devuelve un objeto destruturable con estados, banderas (isPeding) y funciones de control asíncrono
+ * que internamente invalidan el caché al concretarse.
+ * 
+ * @returns Objeto con métricas e interfaces para Suscribir, Actualizar, y Borrar subscripción de la DB.
+ */
 export const useNewsletter = () => {
   const queryClient = useQueryClient();
 
