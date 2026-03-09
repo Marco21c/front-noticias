@@ -9,14 +9,14 @@ export default function NotFound() {
       </span>
 
       <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-        La página no existe
+        La pagina no existe
       </h1>
 
       <div className="h-1 w-16 bg-yellow-500 mb-6" />
 
       <p className="text-gray-600 max-w-md mb-8">
-        La noticia que estás buscando no existe o fue movida.
-        Podés volver a la portada para seguir leyendo las últimas noticias.
+        La noticia que estas buscando no existe o fue movida.
+        Podes volver a la portada para seguir leyendo las ultimas noticias.
       </p>
 
       <Link

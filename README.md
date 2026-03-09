@@ -4,7 +4,7 @@ Frontend de un sistema de gestión de noticias desarrollado con React, TypeScrip
 
 ## Descripción
 
-Sistema de gestión de noticias con interfaz de usuario completa que incluye funcionalidades para usuarios finales y administradores. Implementa autenticación, autorización basada en roles y operaciones CRUD completas para noticias y usuarios.
+Sistema de gestión de noticias con interfaz de usuario completa que incluye funcionalidades para usuarios finales y administradores. Implementa autenticación, autorización basada en roles y operaciones CRUD completas para noticias, categorías y usuarios.
 
 ### Características principales
 
@@ -15,10 +15,12 @@ Sistema de gestión de noticias con interfaz de usuario completa que incluye fun
 - Gestión de usuarios (solo para Superadmin)
 - Búsqueda y filtrado de noticias
 - Visualización detallada de noticias
+- Interceptor inteligente de Formularios para persistir borradores ("Drafts") localmente
+- Subida visual Drag & Drop para las pre-imágenes de Portada
 - Notificaciones con Sonner
-- Validación de formularios con React Hook Form y Zod
-- Gestión de estado del servidor con React Query
-- Rutas protegidas según roles de usuario
+- Validación de formularios y Types con React Hook Form + Zod
+- Gestión de estado del servidor y caché con React Query
+- Rutas protegidas según roles de usuario y permisos dinámicos
 
 ## Instalación
 
@@ -26,6 +28,7 @@ Sistema de gestión de noticias con interfaz de usuario completa que incluye fun
 
 - Node.js (versión 18 o superior)
 - npm, yarn o pnpm
+- Backend API corriendo (ver repositorio backend-noticias)
 
 ### Pasos de instalación
 
@@ -74,30 +77,36 @@ La aplicación estará disponible en `http://localhost:5173`.
 ```
 front-noticias/
 ├── src/
-│   ├── components/        # Componentes reutilizables
-│   │   └── ui/           # Componentes base de UI
-│   ├── contexts/         # Contextos de React (AuthContext)
-│   ├── hooks/            # Custom hooks
-│   ├── lib/              # Configuraciones (axios, utils)
-│   ├── pages/            # Páginas principales
-│   │   ├── components/   # Componentes de páginas
-│   │   └── Panel/        # Panel de administración
-│   ├── services/         # Servicios de API
-│   ├── styles/           # Estilos globales
-│   ├── types/            # Definiciones de tipos TypeScript
-│   ├── App.tsx           # Componente principal
-│   └── main.tsx          # Punto de entrada
-└── public/               # Archivos estáticos
+│   ├── app/                    # Configuración principal (router, providers)
+│   ├── features/               # Funcionalidades por dominio
+│   │   ├── auth/              # Autenticación y usuarios
+│   │   ├── news/              # Noticias
+│   │   ├── categories/        # Categorías
+│   │   ├── panel/             # Panel de administración
+│   │   └── newsletter/        # Suscripciones
+│   ├── layouts/               # Layouts de la aplicación
+│   ├── pages/                 # Páginas principales
+│   └── shared/                # Componentes y utilidades compartidas
+│       ├── components/       # Componentes UI
+│       │   ├── layout/       # Navbar, Footer, etc.
+│       │   └── ui/           # Componentes shadcn/ui
+│       ├── hooks/            # Hooks personalizados
+│       ├── lib/              # Utilidades (axios, utils)
+│       └── styles/           # Estilos globales
+├── public/                    # Archivos estáticos
+└── components.json            # Configuración shadcn/ui
 ```
 
 ### Roles de usuario
 
 El sistema implementa cuatro niveles de acceso:
 
-- **Superadmin**: Acceso completo, incluyendo gestión de usuarios
-- **Admin**: Gestión completa de noticias y categorías
-- **Editor**: Creación y edición de noticias
-- **User**: Solo lectura de noticias
+| Rol | Descripción | Permisos |
+|-----|-------------|----------|
+| **Superadmin** | Administrador total | Gestionar usuarios, noticias, categorías |
+| **Admin** | Administrador de contenido | Noticias, categorías |
+| **Editor** | Creador de contenido | Crear y editar noticias |
+| **User** | Usuario registrado | Solo lectura de noticias |
 
 ### Componentes principales
 
@@ -105,23 +114,94 @@ El sistema implementa cuatro niveles de acceso:
 - Home - Página principal con noticias destacadas
 - News - Visualización detallada de noticias
 - NewsCategory - Noticias filtradas por categoría
-- Login - Autenticación de usuarios
-- Register - Registro de nuevos usuarios
+- SearchResults - Resultados de búsqueda
+- Login/Register - Autenticación de usuarios
+- Newsletter - Suscripción al newsletter
 
-**Panel de administración:**
+**Panel de administración (`/panel`):**
 - DashboardPanel - Panel principal
 - AddNew - Creación de noticias
 - EditNew - Edición de noticias
-- UpdateNew - Actualización de noticias
-- ManageUsers - Gestión de usuarios (Superadmin)
-- LoginPanel - Acceso al panel
+- UpdateNew - Listado y filtro de noticias
+- AddCategory - Crear categoría
+- EditCategory - Editar categoría
+- UpdateCategory - Gestión de categorías
+- ManageUsers - Gestión de usuarios (Admin/Superadmin)
 
-**Componentes reutilizables:**
-- Navbar - Navegación principal
+**Componentes compartidos:**
+- Navbar - Navegación principal con búsqueda
+- OffCanvasMenu - Menú móvil
+- SideBarPanel - Sidebar del panel de admin
 - SearchBar - Búsqueda de noticias
-- NewsList - Lista de noticias
+- NewsList - Lista de noticias (Mampostería y Hero Vertical)
+- NewsFeatured - Noticias destacadas (Grid Periodística de 4 columnas)
 - NewsDetail - Detalle de noticia
+- NewsCard - Tarjeta de noticia (Estilo Diario Clásico sin bordes y tipografía Serif)
+- FormNew - Controlador de React-Hook-Form + Dropzone (Persistencia de SessionStorage)
 - Footer - Pie de página
+- UserDropdown - Menú de usuario
+
+## API Integration
+
+### Servicios
+
+El frontend consume la API REST del backend a través de servicios organizados por dominio:
+
+**News Service (`src/features/news/api/news.services.ts`):**
+- `getNews()` - Obtiene todas las noticias
+- `getNewById(id)` - Obtiene una noticia por ID
+- `getNewsByCategory(categoryId)` - Obtiene noticias por categoría
+- `searchNews(query)` - Busca noticias
+- `postNew(data)` - Crea una nueva noticia
+- `updateNew({ id, payload })` - Actualiza una noticia
+- `deleteNew(id)` - Elimina una noticia
+
+**Category Service (`src/features/categories/api/category.services.ts`):**
+- `getCategories()` - Obtiene todas las categorías
+- `getCategoryById(id)` - Obtiene una categoría por ID
+- `createCategory(data)` - Crea una categoría
+- `updateCategory(id, data)` - Actualiza una categoría
+- `deleteCategory(id)` - Elimina una categoría
+
+**Newsletter Service (`src/features/newsletter/api/newsletter.services.ts`):**
+- `subscribeNewsletter(data)` - Suscribe al newsletter
+- `updatePreferences(data)` - Actualiza preferencias
+- `unsubscribeNewsletter()` - Cancela suscripción
+
+### Tipos principales
+
+**INews:**
+```typescript
+interface INews {
+  id: string;
+  title: string;
+  slug: string;
+  summary: string;
+  content: string;
+  highlights: string[];
+  author: { name?: string };
+  category: { id?: string; name?: string };
+  mainImage?: string;
+  source?: string;
+  variant: 'highlighted' | 'featured' | 'default';
+  status: 'draft' | 'in_review' | 'approved' | 'published' | 'rejected';
+  publicationDate?: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+```
+
+**ICategory:**
+```typescript
+interface ICategory {
+  id: string;
+  name: string;
+  description?: string;
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+```
 
 ## Tecnologías utilizadas
 
@@ -146,6 +226,9 @@ El sistema implementa cuatro niveles de acceso:
 - react-hook-form ^7.71.1
 - zod ^4.3.5
 - @hookform/resolvers ^5.2.2
+- react-dropzone ^14.3.5 (Subidas arrastrar y soltar)
+- react-quill-new (Editor de texto enriquecido WYSIWYG)
+- dompurify (Sanitización anti-XSS)
 
 ### Utilidades
 - react-router-dom ^7.12.0
@@ -157,20 +240,31 @@ El sistema implementa cuatro niveles de acceso:
 ### Autenticación y Autorización
 - Sistema de login con JWT
 - Registro de usuarios
-- Context API para gestión de autenticación
-- Rutas protegidas por rol
+- Context API para gestión de autenticación (`AuthContext`)
+- Rutas protegidas por rol (`PanelProtectedRoute`)
 - Hook personalizado para control de acceso (`useRoleAccess`)
+- Sidebar dinámico según permisos del usuario
 
 ### Gestión de Noticias
+- Diseño Editorial Clásico: Layouts en cuadrícula rígida (CSS Grid con separadores físicos), tipografía Serif y supresión de elementos flotantes genéricos simulando un diario de papel.
 - Creación, edición y eliminación de noticias
+- Editor de Texto Enriquecido integrado (WYSIWYG) para el cuerpo de noticias con configuración de documentos (Negritas, listas, cursivas).
+- Motor inteligente "Draft": Guarda automáticamente el progreso de escritura (texto e imágenes) en `sessionStorage` para restaurarlo si cierras la ventana
+- Drag & Drop visual para previsualizar Portadas (`react-dropzone`)
 - Visualización de noticias por categoría
 - Búsqueda de noticias
 - Vista detallada de noticias
 - Formateo de fechas
+- Variantes de visualización (highlighted, featured, default) adaptadas matemáticamente a densidades de Lectura de Texto.
+
+### Gestión de Categorías
+- Categorías dinámicas desde la API
+- Filtrado de noticias por categoría
+- Navegación por categorías
 
 ### Gestión de Usuarios
 - Creación de usuarios con roles específicos (Superadmin)
-- Validación de formularios con Zod
+- Validación de formularios
 - Interfaz de gestión de usuarios
 
 ### UI/UX
@@ -218,7 +312,7 @@ Este proyecto está bajo la Licencia MIT. Ver archivo `LICENSE` para más detall
 
 ## Integrantes
 
-- **Marcos Condori** - Fullstac Developer - [GitHub](https://github.com/Marco21c) | [LinkedIn](https://www.linkedin.com/in/marcos-condori-23c/)
+- **Marcos Condori** - Fullstack Developer - [GitHub](https://github.com/Marco21c) | [LinkedIn](https://www.linkedin.com/in/marcos-condori-23c/)
 - **Ezequiel Pacheco** - Scrum Master & Fullstack Developer - [GitHub](https://github.com/EzePacheco) | [LinkedIn](https://www.linkedin.com/in/ezepacheco-dev/)
 - **Andres Chaile** - Backend Developer - [GitHub](https://github.com/andres777c) | [LinkedIn](https://www.linkedin.com/in/andres-chaile-491a6127b/)
 - **Leonardo Alcedo** - Backend Developer - [GitHub](https://github.com/leo99902) | [LinkedIn](https://www.linkedin.com/in/leonardo-alcedo-45a83027b/)
