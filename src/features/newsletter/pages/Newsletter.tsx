@@ -6,6 +6,7 @@ import { useNewsletter } from "@/features/newsletter/hooks/useNewsletter";
 import { useGetCategories } from "@/features/categories/hooks/useGetCategories";
 import { useAuth } from "@/features/auth/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Spinner from "@/shared/components/ui/spinner"
 
 export default function Newsletter() {
   const { isAuthenticated } = useAuth();
@@ -129,9 +130,9 @@ export default function Newsletter() {
         </div>
 
         {isLoading ? (
-          <div className="text-center py-8">
-            <p className="text-gray-500">Cargando...</p>
-          </div>
+        <div className="py-8">
+          <Spinner size={40} />
+        </div>
         ) : (
           <>
             <div className="mb-8">
@@ -155,7 +156,7 @@ export default function Newsletter() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex items-center justify-center gap-2 min-w-[220px]">
               {isSubscribed ? (
                 <>
                   <Button
@@ -164,16 +165,30 @@ export default function Newsletter() {
                     onClick={handleUpdatePreferences}
                     disabled={isUpdating || selectedCategories.length === 0}
                   >
-                    {isUpdating ? "Actualizando..." : "Actualizar preferencias"}
+                  {isUpdating ? (
+                <>
+                  <Spinner size={18} />
+                  Actualizando...
+                </>
+              ) : (
+                  "Actualizar preferencias"
+                )}
                   </Button>
                   <Button
                     variant="outline"
                     size="lg"
                     onClick={handleUnsubscribe}
                     disabled={isUnsubscribing}
-                    className="text-red-600 border-red-300 hover:bg-red-50"
+                    className="flex items-center justify-center gap-2 min-w-[170px] text-red-600 border-red-300 hover:bg-red-50"
                   >
-                    {isUnsubscribing ? "Desuscribiendo..." : "Desuscribirse"}
+                  {isUnsubscribing ? (
+                <>
+                  <Spinner size={18} />
+                  Desuscribiendo...
+                </>
+              ) : (
+                  "Desuscribirse"
+              )}
                   </Button>
                 </>
               ) : (
@@ -182,9 +197,17 @@ export default function Newsletter() {
                   size="lg"
                   onClick={handleSubscribe}
                   disabled={isSubscribing || selectedCategories.length === 0}
+                  className="flex items-center justify-center gap-2 min-w-[180px]"
                 >
-                  {isSubscribing ? "Suscribiendo..." : "Suscribirme"}
-                </Button>
+                {isSubscribing ? (
+                  <>
+                    <Spinner size={18} />
+                    Suscribiendo...
+                  </>
+                ) : (
+                  "Suscribirme"
+                )}
+              </Button>
               )}
             </div>
           </>
